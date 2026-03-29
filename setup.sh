@@ -5,7 +5,7 @@ BLENDER_ARCHIVE=blender-4.5.8-linux-x64.tar.xz
 curl -L -O "https://www.blender.org/download/lts/4-5/${BLENDER_ARCHIVE}" 
 
 #unzip blender
-tar xf ${BLENDER_ARCHIVE} --transform blender
+tar xf ${BLENDER_ARCHIVE} && mv ${BLENDER_ARCHIVE} blender
 
 # Start blender
 ./blender/blender -h
