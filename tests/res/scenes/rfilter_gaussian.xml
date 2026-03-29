@@ -1,0 +1,11 @@
+<scene version="2.1.0">
+
+    <sensor type="perspective">
+        <film type="hdrfilm">
+            <rfilter type="gaussian">
+                <float name="stddev" value="1.5" />
+            </rfilter>
+        </film>
+    </sensor>
+
+</scene>
