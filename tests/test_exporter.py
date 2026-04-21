@@ -1,20 +1,34 @@
 import bpy
 import os
 import mitsuba as mi
-mi.set_variant("scalar_rgb")
+mi.set_variant("cuda_ad_rgb")
 import numpy as np
 from matplotlib import image
 import utils.compare_utils as compare
+import pytest
 
-def test_export_glass():
+from fixtures import *
+
+@pytest.mark.parametrize(
+    "xml_scene, blend_scene, bl_render, mi_render",
+    [("scenes/glass.xml", "scenes/blender/test_scene.blend", "renders/blender/glass.png", "renders/mitsuba/glass.png")]
+)
+def test_export_glass(resource_resolver, xml_scene, blend_scene, bl_render, mi_render):
     # Load scene
-    bpy.ops.wm.open_mainfile(filepath='tests/resources/bl_scene.blend')
+    ref_bl_scene = resource_resolver.get_absolute_resource_path(blend_scene)
+    bpy.ops.wm.open_mainfile(filepath=ref_bl_scene)
 
     # Set cycle parameter
+    # FIXME Those can be save inside blend file, better keeping it there or not?
+    # TODO write pros and cons inside notes 
     bpy.context.scene.render.engine = 'CYCLES'
     bpy.context.scene.cycles.device = 'CPU'
-    bpy.context.scene.cycles.max_bounces = 1
+    bpy.context.scene.cycles.max_bounces = 2
     bpy.context.scene.cycles.samples = 64
+
+    resolution = (1280, 720)
+    bpy.context.scene.render.resolution_x = resolution[0]
+    bpy.context.scene.render.resolution_y = resolution[1]
     
     # Set blender glass material
     mat = bpy.data.materials.new("glass")
@@ -28,32 +42,34 @@ def test_export_glass():
     bpy.data.objects['controller'].active_material = mat
 
     # Render and export blender scene
-    export_path = 'test_glass.xml'
-    bl_render_path = 'tests/renders/blender/glass.png'
-    bpy.context.scene.render.filepath = os.path.abspath(bl_render_path)
-    bpy.ops.export_scene.mitsuba(filepath=os.path.abspath(export_path))
+    ref_mi_scene = resource_resolver.get_absolute_resource_path(xml_scene)
+    ref_bl_render = resource_resolver.get_absolute_resource_path(bl_render)
+    bpy.context.scene.render.filepath = ref_bl_render
+    assert bpy.ops.export_scene.mitsuba(filepath=ref_mi_scene) == {"FINISHED"}
     assert bpy.ops.render.render(write_still=True) == {"FINISHED"}
 
-    print(f'current dir: {os.getcwd()}')
-    print(f'export path: {export_path}')
-
     # Render exported scene in mitsuba
-    mi_scene = mi.load_file(export_path) # <= not working because of weird stuff in mitsuba test initialization propably restricting reading to test directory
-                                            #, need to investigate further. also probably the cause for full black render
-    img = mi.render(mi_scene, spp=64)
-    
-    mi_render_path = 'tests/renders/mitsuba/glass.png'
-    mi.util.write_bitmap(mi_render_path, img)
 
-    print(f'current dir: {os.getcwd()}')
+    # print(f"mitsuba file resolver: {}")
+    # mi_path = mi.filesystem.path(ref_mi_scene)
+    # mi.FileResolver.append(arg=mi_path)
+
+    mi_img = mi.render(mi.load_file(ref_mi_scene, resx=resolution[0], resy=resolution[1]))
+    
+    ref_mi_render = resource_resolver.get_absolute_resource_path(mi_render)
+    mi.util.write_bitmap(ref_mi_render, mi_img)
+
 
     # Compare renders
-    mi_render = image.imread(bl_render_path)
-    bl_render = image.imread(bl_render_path)
-    err, var, diff = compare.l2_error(mi_render, bl_render)
+    print(f"path to mi render: {ref_mi_render}")
+    # FIXME Probably a cleaner way to do that, also need to be sure it does not alter the renders 
+    bl_img = np.array(compare.convert_png(mi.Bitmap(ref_bl_render)))
+    mi_img = np.array(compare.convert_png(mi.Bitmap(mi_img)))
+    err, var, diff = compare.l2_error(mi_img, bl_img)
 
     print(f'Error: {err}, Variance: {var}')
-    assert(err < 1.0) # TODO better treshold
+    assert err < 1.0,  f"Error is too big (err = {err}), should be less than 1" # TODO better treshold
 
     # Save diff
-    image.imsave('tests/res/render_diff/glass_diff.png', diff)
+    ref_diff = resource_resolver.get_absolute_resource_path("out/glass_diff.png")
+    image.imsave(ref_diff, diff)

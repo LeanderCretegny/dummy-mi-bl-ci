@@ -1,5 +1,5 @@
 import numpy as np
-from matplotlib import image
+import mitsuba as mi
 
 def l2_error(img1: np.ndarray, img2: np.ndarray, epsilon = 1e-3):
     '''
@@ -21,7 +21,7 @@ def l2_error(img1: np.ndarray, img2: np.ndarray, epsilon = 1e-3):
     var : float
         The variance of the error between img1 and img2
     '''
-    assert(img1.shape == img2.shape)
+    assert img1.shape == img2.shape, f"image 1 has shape {img1.shape} and image 2 has shape {img2.shape}"
 
     # Compute diff
     diff = np.abs(img1 - img2)
@@ -32,3 +32,6 @@ def l2_error(img1: np.ndarray, img2: np.ndarray, epsilon = 1e-3):
     variance = (diff * diff).sum() / pixels
 
     return error, variance, diff
+
+def convert_png(bmp):
+    return bmp.convert(mi.Bitmap.PixelFormat.RGB, mi.Struct.Type.UInt8, True)

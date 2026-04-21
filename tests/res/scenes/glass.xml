@@ -1,11 +1,11 @@
 <scene version="3.8.0">
     <default name="spp" value="64"/>
-    <default name="resx" value="1920"/>
-    <default name="resy" value="1080"/>
+    <default name="resx" value="1280"/>
+    <default name="resy" value="720"/>
 
     <!-- Camera and Rendering Parameters -->
     <integrator type="path" name="elm__0">
-        <integer name="max_depth" value="1"/>
+        <integer name="max_depth" value="2"/>
     </integrator>
 
     <sensor type="perspective" name="elm__2">
