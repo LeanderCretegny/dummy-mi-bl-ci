@@ -5,7 +5,7 @@
 
     <!-- Camera and Rendering Parameters -->
     <integrator type="path" name="elm__0">
-        <integer name="max_depth" value="1"/>
+        <integer name="max_depth" value="5"/>
     </integrator>
 
     <sensor type="perspective" name="elm__2">

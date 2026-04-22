@@ -1,10 +1,9 @@
 import bpy
-import os
 import mitsuba as mi
 mi.set_variant("cuda_ad_rgb")
 import numpy as np
-from matplotlib import image
-import utils.compare_utils as compare
+import cv2
+import utils.compare_utils as util
 import pytest
 
 from fixtures import *
@@ -57,19 +56,20 @@ def test_export_glass(resource_resolver, xml_scene, blend_scene, bl_render, mi_r
     mi_img = mi.render(mi.load_file(ref_mi_scene, resx=resolution[0], resy=resolution[1]))
     
     ref_mi_render = resource_resolver.get_absolute_resource_path(mi_render)
-    mi.util.write_bitmap(ref_mi_render, mi_img)
+    mi_img = util.convert_png(mi.Bitmap(mi_img))
+    mi_img.write(ref_mi_render)
 
 
     # Compare renders
     print(f"path to mi render: {ref_mi_render}")
     # FIXME Probably a cleaner way to do that, also need to be sure it does not alter the renders 
-    bl_img = np.array(compare.convert_png(mi.Bitmap(ref_bl_render)))
-    mi_img = np.array(compare.convert_png(mi.Bitmap(mi_img)))
-    err, var, diff = compare.l2_error(mi_img, bl_img)
-
-    print(f'Error: {err}, Variance: {var}')
-    assert err < 1.0,  f"Error is too big (err = {err}), should be less than 1" # TODO better treshold
+    bl_img = np.asarray(cv2.imread(ref_bl_render))
+    mi_img = np.asarray(cv2.imread(ref_mi_render))
+    err, var, diff = util.mae(mi_img, bl_img)
 
     # Save diff
     ref_diff = resource_resolver.get_absolute_resource_path("out/glass_diff.png")
-    image.imsave(ref_diff, diff)
+    cv2.imwrite(ref_diff, diff)
+
+    print(f'Error: {err}, Variance: {var}')
+    assert err < 1.0,  f"Error is too big (err = {err}), should be less than 1" # TODO better treshold
