@@ -1,5 +1,6 @@
 import pytest
 import numpy as np
+import bpy
 
 import os
 
@@ -18,6 +19,15 @@ class ResourceResolver:
         absolute_dir = self.get_absolute_resource_path(relative_dir)
         os.makedirs(absolute_dir, exist_ok=True)
         return absolute_dir
+    
+    def get_out_path(self):
+        return os.path.join(self.root, 'out')
+    
+    def get_renders_path(self):
+        return os.path.join(self.root, 'renders')
+    
+    def get_scenes_path(self):
+        return os.path.join(self.root, 'scenes')
 
 @pytest.fixture
 def resource_resolver():
@@ -157,3 +167,107 @@ class MitsubaRenderTester:
 @pytest.fixture
 def mitsuba_scene_ztest(mitsuba_scene_renderer):
     return MitsubaRenderTester(mitsuba_scene_renderer)
+
+###############################
+##  BlenderExporter fixture  ##
+###############################
+
+roughness = 'Roughness'
+color = 'Color'
+node_name = 'name'
+
+class BlenderExporter:
+    def __init__(self, resource_resolver: ResourceResolver):
+        self.resolver = resource_resolver
+        self.materials = {
+            'glass': {
+                node_name: 'ShaderNodeBsdfGlass',
+                color: (0, 0, 1, 1),
+            },
+            'glass_r0.5': {
+                node_name: 'ShaderNodeBsdfGlass',
+                color: (0, 0, 1, 1),
+                roughness: 0.5
+            },
+            'glass_r1': {
+                node_name: 'ShaderNodeBsdfGlass',
+                color: (0, 0, 1, 1),
+                roughness: 1
+            },
+            'diffuse': {
+                node_name: 'ShaderNodeBsdfDiffuse',
+                color: (1, 0, 0, 1),
+            },
+            'diffuse_r0.5': {
+                node_name: 'ShaderNodeBsdfDiffuse',
+                color: (1, 0, 0, 1),
+                roughness: 0.5
+            },
+            'diffuse_r1': {
+                node_name: 'ShaderNodeBsdfDiffuse',
+                color: (1, 0, 0, 1),
+                roughness: 1
+            },
+        }
+    
+    def setup_blender(self, max_bounce=2, samples=64, resolution=(1280, 720)):
+        '''
+        TODO
+        '''
+        # Open test scene in blender
+        ref_bl_scene = f'{self.resolver.get_scenes_path()}/blender/test_scene.blend'
+        bpy.ops.wm.open_mainfile(filepath=ref_bl_scene)
+
+        # Set cycle parameter
+        # FIXME Those can be save inside blend file, better keeping it there or not?
+        # TODO write pros and cons inside notes 
+        bpy.context.scene.render.engine = 'CYCLES'
+        bpy.context.scene.cycles.device = 'CPU'
+        bpy.context.scene.cycles.max_bounces = max_bounce
+        bpy.context.scene.cycles.samples = samples
+        bpy.context.scene.render.resolution_x = resolution[0]
+        bpy.context.scene.render.resolution_y = resolution[1]
+    
+    def set_material(self, name):
+        '''
+        TODO
+        '''
+        # Get properties of material
+        if name not in self.materials:
+            return False
+        
+        props = self.materials[name]
+
+        # Create material and enable shader nodes 
+        mat = bpy.data.materials.new(name)
+        mat.use_nodes = True
+        mat.node_tree.nodes.clear()
+        
+        # Add nodes and link them
+        outputMat = mat.node_tree.nodes.new("ShaderNodeOutputMaterial")
+        shader_node = mat.node_tree.nodes.new(props[node_name])
+        mat.node_tree.links.new(shader_node.outputs[0], outputMat.inputs[0])
+
+        # Modify shader node properties to match value stored in dictionary materials 
+        # TODO add more cases when required
+        if color in props:
+            shader_node.inputs[color].default_value = props[color]
+        if roughness in props:
+            shader_node.inputs[roughness].default_value = props[roughness]
+
+        # Set scene object's material to mat TODO modify controller when decided on final test scene
+        bpy.data.objects['controller'].active_material = mat
+        return True
+    
+    def render_and_export(self, ref_render, ref_export):
+        '''
+        TODO
+        '''
+        bpy.context.scene.render.filepath = ref_render
+        bpy.context.scene.render.image_settings.color_mode = 'RGB'
+        assert bpy.ops.export_scene.mitsuba(filepath=ref_export) == {"FINISHED"}
+        assert bpy.ops.render.render(write_still=True) == {"FINISHED"}
+
+@pytest.fixture
+def blender_exporter(resource_resolver):
+    return BlenderExporter(resource_resolver)

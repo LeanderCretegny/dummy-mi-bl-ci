@@ -1,0 +1,74 @@
+<scene version="3.8.0">
+    <default name="spp" value="64"/>
+    <default name="resx" value="1280"/>
+    <default name="resy" value="720"/>
+
+    <!-- Camera and Rendering Parameters -->
+    <integrator type="path" name="elm__0">
+        <integer name="max_depth" value="2"/>
+    </integrator>
+
+    <sensor type="perspective" name="elm__2">
+        <string name="fov_axis" value="x"/>
+        <float name="fov" value="39.597755335771296"/>
+        <float name="principal_point_offset_x" value="0"/>
+        <float name="principal_point_offset_y" value="-0"/>
+        <float name="near_clip" value="0.10000000149011612"/>
+        <float name="far_clip" value="100"/>
+
+        <transform name="to_world">
+            <lookat origin="3.9388909339904785, 1.0583093166351318, 5.1657910346984863" target="3.3451497554779053, 0.94613433629274368, 4.3689923286437988" up="-0.067025944590568542, 0.99368846416473389, -0.089948587119579315"/>
+        </transform>
+
+        <sampler type="independent" name="sampler">
+            <integer name="sample_count" value="$spp"/>
+        </sampler>
+
+        <film type="hdrfilm" name="film">
+            <integer name="width" value="$resx"/>
+            <integer name="height" value="$resy"/>
+        </film>
+    </sensor>
+
+    <!-- Materials -->
+    <bsdf type="twosided" id="default-bsdf" name="default-bsdf">
+        <bsdf type="diffuse" name="bsdf"/>
+    </bsdf>
+
+    <bsdf type="roughdielectric" id="mat-glass_r0_5" name="mat-glass_r0_5">
+        <float name="alpha" value="0.25"/>
+        <string name="distribution" value="ggx"/>
+        <float name="int_ior" value="1.5"/>
+        <rgb name="specular_transmittance" value="0 0 1"/>
+    </bsdf>
+
+    <!-- Emitters -->
+    <emitter type="point" name="elm__1">
+        <vector name="position" x="-0.50375467538833618" y="1.5238622426986694" z="-1.6754539012908936"/>
+        <rgb name="intensity" value="79.577468872070312 79.577468872070312 79.577468872070312"/>
+    </emitter>
+
+    <!-- Shapes -->
+    <shape type="ply" name="elm__4">
+        <string name="filename" value="meshes/Plane.ply"/>
+        <boolean name="face_normals" value="true"/>
+        <ref name="bsdf" id="default-bsdf"/>
+    </shape>
+
+    <shape type="ply" name="elm__6">
+        <string name="filename" value="meshes/controller.ply"/>
+        <ref name="bsdf" id="mat-glass_r0_5"/>
+    </shape>
+
+    <shape type="ply" name="elm__7">
+        <string name="filename" value="meshes/Plane_001.ply"/>
+        <boolean name="face_normals" value="true"/>
+        <ref name="bsdf" id="default-bsdf"/>
+    </shape>
+
+    <shape type="ply" name="elm__8">
+        <string name="filename" value="meshes/Plane_002.ply"/>
+        <boolean name="face_normals" value="true"/>
+        <ref name="bsdf" id="default-bsdf"/>
+    </shape>
+</scene>

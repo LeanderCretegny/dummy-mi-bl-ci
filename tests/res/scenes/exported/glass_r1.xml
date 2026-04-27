@@ -1,11 +1,11 @@
 <scene version="3.8.0">
     <default name="spp" value="64"/>
-    <default name="resx" value="1920"/>
-    <default name="resy" value="1080"/>
+    <default name="resx" value="1280"/>
+    <default name="resy" value="720"/>
 
     <!-- Camera and Rendering Parameters -->
     <integrator type="path" name="elm__0">
-        <integer name="max_depth" value="1"/>
+        <integer name="max_depth" value="2"/>
     </integrator>
 
     <sensor type="perspective" name="elm__2">
@@ -35,7 +35,9 @@
         <bsdf type="diffuse" name="bsdf"/>
     </bsdf>
 
-    <bsdf type="dielectric" id="mat-glass" name="mat-glass">
+    <bsdf type="roughdielectric" id="mat-glass_r1" name="mat-glass_r1">
+        <float name="alpha" value="1"/>
+        <string name="distribution" value="ggx"/>
         <float name="int_ior" value="1.5"/>
         <rgb name="specular_transmittance" value="0 0 1"/>
     </bsdf>
@@ -55,7 +57,7 @@
 
     <shape type="ply" name="elm__6">
         <string name="filename" value="meshes/controller.ply"/>
-        <ref name="bsdf" id="mat-glass"/>
+        <ref name="bsdf" id="mat-glass_r1"/>
     </shape>
 
     <shape type="ply" name="elm__7">

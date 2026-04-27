@@ -32,11 +32,11 @@ def mae(img1: np.ndarray, img2: np.ndarray, gray_scale=True):
     # Compute error and variance
     pixels = img1.shape[0] * img2.shape[1]
     mae = abs_err.sum() / pixels
-    std_dev = ((abs_err - mae) ** 2).sum() / pixels
+    std_dev = ((abs_err.sum(axis=-1) - mae) ** 2).sum() / pixels
 
     # Compute gray scale image of differences
     if gray_scale:
-        diff_img = cv2.cvtColor(abs_err, cv2.COLOR_BGR2GRAY)
+        diff_img = to_gray_scale(abs_err)
     else:
         diff_img = None
     
@@ -72,11 +72,11 @@ def mse(img1: np.ndarray, img2: np.ndarray, gray_scale=True):
     # Compute error and variance
     pixels = img1.shape[0] * img2.shape[1]
     mse = s_err.sum() / pixels
-    std_dev = ((s_err - mse) ** 2).sum() / pixels
+    std_dev = ((s_err.sum(axis=-1) - mse) ** 2).sum() / pixels
 
     # Compute gray scale image of differences
     if gray_scale:
-        diff_img = cv2.cvtColor(s_err, cv2.COLOR_BGR2GRAY)
+        diff_img = to_gray_scale(s_err)
     else:
         diff_img = None
 
@@ -84,3 +84,7 @@ def mse(img1: np.ndarray, img2: np.ndarray, gray_scale=True):
 
 def convert_png(bmp):
     return bmp.convert(mi.Bitmap.PixelFormat.RGB, mi.Struct.Type.UInt8, True)
+
+def to_gray_scale(img: np.ndarray):
+    assert img.shape[2] == 3, f"Image has {img.shape[2]} pixel channels instead of 3"
+    return np.dot(img, [0.2126, 0.7152, 0.0722])

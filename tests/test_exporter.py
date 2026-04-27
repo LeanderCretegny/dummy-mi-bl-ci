@@ -2,74 +2,50 @@ import bpy
 import mitsuba as mi
 mi.set_variant("cuda_ad_rgb")
 import numpy as np
-import cv2
 import utils.compare_utils as util
+import matplotlib.image as img
 import pytest
 
 from fixtures import *
 
 @pytest.mark.parametrize(
-    "xml_scene, blend_scene, bl_render, mi_render",
-    [("scenes/glass.xml", "scenes/blender/test_scene.blend", "renders/blender/glass.png", "renders/mitsuba/glass.png")]
-)
-def test_export_glass(resource_resolver, xml_scene, blend_scene, bl_render, mi_render):
-    # Load scene
-    ref_bl_scene = resource_resolver.get_absolute_resource_path(blend_scene)
-    bpy.ops.wm.open_mainfile(filepath=ref_bl_scene)
-
-    # Set cycle parameter
-    # FIXME Those can be save inside blend file, better keeping it there or not?
-    # TODO write pros and cons inside notes 
-    bpy.context.scene.render.engine = 'CYCLES'
-    bpy.context.scene.cycles.device = 'CPU'
-    bpy.context.scene.cycles.max_bounces = 2
-    bpy.context.scene.cycles.samples = 64
-
+    "shader_node", 
+    [
+        'glass',
+        'glass_r0.5',
+        'glass_r1',
+        'diffuse',
+        'diffuse_r0.5',
+        'diffuse_r1',
+    ]
+) #TODO add every material
+def test_export(resource_resolver, blender_exporter, shader_node):
     resolution = (1280, 720)
-    bpy.context.scene.render.resolution_x = resolution[0]
-    bpy.context.scene.render.resolution_y = resolution[1]
+
+    # Setup blender scene
+    blender_exporter.setup_blender(resolution=resolution)
     
-    # Set blender glass material
-    mat = bpy.data.materials.new("glass")
-    mat.use_nodes = True
-    mat.node_tree.nodes.clear()
-    outputMat = mat.node_tree.nodes.new("ShaderNodeOutputMaterial")
-    glass = mat.node_tree.nodes.new("ShaderNodeBsdfGlass")
-    glass.inputs['Color'].default_value = (0, 0, 1, 1)
-    mat.node_tree.links.new(glass.outputs[0], outputMat.inputs[0])
-
-    bpy.data.objects['controller'].active_material = mat
-
+    # Set blender material
+    assert blender_exporter.set_material(shader_node)
+    
     # Render and export blender scene
-    ref_mi_scene = resource_resolver.get_absolute_resource_path(xml_scene)
-    ref_bl_render = resource_resolver.get_absolute_resource_path(bl_render)
-    bpy.context.scene.render.filepath = ref_bl_render
-    assert bpy.ops.export_scene.mitsuba(filepath=ref_mi_scene) == {"FINISHED"}
-    assert bpy.ops.render.render(write_still=True) == {"FINISHED"}
+    ref_mi_scene = f'{resource_resolver.get_scenes_path()}/exported/{shader_node}.xml'
+    ref_bl_render = f'{resource_resolver.get_renders_path()}/blender/{shader_node}.png' 
+    blender_exporter.render_and_export(ref_bl_render, ref_mi_scene)
 
-    # Render exported scene in mitsuba
-
-    # print(f"mitsuba file resolver: {}")
-    # mi_path = mi.filesystem.path(ref_mi_scene)
-    # mi.FileResolver.append(arg=mi_path)
-
+    # Render exported scene in mitsuba and save result
     mi_img = mi.render(mi.load_file(ref_mi_scene, resx=resolution[0], resy=resolution[1]))
-    
-    ref_mi_render = resource_resolver.get_absolute_resource_path(mi_render)
+    ref_mi_render = f'{resource_resolver.get_renders_path()}/mitsuba/{shader_node}.png' 
     mi_img = util.convert_png(mi.Bitmap(mi_img))
     mi_img.write(ref_mi_render)
 
-
     # Compare renders
-    print(f"path to mi render: {ref_mi_render}")
-    # FIXME Probably a cleaner way to do that, also need to be sure it does not alter the renders 
-    bl_img = np.asarray(cv2.imread(ref_bl_render))
-    mi_img = np.asarray(cv2.imread(ref_mi_render))
-    err, var, diff = util.mae(mi_img, bl_img)
+    bl_img = np.asarray(img.imread(ref_bl_render))
+    mi_img = np.asarray(img.imread(ref_mi_render))
+    err, var, diff = util.mse(mi_img, bl_img)
 
     # Save diff
-    ref_diff = resource_resolver.get_absolute_resource_path("out/glass_diff.png")
-    cv2.imwrite(ref_diff, diff)
+    ref_diff = f"{resource_resolver.get_out_path()}/tests/{shader_node}_diff.png"
+    img.imsave(ref_diff, diff, cmap='gray')
 
-    print(f'Error: {err}, Variance: {var}')
-    assert err < 1.0,  f"Error is too big (err = {err}), should be less than 1" # TODO better treshold
+    assert err < 0.01 and False,  f"Error is too big (err = {err}), should be less than 1" # TODO better treshold
