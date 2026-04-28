@@ -8,7 +8,7 @@
         <integer name="max_depth" value="5"/>
     </integrator>
 
-    <sensor type="perspective" name="elm__2">
+    <sensor type="perspective" name="elm__1">
         <string name="fov_axis" value="x"/>
         <float name="fov" value="39.597755335771296"/>
         <float name="principal_point_offset_x" value="0"/>
@@ -35,56 +35,64 @@
         <bsdf type="diffuse" name="bsdf"/>
     </bsdf>
 
-    <bsdf type="roughdielectric" id="mat-glass_r1" name="mat-glass_r1">
-        <float name="alpha" value="1"/>
-        <string name="distribution" value="beckmann"/>
-        <float name="int_ior" value="1.5"/>
-        <rgb name="specular_transmittance" value="0 0 1"/>
+    <bsdf type="diffuse" id="empty-emitter-bsdf" name="empty-emitter-bsdf">
+        <rgb name="reflectance" value="0 0 0"/>
     </bsdf>
 
     <!-- Emitters -->
-    <emitter type="point" name="elm__1">
-        <vector name="position" x="-0.50375467538833618" y="1.5238622426986694" z="-1.6754539012908936"/>
-        <rgb name="intensity" value="79.577468872070312 79.577468872070312 79.577468872070312"/>
-    </emitter>
+    <shape type="ply" name="elm__7">
+        <string name="filename" value="meshes/Cube.ply"/>
+        <boolean name="face_normals" value="true"/>
+        <ref name="bsdf" id="empty-emitter-bsdf"/>
+
+        <emitter type="area" name="emitter">
+            <rgb name="radiance" value="0.39044401049613953 1 0.35833901166915894"/>
+        </emitter>
+    </shape>
+
+    <shape type="ply" name="elm__8">
+        <string name="filename" value="meshes/Cylinder.ply"/>
+        <ref name="bsdf" id="empty-emitter-bsdf"/>
+
+        <emitter type="area" name="emitter">
+            <rgb name="radiance" value="0.39044401049613953 1 0.35833901166915894"/>
+        </emitter>
+    </shape>
+
+    <shape type="ply" name="elm__9">
+        <string name="filename" value="meshes/Sphere.ply"/>
+        <ref name="bsdf" id="empty-emitter-bsdf"/>
+
+        <emitter type="area" name="emitter">
+            <rgb name="radiance" value="0.39044401049613953 1 0.35833901166915894"/>
+        </emitter>
+    </shape>
+
+    <shape type="ply" name="elm__10">
+        <string name="filename" value="meshes/Torus.ply"/>
+        <ref name="bsdf" id="empty-emitter-bsdf"/>
+
+        <emitter type="area" name="emitter">
+            <rgb name="radiance" value="0.39044401049613953 1 0.35833901166915894"/>
+        </emitter>
+    </shape>
 
     <!-- Shapes -->
-    <shape type="ply" name="elm__4">
+    <shape type="ply" name="elm__3">
         <string name="filename" value="meshes/Plane.ply"/>
         <boolean name="face_normals" value="true"/>
         <ref name="bsdf" id="default-bsdf"/>
     </shape>
 
-    <shape type="ply" name="elm__5">
+    <shape type="ply" name="elm__4">
         <string name="filename" value="meshes/Plane_001.ply"/>
         <boolean name="face_normals" value="true"/>
         <ref name="bsdf" id="default-bsdf"/>
     </shape>
 
-    <shape type="ply" name="elm__6">
+    <shape type="ply" name="elm__5">
         <string name="filename" value="meshes/Plane_002.ply"/>
         <boolean name="face_normals" value="true"/>
         <ref name="bsdf" id="default-bsdf"/>
-    </shape>
-
-    <shape type="ply" name="elm__8">
-        <string name="filename" value="meshes/Cube.ply"/>
-        <boolean name="face_normals" value="true"/>
-        <ref name="bsdf" id="mat-glass_r1"/>
-    </shape>
-
-    <shape type="ply" name="elm__9">
-        <string name="filename" value="meshes/Cylinder.ply"/>
-        <ref name="bsdf" id="mat-glass_r1"/>
-    </shape>
-
-    <shape type="ply" name="elm__10">
-        <string name="filename" value="meshes/Sphere.ply"/>
-        <ref name="bsdf" id="mat-glass_r1"/>
-    </shape>
-
-    <shape type="ply" name="elm__11">
-        <string name="filename" value="meshes/Torus.ply"/>
-        <ref name="bsdf" id="mat-glass_r1"/>
     </shape>
 </scene>

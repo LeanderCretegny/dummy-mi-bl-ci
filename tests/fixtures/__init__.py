@@ -174,25 +174,27 @@ def mitsuba_scene_ztest(mitsuba_scene_renderer):
 
 roughness = 'Roughness'
 color = 'Color'
+strength = 'Strength'
+distrib = 'distribution'
 node_name = 'name'
-
-class BlenderExporter:
-    def __init__(self, resource_resolver: ResourceResolver):
-        self.resolver = resource_resolver
-        self.materials = {
+beckmann = 'BECKMANN'
+blender_materials = {
             'glass': {
                 node_name: 'ShaderNodeBsdfGlass',
                 color: (0, 0, 1, 1),
+                distrib: beckmann,
             },
             'glass_r0.5': {
                 node_name: 'ShaderNodeBsdfGlass',
                 color: (0, 0, 1, 1),
-                roughness: 0.5
+                roughness: 0.5,
+                distrib: beckmann,
             },
             'glass_r1': {
                 node_name: 'ShaderNodeBsdfGlass',
                 color: (0, 0, 1, 1),
-                roughness: 1
+                roughness: 1,
+                distrib: beckmann,
             },
             'diffuse': {
                 node_name: 'ShaderNodeBsdfDiffuse',
@@ -208,14 +210,50 @@ class BlenderExporter:
                 color: (1, 0, 0, 1),
                 roughness: 1
             },
+            'emission': {
+                node_name: 'ShaderNodeEmission',
+                color: (0.390444, 1, 0.358339, 1), 
+            },
+            'emission_str5': {
+                node_name: 'ShaderNodeEmission',
+                color: (0.390444, 1, 0.358339, 1), 
+                strength: 5.0,
+            },
+            'emission_str10': {
+                node_name: 'ShaderNodeEmission',
+                color: (0.390444, 1, 0.358339, 1), 
+                strength: 10.0,
+            },
+            'glossy_r0': {
+                node_name: 'ShaderNodeBsdfGlossy',
+                color: (0.5, 0.5, 0.5, 1),
+                roughness: 0,
+                distrib: beckmann
+            },
+            'glossy_r0.5': {
+                node_name: 'ShaderNodeBsdfGlossy',
+                color: (0.5, 0.5, 0.5, 1),
+                roughness: 0.5,
+                distrib: beckmann,
+            },
+            'glossy_r1': {
+                node_name: 'ShaderNodeBsdfGlossy',
+                color: (0.5, 0.5, 0.5, 1),
+                roughness: 1,
+                distrib: beckmann
+            },
         }
+
+class BlenderExporter:
+    def __init__(self, resource_resolver: ResourceResolver):
+        self.resolver = resource_resolver
     
-    def setup_blender(self, max_bounce=2, samples=64, resolution=(1280, 720)):
+    def setup_blender(self, scene, max_bounce=5, samples=64, resolution=(1280, 720)):
         '''
         TODO
         '''
         # Open test scene in blender
-        ref_bl_scene = f'{self.resolver.get_scenes_path()}/blender/test_scene.blend'
+        ref_bl_scene = f'{self.resolver.get_scenes_path()}/blender/{scene}'
         bpy.ops.wm.open_mainfile(filepath=ref_bl_scene)
 
         # Set cycle parameter
@@ -233,10 +271,10 @@ class BlenderExporter:
         TODO
         '''
         # Get properties of material
-        if name not in self.materials:
+        if name not in blender_materials:
             return False
         
-        props = self.materials[name]
+        props = blender_materials[name]
 
         # Create material and enable shader nodes 
         mat = bpy.data.materials.new(name)
@@ -248,15 +286,21 @@ class BlenderExporter:
         shader_node = mat.node_tree.nodes.new(props[node_name])
         mat.node_tree.links.new(shader_node.outputs[0], outputMat.inputs[0])
 
-        # Modify shader node properties to match value stored in dictionary materials 
-        # TODO add more cases when required
-        if color in props:
-            shader_node.inputs[color].default_value = props[color]
-        if roughness in props:
-            shader_node.inputs[roughness].default_value = props[roughness]
+        # Perform specific scene modification if needed
+        if props[node_name] == 'ShaderNodeEmission':
+            bpy.data.objects['Light'].hide_render = True
 
-        # Set scene object's material to mat TODO modify controller when decided on final test scene
-        bpy.data.objects['controller'].active_material = mat
+        # Set shader node properties accordingly
+        for p, v in props.items():
+            if p == node_name:
+                continue
+            elif p == distrib:
+                shader_node.distribution = v
+            else:
+                shader_node.inputs[p].default_value = v 
+
+        for obj in bpy.data.collections['objects'].objects:
+            obj.active_material = mat
         return True
     
     def render_and_export(self, ref_render, ref_export):

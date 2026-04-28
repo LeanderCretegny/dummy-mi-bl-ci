@@ -5,7 +5,7 @@
 
     <!-- Camera and Rendering Parameters -->
     <integrator type="path" name="elm__0">
-        <integer name="max_depth" value="2"/>
+        <integer name="max_depth" value="5"/>
     </integrator>
 
     <sensor type="perspective" name="elm__2">
@@ -37,7 +37,7 @@
 
     <bsdf type="roughdielectric" id="mat-glass_r0_5" name="mat-glass_r0_5">
         <float name="alpha" value="0.25"/>
-        <string name="distribution" value="ggx"/>
+        <string name="distribution" value="beckmann"/>
         <float name="int_ior" value="1.5"/>
         <rgb name="specular_transmittance" value="0 0 1"/>
     </bsdf>
@@ -55,20 +55,36 @@
         <ref name="bsdf" id="default-bsdf"/>
     </shape>
 
-    <shape type="ply" name="elm__6">
-        <string name="filename" value="meshes/controller.ply"/>
-        <ref name="bsdf" id="mat-glass_r0_5"/>
-    </shape>
-
-    <shape type="ply" name="elm__7">
+    <shape type="ply" name="elm__5">
         <string name="filename" value="meshes/Plane_001.ply"/>
         <boolean name="face_normals" value="true"/>
         <ref name="bsdf" id="default-bsdf"/>
     </shape>
 
-    <shape type="ply" name="elm__8">
+    <shape type="ply" name="elm__6">
         <string name="filename" value="meshes/Plane_002.ply"/>
         <boolean name="face_normals" value="true"/>
         <ref name="bsdf" id="default-bsdf"/>
+    </shape>
+
+    <shape type="ply" name="elm__8">
+        <string name="filename" value="meshes/Cube.ply"/>
+        <boolean name="face_normals" value="true"/>
+        <ref name="bsdf" id="mat-glass_r0_5"/>
+    </shape>
+
+    <shape type="ply" name="elm__9">
+        <string name="filename" value="meshes/Cylinder.ply"/>
+        <ref name="bsdf" id="mat-glass_r0_5"/>
+    </shape>
+
+    <shape type="ply" name="elm__10">
+        <string name="filename" value="meshes/Sphere.ply"/>
+        <ref name="bsdf" id="mat-glass_r0_5"/>
+    </shape>
+
+    <shape type="ply" name="elm__11">
+        <string name="filename" value="meshes/Torus.ply"/>
+        <ref name="bsdf" id="mat-glass_r0_5"/>
     </shape>
 </scene>

@@ -1,4 +1,3 @@
-import bpy
 import mitsuba as mi
 mi.set_variant("cuda_ad_rgb")
 import numpy as np
@@ -17,13 +16,20 @@ from fixtures import *
         'diffuse',
         'diffuse_r0.5',
         'diffuse_r1',
+        'emission',
+        'emission_str5',
+        'emission_str10',
+        'glossy_r0',
+        'glossy_r0.5',
+        'glossy_r1',
     ]
 ) #TODO add every material
-def test_export(resource_resolver, blender_exporter, shader_node):
+@pytest.mark.parametrize("blender_scene", ['simple_pl.blend'])
+def test_export(resource_resolver, blender_exporter, shader_node, blender_scene):
     resolution = (1280, 720)
 
     # Setup blender scene
-    blender_exporter.setup_blender(resolution=resolution)
+    blender_exporter.setup_blender(blender_scene, resolution=resolution)
     
     # Set blender material
     assert blender_exporter.set_material(shader_node)
@@ -48,4 +54,4 @@ def test_export(resource_resolver, blender_exporter, shader_node):
     ref_diff = f"{resource_resolver.get_out_path()}/tests/{shader_node}_diff.png"
     img.imsave(ref_diff, diff, cmap='gray')
 
-    assert err < 0.01 and False,  f"Error is too big (err = {err}), should be less than 1" # TODO better treshold
+    assert err < 0.000306 and False,  f"Error is too big (err = {err}), should be less than 0.000306" # TODO better treshold
