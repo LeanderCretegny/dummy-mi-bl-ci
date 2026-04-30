@@ -1,5 +1,5 @@
 import mitsuba as mi
-mi.set_variant("cuda_ad_rgb")
+mi.set_variant("scalar_rgb")
 import numpy as np
 import utils.compare_utils as util
 import matplotlib.image as img
@@ -24,12 +24,12 @@ from fixtures import *
         'glossy_r1',
     ]
 ) #TODO add every material
-@pytest.mark.parametrize("blender_scene", ['simple_pl.blend'])
-def test_export(resource_resolver, blender_exporter, shader_node, blender_scene):
+@pytest.mark.parametrize("simple_scene_bl", ['simple_pl.blend'])
+def test_export(resource_resolver, blender_exporter, shader_node, simple_scene_bl):
     resolution = (1280, 720)
 
     # Setup blender scene
-    blender_exporter.setup_blender(blender_scene, resolution=resolution)
+    blender_exporter.setup_blender(simple_scene_bl, resolution=resolution)
     
     # Set blender material
     assert blender_exporter.set_material(shader_node)

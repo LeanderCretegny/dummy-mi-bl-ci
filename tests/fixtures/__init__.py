@@ -88,7 +88,7 @@ class MitsubaSceneRenderer:
 
     def render_scene(self, scene_file, **kwargs):
         from mitsuba import load_file
-
+        
         scene = load_file(scene_file, **kwargs)
         scene.integrator().render(scene, seed=0, develop=False)
 
@@ -140,6 +140,7 @@ class MitsubaRenderTester:
         from mitsuba import Bitmap
 
         pixel_count = resolution[0] * resolution[1]
+        print(f"xml_ref: {xml_ref}")
         ref_img, ref_img_var = self.scene_renderer.render_scene(xml_ref, spp=spp, resx=resolution[0], resy=resolution[1])
         img, _ = self.scene_renderer.render_scene(xml_out, spp=spp, resx=resolution[0], resy=resolution[1])
 
