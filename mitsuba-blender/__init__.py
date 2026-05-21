@@ -39,6 +39,12 @@ def init_mitsuba(context):
             import importlib
             importlib.reload(mitsuba)
         mitsuba.set_variant('scalar_rgb')
+        # FIXME remove if plugin included in stable release of mitsuba
+        from . import plugins
+        mitsuba.register_bsdf("blender_principled", lambda props: plugins.BlenderPrincipledBSDF(props))
+        mitsuba.register_texture('brightness_contrast', lambda props: plugins.BrightnessContrast(props))
+        mitsuba.register_texture('rgb_curve', lambda props: plugins.RGBCurve(props))
+        mitsuba.register_texture('mix_color', lambda props: plugins.Mix(props))
         return True
     except ModuleNotFoundError:
         return False

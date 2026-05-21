@@ -1,0 +1,1685 @@
+<scene version="3.8.0">
+    <default name="spp" value="2048"/>
+    <default name="resx" value="1400"/>
+    <default name="resy" value="948"/>
+
+    <!-- Camera and Rendering Parameters -->
+    <integrator type="path" name="elm__0">
+        <integer name="max_depth" value="8"/>
+    </integrator>
+
+    <sensor type="perspective" name="elm__7">
+        <string name="fov_axis" value="x"/>
+        <float name="fov" value="56.144978015299799"/>
+        <float name="principal_point_offset_x" value="0.029999999329447743"/>
+        <float name="principal_point_offset_y" value="0.088607587454691203"/>
+        <float name="near_clip" value="0.10000000149011612"/>
+        <float name="far_clip" value="100"/>
+
+        <transform name="to_world">
+            <matrix value="-0.11100434511899948 0 9.7043084679171443e-09 8.9945716857910156 4.2418880602903327e-16 0.11100434511899948 4.8521542339585721e-09 7.8105320930480957 -9.7043084679171443e-09 4.8521542339585721e-09 -0.11100434511899948 -63.040512084960938 0 0 0 1"/>
+        </transform>
+
+        <sampler type="independent" name="sampler">
+            <integer name="sample_count" value="$spp"/>
+        </sampler>
+
+        <film type="hdrfilm" name="film">
+            <integer name="width" value="$resx"/>
+            <integer name="height" value="$resy"/>
+        </film>
+    </sensor>
+
+    <sensor type="perspective" name="elm__221">
+        <string name="fov_axis" value="x"/>
+        <float name="fov" value="61.92751520437556"/>
+        <float name="principal_point_offset_x" value="0"/>
+        <float name="principal_point_offset_y" value="-0"/>
+        <float name="near_clip" value="0.10000000149011612"/>
+        <float name="far_clip" value="10000"/>
+
+        <transform name="to_world">
+            <matrix value="-0.099833548069000244 0.0003091934195253998 0.0057594841346144676 8.9945716857910156 -4.2152153989505337e-10 0.099856235086917877 -0.0053607113659381866 7.8105320930480957 -0.0057677775621414185 -0.0053517874330282211 -0.09969000518321991 -63.456874847412109 0 0 0 1"/>
+        </transform>
+
+        <sampler type="independent" name="sampler">
+            <integer name="sample_count" value="$spp"/>
+        </sampler>
+
+        <film type="hdrfilm" name="film">
+            <integer name="width" value="$resx"/>
+            <integer name="height" value="$resy"/>
+        </film>
+    </sensor>
+
+    <!-- Materials -->
+    <bsdf type="diffuse" id="mat-AI43_005_11" name="mat-AI43_005_11">
+        <rgb name="reflectance" value="1 0 0.29999999999999999"/>
+    </bsdf>
+
+    <bsdf type="diffuse" id="mat-AI43_005_11_001" name="mat-AI43_005_11_001">
+        <rgb name="reflectance" value="1 0 0.29999999999999999"/>
+    </bsdf>
+
+    <bsdf type="diffuse" id="mat-AI43_005_44" name="mat-AI43_005_44">
+        <rgb name="reflectance" value="1 0 0.29999999999999999"/>
+    </bsdf>
+
+    <bsdf type="diffuse" id="mat-AI43_005_20" name="mat-AI43_005_20">
+        <rgb name="reflectance" value="1 0 0.29999999999999999"/>
+    </bsdf>
+
+    <bsdf type="diffuse" id="mat-AI43_005_22" name="mat-AI43_005_22">
+        <rgb name="reflectance" value="1 0 0.29999999999999999"/>
+    </bsdf>
+
+    <bsdf type="diffuse" id="mat-AI43_005_24" name="mat-AI43_005_24">
+        <rgb name="reflectance" value="1 0 0.29999999999999999"/>
+    </bsdf>
+
+    <bsdf type="diffuse" id="mat-AI43_005_26" name="mat-AI43_005_26">
+        <rgb name="reflectance" value="1 0 0.29999999999999999"/>
+    </bsdf>
+
+    <bsdf type="diffuse" id="mat-AI43_005_28" name="mat-AI43_005_28">
+        <rgb name="reflectance" value="1 0 0.29999999999999999"/>
+    </bsdf>
+
+    <bsdf type="twosided" id="mat-AI43_005_29" name="mat-AI43_005_29">
+        <bsdf type="blender_principled" name="bsdf">
+            <texture type="bitmap" name="base_color">
+                <string name="filename" value="textures/arch120_038_024.jpg"/>
+            </texture>
+            <rgb name="spec_tint" value="1 1 1"/>
+            <float name="transmission" value="0"/>
+            <float name="metallic" value="0"/>
+            <float name="anisotropic" value="0"/>
+            <float name="roughness" value="0.25"/>
+            <float name="sheen" value="0"/>
+            <rgb name="sheen_tint" value="1 1 1"/>
+            <float name="clearcoat" value="0"/>
+            <float name="clearcoat_roughness" value="0.00089999995976686523"/>
+            <float name="eta" value="1.4500000476837158"/>
+            <float name="spec_ior_level" value="0.5"/>
+        </bsdf>
+    </bsdf>
+
+    <bsdf type="twosided" id="mat-AI43_005_30" name="mat-AI43_005_30">
+        <bsdf type="blender_principled" name="bsdf">
+            <texture type="bitmap" name="base_color">
+                <string name="filename" value="textures/arch120_038_023.jpg"/>
+            </texture>
+            <rgb name="spec_tint" value="1 1 1"/>
+            <float name="transmission" value="0"/>
+            <float name="metallic" value="0"/>
+            <float name="anisotropic" value="0"/>
+            <float name="roughness" value="0.25"/>
+            <float name="sheen" value="0"/>
+            <rgb name="sheen_tint" value="1 1 1"/>
+            <float name="clearcoat" value="0"/>
+            <float name="clearcoat_roughness" value="0.00089999995976686523"/>
+            <float name="eta" value="1.4500000476837158"/>
+            <float name="spec_ior_level" value="0.5"/>
+        </bsdf>
+    </bsdf>
+
+    <bsdf type="diffuse" id="mat-AI43_005_32" name="mat-AI43_005_32">
+        <rgb name="reflectance" value="1 0 0.29999999999999999"/>
+    </bsdf>
+
+    <bsdf type="diffuse" id="mat-AI43_005_34" name="mat-AI43_005_34">
+        <rgb name="reflectance" value="1 0 0.29999999999999999"/>
+    </bsdf>
+
+    <bsdf type="diffuse" id="mat-AI43_005_36" name="mat-AI43_005_36">
+        <rgb name="reflectance" value="1 0 0.29999999999999999"/>
+    </bsdf>
+
+    <bsdf type="diffuse" id="mat-AI43_005_38" name="mat-AI43_005_38">
+        <rgb name="reflectance" value="1 0 0.29999999999999999"/>
+    </bsdf>
+
+    <bsdf type="diffuse" id="mat-AI43_005_40" name="mat-AI43_005_40">
+        <rgb name="reflectance" value="1 0 0.29999999999999999"/>
+    </bsdf>
+
+    <bsdf type="diffuse" id="mat-AI43_005_42" name="mat-AI43_005_42">
+        <rgb name="reflectance" value="1 0 0.29999999999999999"/>
+    </bsdf>
+
+    <bsdf type="diffuse" id="mat-AI43_005_46" name="mat-AI43_005_46">
+        <rgb name="reflectance" value="1 0 0.29999999999999999"/>
+    </bsdf>
+
+    <bsdf type="diffuse" id="mat-AI43_005_48" name="mat-AI43_005_48">
+        <rgb name="reflectance" value="1 0 0.29999999999999999"/>
+    </bsdf>
+
+    <bsdf type="twosided" id="mat-AI43_005_49" name="mat-AI43_005_49">
+        <bsdf type="blender_principled" name="bsdf">
+            <texture type="bitmap" name="base_color">
+                <string name="filename" value="textures/AI43_005_book_pages.png"/>
+            </texture>
+            <rgb name="spec_tint" value="1 1 1"/>
+            <float name="transmission" value="0"/>
+            <float name="metallic" value="0"/>
+            <float name="anisotropic" value="0"/>
+            <float name="roughness" value="0.10562501162290605"/>
+            <float name="sheen" value="0"/>
+            <rgb name="sheen_tint" value="1 1 1"/>
+            <float name="clearcoat" value="0"/>
+            <float name="clearcoat_roughness" value="0.00089999995976686523"/>
+            <float name="eta" value="1.4500000476837158"/>
+            <float name="spec_ior_level" value="0.5"/>
+        </bsdf>
+    </bsdf>
+
+    <bsdf type="diffuse" id="mat-AI43_005_51" name="mat-AI43_005_51">
+        <rgb name="reflectance" value="1 0 0.29999999999999999"/>
+    </bsdf>
+
+    <bsdf type="diffuse" id="mat-AI43_005_53" name="mat-AI43_005_53">
+        <rgb name="reflectance" value="1 0 0.29999999999999999"/>
+    </bsdf>
+
+    <bsdf type="diffuse" id="mat-AI43_005_54" name="mat-AI43_005_54">
+        <rgb name="reflectance" value="1 0 0.29999999999999999"/>
+    </bsdf>
+
+    <bsdf type="diffuse" id="mat-AI43_005_55" name="mat-AI43_005_55">
+        <rgb name="reflectance" value="1 0 0.29999999999999999"/>
+    </bsdf>
+
+    <bsdf type="diffuse" id="mat-AI43_005_56" name="mat-AI43_005_56">
+        <rgb name="reflectance" value="1 0 0.29999999999999999"/>
+    </bsdf>
+
+    <bsdf type="diffuse" id="mat-AI43_005_58" name="mat-AI43_005_58">
+        <rgb name="reflectance" value="1 0 0.29999999999999999"/>
+    </bsdf>
+
+    <bsdf type="twosided" id="mat-AI43_005_00" name="mat-AI43_005_00">
+        <bsdf type="blender_principled" name="bsdf">
+            <rgb name="base_color" value="0.90466123819351196 0.90466123819351196 0.90466123819351196"/>
+            <rgb name="spec_tint" value="1 1 1"/>
+            <float name="transmission" value="0"/>
+            <float name="metallic" value="0"/>
+            <float name="anisotropic" value="0"/>
+            <float name="roughness" value="0.090000007152557515"/>
+            <float name="sheen" value="0"/>
+            <rgb name="sheen_tint" value="1 1 1"/>
+            <float name="clearcoat" value="0"/>
+            <float name="clearcoat_roughness" value="0.00089999995976686523"/>
+            <float name="eta" value="1.4500000476837158"/>
+            <float name="spec_ior_level" value="0.5"/>
+        </bsdf>
+    </bsdf>
+
+    <bsdf type="twosided" id="mat-AI43_005_88" name="mat-AI43_005_88">
+        <bsdf type="blender_principled" name="bsdf">
+            <rgb name="base_color" value="0.046665091067552567 0.046665091067552567 0.046665091067552567"/>
+            <rgb name="spec_tint" value="1 1 1"/>
+            <float name="transmission" value="0"/>
+            <float name="metallic" value="0"/>
+            <float name="anisotropic" value="0"/>
+            <float name="roughness" value="0.095069446894857634"/>
+            <float name="sheen" value="0"/>
+            <rgb name="sheen_tint" value="1 1 1"/>
+            <float name="clearcoat" value="0"/>
+            <float name="clearcoat_roughness" value="0.00089999995976686523"/>
+            <float name="eta" value="1.4500000476837158"/>
+            <float name="spec_ior_level" value="0.5"/>
+        </bsdf>
+    </bsdf>
+
+    <bsdf type="diffuse" id="mat-AI43_005_10" name="mat-AI43_005_10">
+        <rgb name="reflectance" value="1 0 0.29999999999999999"/>
+    </bsdf>
+
+    <bsdf type="twosided" id="mat-AI43_005_109" name="mat-AI43_005_109">
+        <bsdf type="blender_principled" name="bsdf">
+            <rgb name="base_color" value="0.063010029494762421 0.063010029494762421 0.063010029494762421"/>
+            <rgb name="spec_tint" value="1 1 1"/>
+            <float name="transmission" value="0"/>
+            <float name="metallic" value="0"/>
+            <float name="anisotropic" value="0"/>
+            <float name="roughness" value="0.25"/>
+            <float name="sheen" value="0"/>
+            <rgb name="sheen_tint" value="1 1 1"/>
+            <float name="clearcoat" value="0"/>
+            <float name="clearcoat_roughness" value="0.00089999995976686523"/>
+            <float name="eta" value="1.4500000476837158"/>
+            <float name="spec_ior_level" value="0.5"/>
+        </bsdf>
+    </bsdf>
+
+    <bsdf type="diffuse" id="mat-AI43_005_77" name="mat-AI43_005_77">
+        <rgb name="reflectance" value="1 0 0.29999999999999999"/>
+    </bsdf>
+
+    <bsdf type="blender_principled" id="mat-glass_004" name="mat-glass_004">
+        <rgb name="base_color" value="1 1 1"/>
+        <rgb name="spec_tint" value="1 1 1"/>
+        <float name="transmission" value="1"/>
+        <float name="metallic" value="0"/>
+        <float name="anisotropic" value="0"/>
+        <float name="roughness" value="0"/>
+        <float name="sheen" value="0"/>
+        <rgb name="sheen_tint" value="1 1 1"/>
+        <float name="clearcoat" value="0"/>
+        <float name="clearcoat_roughness" value="0.00089999995976686523"/>
+        <float name="eta" value="1.5199999809265137"/>
+        <float name="spec_ior_level" value="0.5"/>
+    </bsdf>
+
+    <bsdf type="diffuse" id="mat-AI43_005_93" name="mat-AI43_005_93">
+        <rgb name="reflectance" value="1 0 0.29999999999999999"/>
+    </bsdf>
+
+    <bsdf type="twosided" id="mat-AI43_005_65" name="mat-AI43_005_65">
+        <bsdf type="blender_principled" name="bsdf">
+            <rgb name="base_color" value="0.0071944114752113819 0.0071944114752113819 0.0071944114752113819"/>
+            <rgb name="spec_tint" value="1 1 1"/>
+            <float name="transmission" value="0"/>
+            <float name="metallic" value="0"/>
+            <float name="anisotropic" value="0"/>
+            <float name="roughness" value="0.022500001788139379"/>
+            <float name="sheen" value="0"/>
+            <rgb name="sheen_tint" value="1 1 1"/>
+            <float name="clearcoat" value="0"/>
+            <float name="clearcoat_roughness" value="0.00089999995976686523"/>
+            <float name="eta" value="1.4500000476837158"/>
+            <float name="spec_ior_level" value="0.5"/>
+        </bsdf>
+    </bsdf>
+
+    <bsdf type="diffuse" id="mat-AI43_005_75" name="mat-AI43_005_75">
+        <rgb name="reflectance" value="1 0 0.29999999999999999"/>
+    </bsdf>
+
+    <bsdf type="diffuse" id="mat-AI43_005_66" name="mat-AI43_005_66">
+        <rgb name="reflectance" value="1 0 0.29999999999999999"/>
+    </bsdf>
+
+    <bsdf type="twosided" id="mat-AI43_005_67" name="mat-AI43_005_67">
+        <bsdf type="blender_principled" name="bsdf">
+            <rgb name="base_color" value="0.5 0.5 0.5"/>
+            <rgb name="spec_tint" value="1 1 1"/>
+            <float name="transmission" value="0"/>
+            <float name="metallic" value="0"/>
+            <float name="anisotropic" value="0"/>
+            <float name="roughness" value="0.050624997317791021"/>
+            <float name="sheen" value="0"/>
+            <rgb name="sheen_tint" value="1 1 1"/>
+            <float name="clearcoat" value="0"/>
+            <float name="clearcoat_roughness" value="0.00089999995976686523"/>
+            <float name="eta" value="1.4500000476837158"/>
+            <float name="spec_ior_level" value="0.5"/>
+        </bsdf>
+    </bsdf>
+
+    <bsdf type="twosided" id="mat-AI43_005_68" name="mat-AI43_005_68">
+        <bsdf type="blender_principled" name="bsdf">
+            <rgb name="base_color" value="0.56471157073974609 0.53947967290878296 0.47353148460388184"/>
+            <rgb name="spec_tint" value="1 1 1"/>
+            <float name="transmission" value="0"/>
+            <float name="metallic" value="1"/>
+            <float name="anisotropic" value="0"/>
+            <float name="roughness" value="0.015625"/>
+            <float name="sheen" value="0"/>
+            <rgb name="sheen_tint" value="1 1 1"/>
+            <float name="clearcoat" value="0"/>
+            <float name="clearcoat_roughness" value="0.00089999995976686523"/>
+            <float name="eta" value="1.4500000476837158"/>
+            <float name="spec_ior_level" value="0.5"/>
+        </bsdf>
+    </bsdf>
+
+    <bsdf type="blender_principled" id="mat-AI43_005_73" name="mat-AI43_005_73">
+        <rgb name="base_color" value="0.72934716939926147 0.72934716939926147 0.72934716939926147"/>
+        <rgb name="spec_tint" value="1 1 1"/>
+        <float name="transmission" value="1"/>
+        <float name="metallic" value="0"/>
+        <float name="anisotropic" value="0"/>
+        <float name="roughness" value="0.00039999998211860677"/>
+        <float name="sheen" value="0"/>
+        <rgb name="sheen_tint" value="1 1 1"/>
+        <float name="clearcoat" value="0"/>
+        <float name="clearcoat_roughness" value="0.00089999995976686523"/>
+        <float name="eta" value="1.5199999809265137"/>
+        <float name="spec_ior_level" value="0.5"/>
+    </bsdf>
+
+    <bsdf type="diffuse" id="mat-AI43_005_76" name="mat-AI43_005_76">
+        <rgb name="reflectance" value="1 0 0.29999999999999999"/>
+    </bsdf>
+
+    <bsdf type="twosided" id="mat-AI43_005_02" name="mat-AI43_005_02">
+        <bsdf type="blender_principled" name="bsdf">
+            <rgb name="base_color" value="0.84687340259552002 0.84687340259552002 0.84687340259552002"/>
+            <rgb name="spec_tint" value="1 1 1"/>
+            <float name="transmission" value="0"/>
+            <float name="metallic" value="0"/>
+            <float name="anisotropic" value="0"/>
+            <float name="roughness" value="0.075625003278255498"/>
+            <float name="sheen" value="0"/>
+            <rgb name="sheen_tint" value="1 1 1"/>
+            <float name="clearcoat" value="0"/>
+            <float name="clearcoat_roughness" value="0.00089999995976686523"/>
+            <float name="eta" value="1.4500000476837158"/>
+            <float name="spec_ior_level" value="0.5"/>
+        </bsdf>
+    </bsdf>
+
+    <bsdf type="twosided" id="mat-AI43_005_03" name="mat-AI43_005_03">
+        <bsdf type="blender_principled" name="bsdf">
+            <rgb name="base_color" value="0.74841403961181641 0.74841403961181641 0.74841403961181641"/>
+            <rgb name="spec_tint" value="1 1 1"/>
+            <float name="transmission" value="0"/>
+            <float name="metallic" value="0"/>
+            <float name="anisotropic" value="0"/>
+            <float name="roughness" value="0.090000007152557515"/>
+            <float name="sheen" value="0"/>
+            <rgb name="sheen_tint" value="1 1 1"/>
+            <float name="clearcoat" value="0"/>
+            <float name="clearcoat_roughness" value="0.00089999995976686523"/>
+            <float name="eta" value="1.4500000476837158"/>
+            <float name="spec_ior_level" value="0.5"/>
+        </bsdf>
+    </bsdf>
+
+    <bsdf type="blender_principled" id="mat-AI43_005_85" name="mat-AI43_005_85">
+        <rgb name="base_color" value="0.5 0.5 0.5"/>
+        <rgb name="spec_tint" value="1 1 1"/>
+        <float name="transmission" value="1"/>
+        <float name="metallic" value="0"/>
+        <float name="anisotropic" value="0"/>
+        <float name="roughness" value="0.0056250015646220342"/>
+        <float name="sheen" value="0"/>
+        <rgb name="sheen_tint" value="1 1 1"/>
+        <float name="clearcoat" value="0"/>
+        <float name="clearcoat_roughness" value="0.00089999995976686523"/>
+        <float name="eta" value="1.5199999809265137"/>
+        <float name="spec_ior_level" value="0.5"/>
+    </bsdf>
+
+    <bsdf type="twosided" id="mat-AI43_005_09" name="mat-AI43_005_09">
+        <bsdf type="blender_principled" name="bsdf">
+            <rgb name="base_color" value="0.49190500378608704 0.49190500378608704 0.49190500378608704"/>
+            <rgb name="spec_tint" value="1 1 1"/>
+            <float name="transmission" value="0"/>
+            <float name="metallic" value="0"/>
+            <float name="anisotropic" value="0"/>
+            <float name="roughness" value="0.20249998927116408"/>
+            <float name="sheen" value="0"/>
+            <rgb name="sheen_tint" value="1 1 1"/>
+            <float name="clearcoat" value="0"/>
+            <float name="clearcoat_roughness" value="0.00089999995976686523"/>
+            <float name="eta" value="1.4500000476837158"/>
+            <float name="spec_ior_level" value="0.5"/>
+        </bsdf>
+    </bsdf>
+
+    <bsdf type="diffuse" id="mat-AI43_005_108" name="mat-AI43_005_108">
+        <rgb name="reflectance" value="1 0 0.29999999999999999"/>
+    </bsdf>
+
+    <bsdf type="diffuse" id="mat-AI43_005_06" name="mat-AI43_005_06">
+        <rgb name="reflectance" value="1 0 0.29999999999999999"/>
+    </bsdf>
+
+    <bsdf type="twosided" id="mat-AI43_005_80" name="mat-AI43_005_80">
+        <bsdf type="blender_principled" name="bsdf">
+            <texture type="bitmap" name="base_color">
+                <string name="filename" value="textures/AM149_set24_print_1.jpg"/>
+            </texture>
+            <rgb name="spec_tint" value="1 1 1"/>
+            <float name="transmission" value="0"/>
+            <float name="metallic" value="0"/>
+            <float name="anisotropic" value="0"/>
+            <float name="roughness" value="0.17361110283268832"/>
+            <float name="sheen" value="0"/>
+            <rgb name="sheen_tint" value="1 1 1"/>
+            <float name="clearcoat" value="0"/>
+            <float name="clearcoat_roughness" value="0.00089999995976686523"/>
+            <float name="eta" value="1.4500000476837158"/>
+            <float name="spec_ior_level" value="0.5"/>
+        </bsdf>
+    </bsdf>
+
+    <bsdf type="twosided" id="mat-AI43_005_79" name="mat-AI43_005_79">
+        <bsdf type="blender_principled" name="bsdf">
+            <rgb name="base_color" value="0.62091583013534546 0.62091583013534546 0.62091583013534546"/>
+            <rgb name="spec_tint" value="1 1 1"/>
+            <float name="transmission" value="0"/>
+            <float name="metallic" value="0"/>
+            <float name="anisotropic" value="0"/>
+            <float name="roughness" value="0.090000007152557515"/>
+            <float name="sheen" value="0"/>
+            <rgb name="sheen_tint" value="1 1 1"/>
+            <float name="clearcoat" value="0"/>
+            <float name="clearcoat_roughness" value="0.00089999995976686523"/>
+            <float name="eta" value="1.4500000476837158"/>
+            <float name="spec_ior_level" value="0.5"/>
+        </bsdf>
+    </bsdf>
+
+    <bsdf type="twosided" id="mat-AI43_005_81" name="mat-AI43_005_81">
+        <bsdf type="blender_principled" name="bsdf">
+            <texture type="bitmap" name="base_color">
+                <string name="filename" value="textures/AI43_005_pictures_001.jpg"/>
+            </texture>
+            <rgb name="spec_tint" value="1 1 1"/>
+            <float name="transmission" value="0"/>
+            <float name="metallic" value="0"/>
+            <float name="anisotropic" value="0"/>
+            <float name="roughness" value="0.40111110104454895"/>
+            <float name="sheen" value="0"/>
+            <rgb name="sheen_tint" value="1 1 1"/>
+            <float name="clearcoat" value="0"/>
+            <float name="clearcoat_roughness" value="0.00089999995976686523"/>
+            <float name="eta" value="1.4500000476837158"/>
+            <float name="spec_ior_level" value="0.5"/>
+        </bsdf>
+    </bsdf>
+
+    <bsdf type="diffuse" id="mat-AI43_005_104" name="mat-AI43_005_104">
+        <rgb name="reflectance" value="1 0 0.29999999999999999"/>
+    </bsdf>
+
+    <bsdf type="diffuse" id="mat-AI43_005_13" name="mat-AI43_005_13">
+        <rgb name="reflectance" value="1 0 0.29999999999999999"/>
+    </bsdf>
+
+    <bsdf type="twosided" id="mat-AI43_005_14" name="mat-AI43_005_14">
+        <bsdf type="blender_principled" name="bsdf">
+            <rgb name="base_color" value="0.86889946460723877 0.86889946460723877 0.86889946460723877"/>
+            <rgb name="spec_tint" value="1 1 1"/>
+            <float name="transmission" value="0"/>
+            <float name="metallic" value="0"/>
+            <float name="anisotropic" value="0"/>
+            <float name="roughness" value="0.090000007152557515"/>
+            <float name="sheen" value="0"/>
+            <rgb name="sheen_tint" value="1 1 1"/>
+            <float name="clearcoat" value="0"/>
+            <float name="clearcoat_roughness" value="0.00089999995976686523"/>
+            <float name="eta" value="1.4500000476837158"/>
+            <float name="spec_ior_level" value="0.5"/>
+        </bsdf>
+    </bsdf>
+
+    <bsdf type="diffuse" id="mat-AI43_005_59" name="mat-AI43_005_59">
+        <rgb name="reflectance" value="1 0 0.29999999999999999"/>
+    </bsdf>
+
+    <bsdf type="diffuse" id="mat-AI43_005_17" name="mat-AI43_005_17">
+        <rgb name="reflectance" value="1 0 0.29999999999999999"/>
+    </bsdf>
+
+    <bsdf type="twosided" id="mat-AI43_005_18" name="mat-AI43_005_18">
+        <bsdf type="blender_principled" name="bsdf">
+            <rgb name="base_color" value="0.16513220965862274 0.16513220965862274 0.16513220965862274"/>
+            <rgb name="spec_tint" value="1 1 1"/>
+            <float name="transmission" value="0"/>
+            <float name="metallic" value="0"/>
+            <float name="anisotropic" value="0"/>
+            <float name="roughness" value="0.036736109587881316"/>
+            <float name="sheen" value="0"/>
+            <rgb name="sheen_tint" value="1 1 1"/>
+            <float name="clearcoat" value="0"/>
+            <float name="clearcoat_roughness" value="0.00089999995976686523"/>
+            <float name="eta" value="1.4500000476837158"/>
+            <float name="spec_ior_level" value="0.5"/>
+        </bsdf>
+    </bsdf>
+
+    <bsdf type="twosided" id="mat-AI43_005_82" name="mat-AI43_005_82">
+        <bsdf type="blender_principled" name="bsdf">
+            <rgb name="base_color" value="0.051269460469484329 0.051269460469484329 0.051269460469484329"/>
+            <rgb name="spec_tint" value="1 1 1"/>
+            <float name="transmission" value="0"/>
+            <float name="metallic" value="1"/>
+            <float name="anisotropic" value="0"/>
+            <float name="roughness" value="0.25"/>
+            <float name="sheen" value="0"/>
+            <rgb name="sheen_tint" value="1 1 1"/>
+            <float name="clearcoat" value="0"/>
+            <float name="clearcoat_roughness" value="0.00089999995976686523"/>
+            <float name="eta" value="1.4500000476837158"/>
+            <float name="spec_ior_level" value="0.5"/>
+        </bsdf>
+    </bsdf>
+
+    <bsdf type="blender_principled" id="mat-AI43_005_83" name="mat-AI43_005_83">
+        <rgb name="base_color" value="0.80000001192092896 0.80000001192092896 0.80000001192092896"/>
+        <rgb name="spec_tint" value="1 1 1"/>
+        <float name="transmission" value="1"/>
+        <float name="metallic" value="0"/>
+        <float name="anisotropic" value="0"/>
+        <float name="roughness" value="0.040000001192092904"/>
+        <float name="sheen" value="0"/>
+        <rgb name="sheen_tint" value="1 1 1"/>
+        <float name="clearcoat" value="0"/>
+        <float name="clearcoat_roughness" value="0.00089999995976686523"/>
+        <float name="eta" value="1.5199999809265137"/>
+        <float name="spec_ior_level" value="0.5"/>
+    </bsdf>
+
+    <bsdf type="twosided" id="mat-AI43_005_19" name="mat-AI43_005_19">
+        <bsdf type="blender_principled" name="bsdf">
+            <rgb name="base_color" value="0.010022828355431557 0.010022828355431557 0.010022828355431557"/>
+            <rgb name="spec_tint" value="1 1 1"/>
+            <float name="transmission" value="0"/>
+            <float name="metallic" value="0"/>
+            <float name="anisotropic" value="0"/>
+            <float name="roughness" value="0.25"/>
+            <float name="sheen" value="0"/>
+            <rgb name="sheen_tint" value="1 1 1"/>
+            <float name="clearcoat" value="0"/>
+            <float name="clearcoat_roughness" value="0.00089999995976686523"/>
+            <float name="eta" value="1.4500000476837158"/>
+            <float name="spec_ior_level" value="0.5"/>
+        </bsdf>
+    </bsdf>
+
+    <bsdf type="twosided" id="mat-AI43_005_84" name="mat-AI43_005_84">
+        <bsdf type="blender_principled" name="bsdf">
+            <rgb name="base_color" value="0.027211785316467285 0.027211785316467285 0.027211785316467285"/>
+            <rgb name="spec_tint" value="1 1 1"/>
+            <float name="transmission" value="0"/>
+            <float name="metallic" value="0"/>
+            <float name="anisotropic" value="0"/>
+            <float name="roughness" value="0.033611112568113555"/>
+            <float name="sheen" value="0"/>
+            <rgb name="sheen_tint" value="1 1 1"/>
+            <float name="clearcoat" value="0"/>
+            <float name="clearcoat_roughness" value="0.00089999995976686523"/>
+            <float name="eta" value="1.4500000476837158"/>
+            <float name="spec_ior_level" value="0.5"/>
+        </bsdf>
+    </bsdf>
+
+    <bsdf type="twosided" id="mat-AI43_005_16" name="mat-AI43_005_16">
+        <bsdf type="blender_principled" name="bsdf">
+            <rgb name="base_color" value="0.011645432561635971 0.011645432561635971 0.011645432561635971"/>
+            <rgb name="spec_tint" value="1 1 1"/>
+            <float name="transmission" value="0"/>
+            <float name="metallic" value="0"/>
+            <float name="anisotropic" value="0"/>
+            <float name="roughness" value="0.25"/>
+            <float name="sheen" value="0"/>
+            <rgb name="sheen_tint" value="1 1 1"/>
+            <float name="clearcoat" value="0"/>
+            <float name="clearcoat_roughness" value="0.00089999995976686523"/>
+            <float name="eta" value="1.4500000476837158"/>
+            <float name="spec_ior_level" value="0.45833298563957214"/>
+        </bsdf>
+    </bsdf>
+
+    <bsdf type="diffuse" id="mat-AI43_005_12" name="mat-AI43_005_12">
+        <rgb name="reflectance" value="1 0 0.29999999999999999"/>
+    </bsdf>
+
+    <bsdf type="twosided" id="mat-AI43_005_86" name="mat-AI43_005_86">
+        <bsdf type="blender_principled" name="bsdf">
+            <rgb name="base_color" value="0.86889946460723877 0.86889946460723877 0.86889946460723877"/>
+            <rgb name="spec_tint" value="1 1 1"/>
+            <float name="transmission" value="0"/>
+            <float name="metallic" value="0"/>
+            <float name="anisotropic" value="0"/>
+            <float name="roughness" value="0.075625003278255498"/>
+            <float name="sheen" value="0"/>
+            <rgb name="sheen_tint" value="1 1 1"/>
+            <float name="clearcoat" value="0"/>
+            <float name="clearcoat_roughness" value="0.00089999995976686523"/>
+            <float name="eta" value="1.4500000476837158"/>
+            <float name="spec_ior_level" value="0.5"/>
+        </bsdf>
+    </bsdf>
+
+    <bsdf type="diffuse" id="mat-AI43_005_15" name="mat-AI43_005_15">
+        <rgb name="reflectance" value="1 0 0.29999999999999999"/>
+    </bsdf>
+
+    <bsdf type="twosided" id="mat-AI43_005_62" name="mat-AI43_005_62">
+        <bsdf type="blender_principled" name="bsdf">
+            <rgb name="base_color" value="0.049706574529409409 0.049706574529409409 0.049706574529409409"/>
+            <rgb name="spec_tint" value="1 1 1"/>
+            <float name="transmission" value="0"/>
+            <float name="metallic" value="1"/>
+            <float name="anisotropic" value="0"/>
+            <float name="roughness" value="0.025069443815284309"/>
+            <float name="sheen" value="0"/>
+            <rgb name="sheen_tint" value="1 1 1"/>
+            <float name="clearcoat" value="0"/>
+            <float name="clearcoat_roughness" value="0.00089999995976686523"/>
+            <float name="eta" value="1.4500000476837158"/>
+            <float name="spec_ior_level" value="0.5"/>
+        </bsdf>
+    </bsdf>
+
+    <bsdf type="diffuse" id="mat-AI43_005_08" name="mat-AI43_005_08">
+        <rgb name="reflectance" value="1 0 0.29999999999999999"/>
+    </bsdf>
+
+    <bsdf type="twosided" id="mat-AI43_005_01" name="mat-AI43_005_01">
+        <bsdf type="blender_principled" name="bsdf">
+            <rgb name="base_color" value="0.095307469367980957 0.095307469367980957 0.095307469367980957"/>
+            <rgb name="spec_tint" value="1 1 1"/>
+            <float name="transmission" value="0"/>
+            <float name="metallic" value="0"/>
+            <float name="anisotropic" value="0"/>
+            <float name="roughness" value="0.25"/>
+            <float name="sheen" value="0"/>
+            <rgb name="sheen_tint" value="1 1 1"/>
+            <float name="clearcoat" value="0"/>
+            <float name="clearcoat_roughness" value="0.00089999995976686523"/>
+            <float name="eta" value="1.4500000476837158"/>
+            <float name="spec_ior_level" value="0.5"/>
+        </bsdf>
+    </bsdf>
+
+    <bsdf type="diffuse" id="mat-AI43_005_105" name="mat-AI43_005_105">
+        <rgb name="reflectance" value="1 0 0.29999999999999999"/>
+    </bsdf>
+
+    <bsdf type="diffuse" id="mat-AI43_005_103" name="mat-AI43_005_103">
+        <rgb name="reflectance" value="1 0 0.29999999999999999"/>
+    </bsdf>
+
+    <bsdf type="twosided" id="mat-AI43_005_04" name="mat-AI43_005_04">
+        <bsdf type="blender_principled" name="bsdf">
+            <texture type="rgb_curve" name="base_color">
+                <float name="factor" value="1"/>
+
+                <texture type="bitmap" name="color">
+                    <string name="filename" value="textures/AI43_005_plaster_color_001.jpg"/>
+                </texture>
+                <string name="points_c" value="0.0-0.0 0.3863636255264282-0.6187500357627869 1.0-1.0"/>
+                <string name="points_r" value="0.0-0.0 1.0-1.0"/>
+                <string name="points_g" value="0.0-0.0 1.0-1.0"/>
+                <string name="points_b" value="0.0-0.0 1.0-1.0"/>
+            </texture>
+            <rgb name="spec_tint" value="1 1 1"/>
+            <float name="transmission" value="0"/>
+            <float name="metallic" value="0"/>
+            <float name="anisotropic" value="0"/>
+            <float name="roughness" value="0.16000000476837162"/>
+            <float name="sheen" value="0"/>
+            <rgb name="sheen_tint" value="1 1 1"/>
+            <float name="clearcoat" value="0"/>
+            <float name="clearcoat_roughness" value="0.00089999995976686523"/>
+            <float name="eta" value="1.4500000476837158"/>
+            <float name="spec_ior_level" value="0.5"/>
+        </bsdf>
+    </bsdf>
+
+    <bsdf type="diffuse" id="mat-AI43_005_61_001" name="mat-AI43_005_61_001">
+        <rgb name="reflectance" value="1 0 0.29999999999999999"/>
+    </bsdf>
+
+    <bsdf type="twosided" id="mat-AI43_005_60" name="mat-AI43_005_60">
+        <bsdf type="blender_principled" name="bsdf">
+            <rgb name="base_color" value="0.17064493894577026 0.17064493894577026 0.17064493894577026"/>
+            <rgb name="spec_tint" value="1 1 1"/>
+            <float name="transmission" value="0"/>
+            <float name="metallic" value="1"/>
+            <float name="anisotropic" value="0"/>
+            <float name="roughness" value="0.0056249982118607988"/>
+            <float name="sheen" value="0"/>
+            <rgb name="sheen_tint" value="1 1 1"/>
+            <float name="clearcoat" value="0"/>
+            <float name="clearcoat_roughness" value="0.00089999995976686523"/>
+            <float name="eta" value="1.4500000476837158"/>
+            <float name="spec_ior_level" value="0.5"/>
+        </bsdf>
+    </bsdf>
+
+    <bsdf type="diffuse" id="mat-AI43_005_61" name="mat-AI43_005_61">
+        <rgb name="reflectance" value="1 0 0.29999999999999999"/>
+    </bsdf>
+
+    <bsdf type="twosided" id="mat-AI43_005_64" name="mat-AI43_005_64">
+        <bsdf type="blender_principled" name="bsdf">
+            <rgb name="base_color" value="0.63828319311141968 0.63828319311141968 0.63828319311141968"/>
+            <rgb name="spec_tint" value="1 1 1"/>
+            <float name="transmission" value="0"/>
+            <float name="metallic" value="1"/>
+            <float name="anisotropic" value="0"/>
+            <float name="roughness" value="0.0063999997138977083"/>
+            <float name="sheen" value="0"/>
+            <rgb name="sheen_tint" value="1 1 1"/>
+            <float name="clearcoat" value="0"/>
+            <float name="clearcoat_roughness" value="0.00089999995976686523"/>
+            <float name="eta" value="1.4500000476837158"/>
+            <float name="spec_ior_level" value="0.5"/>
+        </bsdf>
+    </bsdf>
+
+    <bsdf type="diffuse" id="mat-AI43_005_91" name="mat-AI43_005_91">
+        <rgb name="reflectance" value="1 0 0.29999999999999999"/>
+    </bsdf>
+
+    <bsdf type="twosided" id="mat-AI43_005_92" name="mat-AI43_005_92">
+        <bsdf type="blender_principled" name="bsdf">
+            <rgb name="base_color" value="0.019606649875640869 0.019606649875640869 0.019606649875640869"/>
+            <rgb name="spec_tint" value="1 1 1"/>
+            <float name="transmission" value="0"/>
+            <float name="metallic" value="0"/>
+            <float name="anisotropic" value="0"/>
+            <float name="roughness" value="0.085069456034236879"/>
+            <float name="sheen" value="0"/>
+            <rgb name="sheen_tint" value="1 1 1"/>
+            <float name="clearcoat" value="0"/>
+            <float name="clearcoat_roughness" value="0.00089999995976686523"/>
+            <float name="eta" value="1.4500000476837158"/>
+            <float name="spec_ior_level" value="0.5"/>
+        </bsdf>
+    </bsdf>
+
+    <bsdf type="twosided" id="mat-AI43_005_90" name="mat-AI43_005_90">
+        <bsdf type="blender_principled" name="bsdf">
+            <rgb name="base_color" value="0.13286831974983215 0.13286831974983215 0.13286831974983215"/>
+            <rgb name="spec_tint" value="1 1 1"/>
+            <float name="transmission" value="0"/>
+            <float name="metallic" value="0"/>
+            <float name="anisotropic" value="0"/>
+            <float name="roughness" value="0.25"/>
+            <float name="sheen" value="0"/>
+            <rgb name="sheen_tint" value="1 1 1"/>
+            <float name="clearcoat" value="0"/>
+            <float name="clearcoat_roughness" value="0.00089999995976686523"/>
+            <float name="eta" value="1.4500000476837158"/>
+            <float name="spec_ior_level" value="0.5"/>
+        </bsdf>
+    </bsdf>
+
+    <bsdf type="twosided" id="mat-AI43_005_05" name="mat-AI43_005_05">
+        <bsdf type="blender_principled" name="bsdf">
+            <rgb name="base_color" value="0.019382359459996223 0.019382359459996223 0.019382359459996223"/>
+            <rgb name="spec_tint" value="1 1 1"/>
+            <float name="transmission" value="0"/>
+            <float name="metallic" value="0"/>
+            <float name="anisotropic" value="0"/>
+            <float name="roughness" value="0.071111102634006329"/>
+            <float name="sheen" value="0"/>
+            <rgb name="sheen_tint" value="1 1 1"/>
+            <float name="clearcoat" value="0"/>
+            <float name="clearcoat_roughness" value="0.00089999995976686523"/>
+            <float name="eta" value="1.4500000476837158"/>
+            <float name="spec_ior_level" value="0.5"/>
+        </bsdf>
+    </bsdf>
+
+    <bsdf type="twosided" id="mat-AI43_005_107" name="mat-AI43_005_107">
+        <bsdf type="blender_principled" name="bsdf">
+            <rgb name="base_color" value="0.69207108020782471 0.69207108020782471 0.69207108020782471"/>
+            <rgb name="spec_tint" value="1 1 1"/>
+            <float name="transmission" value="0"/>
+            <float name="metallic" value="0"/>
+            <float name="anisotropic" value="0"/>
+            <float name="roughness" value="0.033611112568113555"/>
+            <float name="sheen" value="0"/>
+            <rgb name="sheen_tint" value="1 1 1"/>
+            <float name="clearcoat" value="0"/>
+            <float name="clearcoat_roughness" value="0.00089999995976686523"/>
+            <float name="eta" value="1.4500000476837158"/>
+            <float name="spec_ior_level" value="0.5"/>
+        </bsdf>
+    </bsdf>
+
+    <bsdf type="diffuse" id="mat-AI43_005_89" name="mat-AI43_005_89">
+        <rgb name="reflectance" value="1 0 0.29999999999999999"/>
+    </bsdf>
+
+    <bsdf type="diffuse" id="mat-AI43_005_78" name="mat-AI43_005_78">
+        <rgb name="reflectance" value="1 0 0.29999999999999999"/>
+    </bsdf>
+
+    <bsdf type="diffuse" id="mat-AI43_005_07" name="mat-AI43_005_07">
+        <rgb name="reflectance" value="1 0 0.29999999999999999"/>
+    </bsdf>
+
+    <bsdf type="twosided" id="mat-AI43_005_63" name="mat-AI43_005_63">
+        <bsdf type="blender_principled" name="bsdf">
+            <rgb name="base_color" value="0.12743771076202393 0.12743771076202393 0.12743771076202393"/>
+            <rgb name="spec_tint" value="1 1 1"/>
+            <float name="transmission" value="0"/>
+            <float name="metallic" value="1"/>
+            <float name="anisotropic" value="0"/>
+            <float name="roughness" value="0.0084028382434873095"/>
+            <float name="sheen" value="0"/>
+            <rgb name="sheen_tint" value="1 1 1"/>
+            <float name="clearcoat" value="0"/>
+            <float name="clearcoat_roughness" value="0.00089999995976686523"/>
+            <float name="eta" value="1.4500000476837158"/>
+            <float name="spec_ior_level" value="0.5"/>
+        </bsdf>
+    </bsdf>
+
+    <!-- Emitters -->
+    <emitter type="constant" name="elm__1">
+        <rgb name="radiance" value="0.80000001192092896 0.80000001192092896 0.80000001192092896"/>
+    </emitter>
+
+    <shape type="rectangle" name="elm__2">
+        <boolean name="flip_normals" value="true"/>
+
+        <transform name="to_world">
+            <matrix value="6.794810758492531e-08 1.3033654511218629e-07 0.5 11.991575241088867 0.89999997615814209 -9.8401359082496073e-15 -3.7748950632021661e-08 10.434682846069336 0 0.40000000596046448 -1.6292068494294654e-07 -70.896026611328125 0 0 0 1"/>
+        </transform>
+
+        <emitter type="area" name="emitter">
+            <rgb name="radiance" value="17.361110687255859 17.361110687255859 17.361110687255859"/>
+        </emitter>
+        <bsdf type="null" name="bsdf"/>
+    </shape>
+
+    <shape type="rectangle" name="elm__3">
+        <boolean name="flip_normals" value="true"/>
+
+        <transform name="to_world">
+            <matrix value="6.0398306800379942e-08 0 -0.5 5.9927654266357422 0.79999983310699463 0 3.7748950632021661e-08 7.296654224395752 0 -0.5 0 -70.106254577636719 0 0 0 1"/>
+        </transform>
+
+        <emitter type="area" name="emitter">
+            <rgb name="radiance" value="5.4687509536743164 5.4687509536743164 5.4687509536743164"/>
+        </emitter>
+        <bsdf type="null" name="bsdf"/>
+    </shape>
+
+    <shape type="rectangle" name="elm__4">
+        <boolean name="flip_normals" value="true"/>
+
+        <transform name="to_world">
+            <matrix value="6.794810758492531e-08 -0.40000000596046448 2.1855694143368964e-08 10.406262397766113 0.89999997615814209 3.0199160505617328e-08 -1.6500590388878324e-15 11.001075744628906 0 1.7484556025237907e-08 0.5 -62.519691467285156 0 0 0 1"/>
+        </transform>
+
+        <emitter type="area" name="emitter">
+            <rgb name="radiance" value="17.361110687255859 17.361110687255859 17.361110687255859"/>
+        </emitter>
+        <bsdf type="null" name="bsdf"/>
+    </shape>
+
+    <shape type="rectangle" name="elm__5">
+        <boolean name="flip_normals" value="true"/>
+
+        <transform name="to_world">
+            <matrix value="6.794810758492531e-08 0 -0.5 5.9927654266357422 0.89999997615814209 0 3.7748950632021661e-08 10.434682846069336 0 -1.1050000190734863 0 -68.105941772460938 0 0 0 1"/>
+        </transform>
+
+        <emitter type="area" name="emitter">
+            <rgb name="radiance" value="6.2845654487609863 6.2845654487609863 6.2845654487609863"/>
+        </emitter>
+        <bsdf type="null" name="bsdf"/>
+    </shape>
+
+    <shape type="rectangle" name="elm__6">
+        <boolean name="flip_normals" value="true"/>
+
+        <transform name="to_world">
+            <matrix value="1.1324685544877866e-07 0 -0.5 6.4743289947509766 1.5 0 3.7748950632021661e-08 7.654454231262207 0 -2.75 0 -66.049423217773438 0 0 0 1"/>
+        </transform>
+
+        <emitter type="area" name="emitter">
+            <rgb name="radiance" value="2.2727272510528564 2.2727272510528564 2.2727272510528564"/>
+        </emitter>
+        <bsdf type="null" name="bsdf"/>
+    </shape>
+
+    <!-- Shapes -->
+    <shape type="ply" name="elm__10">
+        <string name="filename" value="meshes/AI43_005_bench_001_003-AI43_005_11.ply"/>
+        <ref name="bsdf" id="mat-AI43_005_11"/>
+    </shape>
+
+    <shape type="ply" name="elm__11">
+        <string name="filename" value="meshes/AI43_005_bench_001_003-AI43_005_11.001.ply"/>
+        <ref name="bsdf" id="mat-AI43_005_11_001"/>
+    </shape>
+
+    <shape type="ply" name="elm__12">
+        <string name="filename" value="meshes/AI43_005_bench_001-AI43_005_11.ply"/>
+        <ref name="bsdf" id="mat-AI43_005_11"/>
+    </shape>
+
+    <shape type="ply" name="elm__13">
+        <string name="filename" value="meshes/AI43_005_bench_001-AI43_005_11.001.ply"/>
+        <ref name="bsdf" id="mat-AI43_005_11_001"/>
+    </shape>
+
+    <shape type="ply" name="elm__16">
+        <string name="filename" value="meshes/AI43_005_books_001_00-AI43_005_44.ply"/>
+        <ref name="bsdf" id="mat-AI43_005_44"/>
+    </shape>
+
+    <shape type="ply" name="elm__17">
+        <string name="filename" value="meshes/AI43_005_books_001_00-AI43_005_20.ply"/>
+        <ref name="bsdf" id="mat-AI43_005_20"/>
+    </shape>
+
+    <shape type="ply" name="elm__18">
+        <string name="filename" value="meshes/AI43_005_books_001_02.ply"/>
+        <ref name="bsdf" id="mat-AI43_005_20"/>
+    </shape>
+
+    <shape type="ply" name="elm__19">
+        <string name="filename" value="meshes/AI43_005_books_001_03.ply"/>
+        <ref name="bsdf" id="mat-AI43_005_20"/>
+    </shape>
+
+    <shape type="ply" name="elm__20">
+        <string name="filename" value="meshes/AI43_005_books_001_04.ply"/>
+        <ref name="bsdf" id="mat-AI43_005_20"/>
+    </shape>
+
+    <shape type="ply" name="elm__21">
+        <string name="filename" value="meshes/AI43_005_books_001_05.ply"/>
+        <ref name="bsdf" id="mat-AI43_005_20"/>
+    </shape>
+
+    <shape type="ply" name="elm__22">
+        <string name="filename" value="meshes/AI43_005_books_001_06.ply"/>
+        <ref name="bsdf" id="mat-AI43_005_20"/>
+    </shape>
+
+    <shape type="ply" name="elm__23">
+        <string name="filename" value="meshes/AI43_005_books_001_07.ply"/>
+        <ref name="bsdf" id="mat-AI43_005_20"/>
+    </shape>
+
+    <shape type="ply" name="elm__24">
+        <string name="filename" value="meshes/AI43_005_books_001_08.ply"/>
+        <ref name="bsdf" id="mat-AI43_005_20"/>
+    </shape>
+
+    <shape type="ply" name="elm__25">
+        <string name="filename" value="meshes/AI43_005_books_001_09.ply"/>
+        <ref name="bsdf" id="mat-AI43_005_20"/>
+    </shape>
+
+    <shape type="ply" name="elm__27">
+        <string name="filename" value="meshes/AI43_005_books_001_10-AI43_005_22.ply"/>
+        <ref name="bsdf" id="mat-AI43_005_22"/>
+    </shape>
+
+    <shape type="ply" name="elm__28">
+        <string name="filename" value="meshes/AI43_005_books_001_10-AI43_005_20.ply"/>
+        <ref name="bsdf" id="mat-AI43_005_20"/>
+    </shape>
+
+    <shape type="ply" name="elm__30">
+        <string name="filename" value="meshes/AI43_005_books_001_11-AI43_005_24.ply"/>
+        <ref name="bsdf" id="mat-AI43_005_24"/>
+    </shape>
+
+    <shape type="ply" name="elm__31">
+        <string name="filename" value="meshes/AI43_005_books_001_11-AI43_005_20.ply"/>
+        <ref name="bsdf" id="mat-AI43_005_20"/>
+    </shape>
+
+    <shape type="ply" name="elm__32">
+        <string name="filename" value="meshes/AI43_005_books_001_12.ply"/>
+        <ref name="bsdf" id="mat-AI43_005_20"/>
+    </shape>
+
+    <shape type="ply" name="elm__34">
+        <string name="filename" value="meshes/AI43_005_books_001_13-AI43_005_26.ply"/>
+        <ref name="bsdf" id="mat-AI43_005_26"/>
+    </shape>
+
+    <shape type="ply" name="elm__35">
+        <string name="filename" value="meshes/AI43_005_books_001_13-AI43_005_20.ply"/>
+        <ref name="bsdf" id="mat-AI43_005_20"/>
+    </shape>
+
+    <shape type="ply" name="elm__37">
+        <string name="filename" value="meshes/AI43_005_books_001_14-AI43_005_28.ply"/>
+        <ref name="bsdf" id="mat-AI43_005_28"/>
+    </shape>
+
+    <shape type="ply" name="elm__38">
+        <string name="filename" value="meshes/AI43_005_books_001_14-AI43_005_20.ply"/>
+        <ref name="bsdf" id="mat-AI43_005_20"/>
+    </shape>
+
+    <shape type="ply" name="elm__40">
+        <string name="filename" value="meshes/AI43_005_books_001_15.ply"/>
+        <ref name="bsdf" id="mat-AI43_005_29"/>
+    </shape>
+
+    <shape type="ply" name="elm__41">
+        <string name="filename" value="meshes/AI43_005_books_001_16.ply"/>
+        <ref name="bsdf" id="mat-AI43_005_20"/>
+    </shape>
+
+    <shape type="ply" name="elm__43">
+        <string name="filename" value="meshes/AI43_005_books_001_17.ply"/>
+        <ref name="bsdf" id="mat-AI43_005_30"/>
+    </shape>
+
+    <shape type="ply" name="elm__45">
+        <string name="filename" value="meshes/AI43_005_books_001_18-AI43_005_32.ply"/>
+        <ref name="bsdf" id="mat-AI43_005_32"/>
+    </shape>
+
+    <shape type="ply" name="elm__46">
+        <string name="filename" value="meshes/AI43_005_books_001_18-AI43_005_20.ply"/>
+        <ref name="bsdf" id="mat-AI43_005_20"/>
+    </shape>
+
+    <shape type="ply" name="elm__47">
+        <string name="filename" value="meshes/AI43_005_books_001_19.ply"/>
+        <ref name="bsdf" id="mat-AI43_005_20"/>
+    </shape>
+
+    <shape type="ply" name="elm__49">
+        <string name="filename" value="meshes/AI43_005_books_001_20-AI43_005_34.ply"/>
+        <ref name="bsdf" id="mat-AI43_005_34"/>
+    </shape>
+
+    <shape type="ply" name="elm__50">
+        <string name="filename" value="meshes/AI43_005_books_001_20-AI43_005_20.ply"/>
+        <ref name="bsdf" id="mat-AI43_005_20"/>
+    </shape>
+
+    <shape type="ply" name="elm__52">
+        <string name="filename" value="meshes/AI43_005_books_001_21-AI43_005_36.ply"/>
+        <ref name="bsdf" id="mat-AI43_005_36"/>
+    </shape>
+
+    <shape type="ply" name="elm__53">
+        <string name="filename" value="meshes/AI43_005_books_001_21-AI43_005_20.ply"/>
+        <ref name="bsdf" id="mat-AI43_005_20"/>
+    </shape>
+
+    <shape type="ply" name="elm__55">
+        <string name="filename" value="meshes/AI43_005_books_001_22-AI43_005_38.ply"/>
+        <ref name="bsdf" id="mat-AI43_005_38"/>
+    </shape>
+
+    <shape type="ply" name="elm__56">
+        <string name="filename" value="meshes/AI43_005_books_001_22-AI43_005_20.ply"/>
+        <ref name="bsdf" id="mat-AI43_005_20"/>
+    </shape>
+
+    <shape type="ply" name="elm__58">
+        <string name="filename" value="meshes/AI43_005_books_001_23-AI43_005_40.ply"/>
+        <ref name="bsdf" id="mat-AI43_005_40"/>
+    </shape>
+
+    <shape type="ply" name="elm__59">
+        <string name="filename" value="meshes/AI43_005_books_001_23-AI43_005_20.ply"/>
+        <ref name="bsdf" id="mat-AI43_005_20"/>
+    </shape>
+
+    <shape type="ply" name="elm__61">
+        <string name="filename" value="meshes/AI43_005_books_001_24-AI43_005_42.ply"/>
+        <ref name="bsdf" id="mat-AI43_005_42"/>
+    </shape>
+
+    <shape type="ply" name="elm__62">
+        <string name="filename" value="meshes/AI43_005_books_001_24-AI43_005_20.ply"/>
+        <ref name="bsdf" id="mat-AI43_005_20"/>
+    </shape>
+
+    <shape type="ply" name="elm__64">
+        <string name="filename" value="meshes/AI43_005_books_001_25-AI43_005_46.ply"/>
+        <ref name="bsdf" id="mat-AI43_005_46"/>
+    </shape>
+
+    <shape type="ply" name="elm__65">
+        <string name="filename" value="meshes/AI43_005_books_001_25-AI43_005_20.ply"/>
+        <ref name="bsdf" id="mat-AI43_005_20"/>
+    </shape>
+
+    <shape type="ply" name="elm__68">
+        <string name="filename" value="meshes/AI43_005_books_001_26-AI43_005_48.ply"/>
+        <ref name="bsdf" id="mat-AI43_005_48"/>
+    </shape>
+
+    <shape type="ply" name="elm__69">
+        <string name="filename" value="meshes/AI43_005_books_001_26-AI43_005_49.ply"/>
+        <ref name="bsdf" id="mat-AI43_005_49"/>
+    </shape>
+
+    <shape type="ply" name="elm__71">
+        <string name="filename" value="meshes/AI43_005_books_001_27-AI43_005_51.ply"/>
+        <ref name="bsdf" id="mat-AI43_005_51"/>
+    </shape>
+
+    <shape type="ply" name="elm__72">
+        <string name="filename" value="meshes/AI43_005_books_001_27-AI43_005_49.ply"/>
+        <ref name="bsdf" id="mat-AI43_005_49"/>
+    </shape>
+
+    <shape type="ply" name="elm__74">
+        <string name="filename" value="meshes/AI43_005_books_001_28-AI43_005_53.ply"/>
+        <ref name="bsdf" id="mat-AI43_005_53"/>
+    </shape>
+
+    <shape type="ply" name="elm__75">
+        <string name="filename" value="meshes/AI43_005_books_001_28-AI43_005_49.ply"/>
+        <ref name="bsdf" id="mat-AI43_005_49"/>
+    </shape>
+
+    <shape type="ply" name="elm__77">
+        <string name="filename" value="meshes/AI43_005_books_001_29.ply"/>
+        <ref name="bsdf" id="mat-AI43_005_54"/>
+    </shape>
+
+    <shape type="ply" name="elm__78">
+        <string name="filename" value="meshes/AI43_005_books_001_30.ply"/>
+        <ref name="bsdf" id="mat-AI43_005_54"/>
+    </shape>
+
+    <shape type="ply" name="elm__80">
+        <string name="filename" value="meshes/AI43_005_books_001_31.ply"/>
+        <ref name="bsdf" id="mat-AI43_005_55"/>
+    </shape>
+
+    <shape type="ply" name="elm__82">
+        <string name="filename" value="meshes/AI43_005_books_001_32.ply"/>
+        <ref name="bsdf" id="mat-AI43_005_56"/>
+    </shape>
+
+    <shape type="ply" name="elm__84">
+        <string name="filename" value="meshes/AI43_005_books_001_33-AI43_005_58.ply"/>
+        <ref name="bsdf" id="mat-AI43_005_58"/>
+    </shape>
+
+    <shape type="ply" name="elm__85">
+        <string name="filename" value="meshes/AI43_005_books_001_33-AI43_005_54.ply"/>
+        <ref name="bsdf" id="mat-AI43_005_54"/>
+    </shape>
+
+    <shape type="ply" name="elm__87">
+        <string name="filename" value="meshes/AI43_005_building_001.ply"/>
+        <ref name="bsdf" id="mat-AI43_005_00"/>
+    </shape>
+
+    <shape type="ply" name="elm__89">
+        <string name="filename" value="meshes/AI43_005_carpet_001.ply"/>
+        <ref name="bsdf" id="mat-AI43_005_88"/>
+    </shape>
+
+    <shape type="ply" name="elm__91">
+        <string name="filename" value="meshes/AI43_005_chair_002.ply"/>
+        <ref name="bsdf" id="mat-AI43_005_10"/>
+    </shape>
+
+    <shape type="ply" name="elm__93">
+        <string name="filename" value="meshes/AI43_005_concrete_floor_001.ply"/>
+        <ref name="bsdf" id="mat-AI43_005_109"/>
+    </shape>
+
+    <shape type="ply" name="elm__95">
+        <string name="filename" value="meshes/AI43_005_floor_marble_001.ply"/>
+        <ref name="bsdf" id="mat-AI43_005_77"/>
+    </shape>
+
+    <shape type="ply" name="elm__97">
+        <string name="filename" value="meshes/AI43_005_glass_001.ply"/>
+        <ref name="bsdf" id="mat-glass_004"/>
+    </shape>
+
+    <shape type="ply" name="elm__98">
+        <string name="filename" value="meshes/AI43_005_glass_002.ply"/>
+        <ref name="bsdf" id="mat-glass_004"/>
+    </shape>
+
+    <shape type="ply" name="elm__100">
+        <string name="filename" value="meshes/AI43_005_ground_001.ply"/>
+        <ref name="bsdf" id="mat-AI43_005_93"/>
+    </shape>
+
+    <shape type="ply" name="elm__103">
+        <string name="filename" value="meshes/AI43_005_hood_001_00-AI43_005_65.ply"/>
+        <ref name="bsdf" id="mat-AI43_005_65"/>
+    </shape>
+
+    <shape type="ply" name="elm__104">
+        <string name="filename" value="meshes/AI43_005_hood_001_00-AI43_005_75.ply"/>
+        <ref name="bsdf" id="mat-AI43_005_75"/>
+    </shape>
+
+    <shape type="ply" name="elm__105">
+        <string name="filename" value="meshes/AI43_005_hood_001_02.ply"/>
+        <ref name="bsdf" id="mat-AI43_005_65"/>
+    </shape>
+
+    <shape type="ply" name="elm__107">
+        <string name="filename" value="meshes/AI43_005_hood_001_03.ply"/>
+        <ref name="bsdf" id="mat-AI43_005_66"/>
+    </shape>
+
+    <shape type="ply" name="elm__109">
+        <string name="filename" value="meshes/AI43_005_hood_001_04.ply"/>
+        <ref name="bsdf" id="mat-AI43_005_67"/>
+    </shape>
+
+    <shape type="ply" name="elm__111">
+        <string name="filename" value="meshes/AI43_005_hood_001_05.ply"/>
+        <ref name="bsdf" id="mat-AI43_005_68"/>
+    </shape>
+
+    <shape type="ply" name="elm__113">
+        <string name="filename" value="meshes/AI43_005_hood_001_06-AI43_005_65.ply"/>
+        <ref name="bsdf" id="mat-AI43_005_65"/>
+    </shape>
+
+    <shape type="ply" name="elm__114">
+        <string name="filename" value="meshes/AI43_005_hood_001_06-AI43_005_73.ply"/>
+        <ref name="bsdf" id="mat-AI43_005_73"/>
+    </shape>
+
+    <shape type="ply" name="elm__115">
+        <string name="filename" value="meshes/AI43_005_hood_001_07.ply"/>
+        <ref name="bsdf" id="mat-AI43_005_65"/>
+    </shape>
+
+    <shape type="ply" name="elm__116">
+        <string name="filename" value="meshes/AI43_005_hood_001_08.ply"/>
+        <ref name="bsdf" id="mat-AI43_005_65"/>
+    </shape>
+
+    <shape type="ply" name="elm__118">
+        <string name="filename" value="meshes/AI43_005_hood_001_09.ply"/>
+        <ref name="bsdf" id="mat-AI43_005_76"/>
+    </shape>
+
+    <shape type="ply" name="elm__120">
+        <string name="filename" value="meshes/AI43_005_lamp_001_00.ply"/>
+        <ref name="bsdf" id="mat-AI43_005_02"/>
+    </shape>
+
+    <shape type="ply" name="elm__121">
+        <string name="filename" value="meshes/AI43_005_lamp_001_01.ply"/>
+        <ref name="bsdf" id="mat-AI43_005_02"/>
+    </shape>
+
+    <shape type="ply" name="elm__122">
+        <string name="filename" value="meshes/AI43_005_lamp_001_02.ply"/>
+        <ref name="bsdf" id="mat-AI43_005_02"/>
+    </shape>
+
+    <shape type="ply" name="elm__124">
+        <string name="filename" value="meshes/AI43_005_lamp_001_03.ply"/>
+        <ref name="bsdf" id="mat-AI43_005_03"/>
+    </shape>
+
+    <shape type="ply" name="elm__126">
+        <string name="filename" value="meshes/AI43_005_lamp_001_04.ply"/>
+        <ref name="bsdf" id="mat-AI43_005_85"/>
+    </shape>
+
+    <shape type="ply" name="elm__127">
+        <string name="filename" value="meshes/AI43_005_lamp_001_05.ply"/>
+        <ref name="bsdf" id="mat-AI43_005_02"/>
+    </shape>
+
+    <shape type="ply" name="elm__128">
+        <string name="filename" value="meshes/AI43_005_lamp_001_06.ply"/>
+        <ref name="bsdf" id="mat-AI43_005_02"/>
+    </shape>
+
+    <shape type="ply" name="elm__130">
+        <string name="filename" value="meshes/AI43_005_lamp_001_07.ply"/>
+        <ref name="bsdf" id="mat-AI43_005_09"/>
+    </shape>
+
+    <shape type="ply" name="elm__132">
+        <string name="filename" value="meshes/AI43_005_mattress_001.ply"/>
+        <ref name="bsdf" id="mat-AI43_005_108"/>
+    </shape>
+
+    <shape type="ply" name="elm__134">
+        <string name="filename" value="meshes/AI43_005_panels_001.ply"/>
+        <ref name="bsdf" id="mat-AI43_005_06"/>
+    </shape>
+
+    <shape type="ply" name="elm__136">
+        <string name="filename" value="meshes/AI43_005_pictures_001_00.ply"/>
+        <ref name="bsdf" id="mat-AI43_005_80"/>
+    </shape>
+
+    <shape type="ply" name="elm__138">
+        <string name="filename" value="meshes/AI43_005_pictures_001_02.ply"/>
+        <ref name="bsdf" id="mat-AI43_005_79"/>
+    </shape>
+
+    <shape type="ply" name="elm__140">
+        <string name="filename" value="meshes/AI43_005_pictures_002_00.ply"/>
+        <ref name="bsdf" id="mat-AI43_005_81"/>
+    </shape>
+
+    <shape type="ply" name="elm__141">
+        <string name="filename" value="meshes/AI43_005_pictures_002_01.ply"/>
+        <ref name="bsdf" id="mat-AI43_005_00"/>
+    </shape>
+
+    <shape type="ply" name="elm__143">
+        <string name="filename" value="meshes/AI43_005_pillow_001.ply"/>
+        <ref name="bsdf" id="mat-AI43_005_104"/>
+    </shape>
+
+    <shape type="ply" name="elm__145">
+        <string name="filename" value="meshes/AI43_005_props_001_00.ply"/>
+        <ref name="bsdf" id="mat-AI43_005_13"/>
+    </shape>
+
+    <shape type="ply" name="elm__147">
+        <string name="filename" value="meshes/AI43_005_props_001_01.ply"/>
+        <ref name="bsdf" id="mat-AI43_005_14"/>
+    </shape>
+
+    <shape type="ply" name="elm__149">
+        <string name="filename" value="meshes/AI43_005_props_001_02.ply"/>
+        <ref name="bsdf" id="mat-AI43_005_59"/>
+    </shape>
+
+    <shape type="ply" name="elm__150">
+        <string name="filename" value="meshes/AI43_005_props_001_03.ply"/>
+        <ref name="bsdf" id="mat-AI43_005_14"/>
+    </shape>
+
+    <shape type="ply" name="elm__151">
+        <string name="filename" value="meshes/AI43_005_props_001_04.ply"/>
+        <ref name="bsdf" id="mat-AI43_005_14"/>
+    </shape>
+
+    <shape type="ply" name="elm__152">
+        <string name="filename" value="meshes/AI43_005_props_002_00.ply"/>
+        <ref name="bsdf" id="mat-AI43_005_14"/>
+    </shape>
+
+    <shape type="ply" name="elm__153">
+        <string name="filename" value="meshes/AI43_005_props_002_01.ply"/>
+        <ref name="bsdf" id="mat-AI43_005_14"/>
+    </shape>
+
+    <shape type="ply" name="elm__155">
+        <string name="filename" value="meshes/AI43_005_props_002_02.ply"/>
+        <ref name="bsdf" id="mat-AI43_005_17"/>
+    </shape>
+
+    <shape type="ply" name="elm__157">
+        <string name="filename" value="meshes/AI43_005_props_002_03.ply"/>
+        <ref name="bsdf" id="mat-AI43_005_18"/>
+    </shape>
+
+    <shape type="ply" name="elm__158">
+        <string name="filename" value="meshes/AI43_005_props_002_04.ply"/>
+        <ref name="bsdf" id="mat-AI43_005_17"/>
+    </shape>
+
+    <shape type="ply" name="elm__159">
+        <string name="filename" value="meshes/AI43_005_props_002_05.ply"/>
+        <ref name="bsdf" id="mat-AI43_005_17"/>
+    </shape>
+
+    <shape type="ply" name="elm__161">
+        <string name="filename" value="meshes/AI43_005_props_003_00.ply"/>
+        <ref name="bsdf" id="mat-AI43_005_82"/>
+    </shape>
+
+    <shape type="ply" name="elm__162">
+        <string name="filename" value="meshes/AI43_005_props_003_01.ply"/>
+        <ref name="bsdf" id="mat-AI43_005_06"/>
+    </shape>
+
+    <shape type="ply" name="elm__164">
+        <string name="filename" value="meshes/AI43_005_props_003_02.ply"/>
+        <ref name="bsdf" id="mat-AI43_005_83"/>
+    </shape>
+
+    <shape type="ply" name="elm__165">
+        <string name="filename" value="meshes/AI43_005_props_003_04.ply"/>
+        <ref name="bsdf" id="mat-AI43_005_83"/>
+    </shape>
+
+    <shape type="ply" name="elm__166">
+        <string name="filename" value="meshes/AI43_005_props_003_05.ply"/>
+        <ref name="bsdf" id="mat-AI43_005_83"/>
+    </shape>
+
+    <shape type="ply" name="elm__167">
+        <string name="filename" value="meshes/AI43_005_props_003_06.ply"/>
+        <ref name="bsdf" id="mat-AI43_005_06"/>
+    </shape>
+
+    <shape type="ply" name="elm__168">
+        <string name="filename" value="meshes/AI43_005_props_003_07.ply"/>
+        <ref name="bsdf" id="mat-AI43_005_06"/>
+    </shape>
+
+    <shape type="ply" name="elm__169">
+        <string name="filename" value="meshes/AI43_005_props_003_08.ply"/>
+        <ref name="bsdf" id="mat-AI43_005_82"/>
+    </shape>
+
+    <shape type="ply" name="elm__170">
+        <string name="filename" value="meshes/AI43_005_props_003_09.ply"/>
+        <ref name="bsdf" id="mat-AI43_005_82"/>
+    </shape>
+
+    <shape type="ply" name="elm__171">
+        <string name="filename" value="meshes/AI43_005_props_003_10.ply"/>
+        <ref name="bsdf" id="mat-AI43_005_83"/>
+    </shape>
+
+    <shape type="ply" name="elm__172">
+        <string name="filename" value="meshes/AI43_005_props_003_11.ply"/>
+        <ref name="bsdf" id="mat-AI43_005_06"/>
+    </shape>
+
+    <shape type="ply" name="elm__173">
+        <string name="filename" value="meshes/AI43_005_props_003_12.ply"/>
+        <ref name="bsdf" id="mat-AI43_005_82"/>
+    </shape>
+
+    <shape type="ply" name="elm__175">
+        <string name="filename" value="meshes/AI43_005_props_004_00.ply"/>
+        <ref name="bsdf" id="mat-AI43_005_19"/>
+    </shape>
+
+    <shape type="ply" name="elm__176">
+        <string name="filename" value="meshes/AI43_005_props_004_01.ply"/>
+        <ref name="bsdf" id="mat-AI43_005_14"/>
+    </shape>
+
+    <shape type="ply" name="elm__177">
+        <string name="filename" value="meshes/AI43_005_props_004_02.ply"/>
+        <ref name="bsdf" id="mat-AI43_005_14"/>
+    </shape>
+
+    <shape type="ply" name="elm__178">
+        <string name="filename" value="meshes/AI43_005_props_004_03.ply"/>
+        <ref name="bsdf" id="mat-AI43_005_14"/>
+    </shape>
+
+    <shape type="ply" name="elm__179">
+        <string name="filename" value="meshes/AI43_005_props_004_04.ply"/>
+        <ref name="bsdf" id="mat-AI43_005_14"/>
+    </shape>
+
+    <shape type="ply" name="elm__181">
+        <string name="filename" value="meshes/AI43_005_props_004_05.ply"/>
+        <ref name="bsdf" id="mat-AI43_005_84"/>
+    </shape>
+
+    <shape type="ply" name="elm__182">
+        <string name="filename" value="meshes/AI43_005_props_004_06.ply"/>
+        <ref name="bsdf" id="mat-AI43_005_17"/>
+    </shape>
+
+    <shape type="ply" name="elm__184">
+        <string name="filename" value="meshes/AI43_005_props_004_07.ply"/>
+        <ref name="bsdf" id="mat-AI43_005_16"/>
+    </shape>
+
+    <shape type="ply" name="elm__185">
+        <string name="filename" value="meshes/AI43_005_props_004_08.ply"/>
+        <ref name="bsdf" id="mat-AI43_005_16"/>
+    </shape>
+
+    <shape type="ply" name="elm__187">
+        <string name="filename" value="meshes/AI43_005_props_004_09.ply"/>
+        <ref name="bsdf" id="mat-AI43_005_12"/>
+    </shape>
+
+    <shape type="ply" name="elm__189">
+        <string name="filename" value="meshes/AI43_005_props_005.ply"/>
+        <ref name="bsdf" id="mat-AI43_005_86"/>
+    </shape>
+
+    <shape type="ply" name="elm__191">
+        <string name="filename" value="meshes/AI43_005_shelf_001.ply"/>
+        <ref name="bsdf" id="mat-AI43_005_15"/>
+    </shape>
+
+    <shape type="ply" name="elm__193">
+        <string name="filename" value="meshes/AI43_005_sideboard_001_00.ply"/>
+        <ref name="bsdf" id="mat-AI43_005_62"/>
+    </shape>
+
+    <shape type="ply" name="elm__194">
+        <string name="filename" value="meshes/AI43_005_sideboard_001_01.ply"/>
+        <ref name="bsdf" id="mat-AI43_005_62"/>
+    </shape>
+
+    <shape type="ply" name="elm__196">
+        <string name="filename" value="meshes/AI43_005_sideboard_001_03.ply"/>
+        <ref name="bsdf" id="mat-AI43_005_08"/>
+    </shape>
+
+    <shape type="ply" name="elm__197">
+        <string name="filename" value="meshes/AI43_005_sideboard_001_04.ply"/>
+        <ref name="bsdf" id="mat-AI43_005_09"/>
+    </shape>
+
+    <shape type="ply" name="elm__200">
+        <string name="filename" value="meshes/AI43_005_sideboard_001_05-AI43_005_01.ply"/>
+        <ref name="bsdf" id="mat-AI43_005_01"/>
+    </shape>
+
+    <shape type="ply" name="elm__201">
+        <string name="filename" value="meshes/AI43_005_sideboard_001_05-AI43_005_105.ply"/>
+        <ref name="bsdf" id="mat-AI43_005_105"/>
+    </shape>
+
+    <shape type="ply" name="elm__203">
+        <string name="filename" value="meshes/AI43_005_stairs_001_00.ply"/>
+        <ref name="bsdf" id="mat-AI43_005_103"/>
+    </shape>
+
+    <shape type="ply" name="elm__204">
+        <string name="filename" value="meshes/AI43_005_stairs_001_01.ply"/>
+        <ref name="bsdf" id="mat-AI43_005_00"/>
+    </shape>
+
+    <shape type="ply" name="elm__206">
+        <string name="filename" value="meshes/AI43_005_stairs_001_02.ply"/>
+        <ref name="bsdf" id="mat-AI43_005_04"/>
+    </shape>
+
+    <shape type="ply" name="elm__208">
+        <string name="filename" value="meshes/AI43_005_stove_001_00.ply"/>
+        <ref name="bsdf" id="mat-AI43_005_61_001"/>
+    </shape>
+
+    <shape type="ply" name="elm__210">
+        <string name="filename" value="meshes/AI43_005_stove_001_02.ply"/>
+        <ref name="bsdf" id="mat-AI43_005_60"/>
+    </shape>
+
+    <shape type="ply" name="elm__212">
+        <string name="filename" value="meshes/AI43_005_stove_001_03.ply"/>
+        <ref name="bsdf" id="mat-AI43_005_61"/>
+    </shape>
+
+    <shape type="ply" name="elm__213">
+        <string name="filename" value="meshes/AI43_005_table_001_00.ply"/>
+        <ref name="bsdf" id="mat-AI43_005_10"/>
+    </shape>
+
+    <shape type="ply" name="elm__214">
+        <string name="filename" value="meshes/AI43_005_table_001_02.ply"/>
+        <ref name="bsdf" id="mat-AI43_005_02"/>
+    </shape>
+
+    <shape type="ply" name="elm__215">
+        <string name="filename" value="meshes/AI43_005_table_001_03.ply"/>
+        <ref name="bsdf" id="mat-AI43_005_10"/>
+    </shape>
+
+    <shape type="ply" name="elm__216">
+        <string name="filename" value="meshes/AI43_005_table_002_00.ply"/>
+        <ref name="bsdf" id="mat-AI43_005_10"/>
+    </shape>
+
+    <shape type="ply" name="elm__217">
+        <string name="filename" value="meshes/AI43_005_table_002_02.ply"/>
+        <ref name="bsdf" id="mat-AI43_005_02"/>
+    </shape>
+
+    <shape type="ply" name="elm__218">
+        <string name="filename" value="meshes/AI43_005_table_002_03.ply"/>
+        <ref name="bsdf" id="mat-AI43_005_10"/>
+    </shape>
+
+    <shape type="ply" name="elm__220">
+        <string name="filename" value="meshes/AI43_005_tap_001.ply"/>
+        <ref name="bsdf" id="mat-AI43_005_64"/>
+    </shape>
+
+    <shape type="ply" name="elm__224">
+        <string name="filename" value="meshes/AI43_005_wall_001-AI43_005_91.ply"/>
+        <ref name="bsdf" id="mat-AI43_005_91"/>
+    </shape>
+
+    <shape type="ply" name="elm__225">
+        <string name="filename" value="meshes/AI43_005_wall_001-AI43_005_92.ply"/>
+        <ref name="bsdf" id="mat-AI43_005_92"/>
+    </shape>
+
+    <shape type="ply" name="elm__227">
+        <string name="filename" value="meshes/AI43_005_wall_002.ply"/>
+        <ref name="bsdf" id="mat-AI43_005_90"/>
+    </shape>
+
+    <shape type="ply" name="elm__229">
+        <string name="filename" value="meshes/AI43_005_windows_001.ply"/>
+        <ref name="bsdf" id="mat-AI43_005_05"/>
+    </shape>
+
+    <shape type="ply" name="elm__231">
+        <string name="filename" value="meshes/AI43_005_windows_002-AI43_005_107.ply"/>
+        <ref name="bsdf" id="mat-AI43_005_107"/>
+    </shape>
+
+    <shape type="ply" name="elm__232">
+        <string name="filename" value="meshes/AI43_005_windows_002-AI43_005_05.ply"/>
+        <ref name="bsdf" id="mat-AI43_005_05"/>
+    </shape>
+
+    <shape type="ply" name="elm__234">
+        <string name="filename" value="meshes/AI43_005_wood_002.ply"/>
+        <ref name="bsdf" id="mat-AI43_005_89"/>
+    </shape>
+
+    <shape type="ply" name="elm__236">
+        <string name="filename" value="meshes/AI43_005_floor_001_001.ply"/>
+        <ref name="bsdf" id="mat-AI43_005_78"/>
+    </shape>
+
+    <shape type="ply" name="elm__238">
+        <string name="filename" value="meshes/AI43_005_wood_001_001.ply"/>
+        <ref name="bsdf" id="mat-AI43_005_07"/>
+    </shape>
+
+    <shape type="ply" name="elm__240">
+        <string name="filename" value="meshes/AI43_005_sideboard_001_02_001.ply"/>
+        <ref name="bsdf" id="mat-AI43_005_63"/>
+    </shape>
+</scene>

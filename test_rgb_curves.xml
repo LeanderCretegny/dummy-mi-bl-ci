@@ -1,0 +1,59 @@
+<scene version="3.8.0">
+    <default name="spp" value="64"/>
+    <default name="resx" value="1920"/>
+    <default name="resy" value="1080"/>
+
+    <!-- Camera and Rendering Parameters -->
+    <integrator type="path" name="elm__0">
+        <integer name="max_depth" value="12"/>
+    </integrator>
+
+    <sensor type="perspective" name="elm__4">
+        <string name="fov_axis" value="x"/>
+        <float name="fov" value="39.597755335771296"/>
+        <float name="principal_point_offset_x" value="0"/>
+        <float name="principal_point_offset_y" value="-0"/>
+        <float name="near_clip" value="0.10000000149011612"/>
+        <float name="far_clip" value="100"/>
+
+        <transform name="to_world">
+            <lookat origin="7.358891487121582, 4.9583091735839844, 6.9257907867431641" target="6.7073333263397217, 4.513037770986557, 6.3116203546524048" up="-0.32401347160339355, 0.89539563655853271, -0.30542084574699402"/>
+        </transform>
+
+        <sampler type="independent" name="sampler">
+            <integer name="sample_count" value="$spp"/>
+        </sampler>
+
+        <film type="hdrfilm" name="film">
+            <integer name="width" value="$resx"/>
+            <integer name="height" value="$resy"/>
+        </film>
+    </sensor>
+
+    <!-- Materials -->
+    <texture type="brightness_contrast" id="mat-curves" name="mat-curves">
+        <texture type="rgb_curve" name="color">
+            <float name="factor" value="0.42272728681564331"/>
+            <rgb name="color" value="0.099955402314662933 1 0.12684378027915955"/>
+            <string name="points_c" value="0.0659092590212822-0.6968747973442078 0.3863636255264282-0.4906249940395355 0.5931817889213562-0.6906248927116394 0.8500000238418579-0.43437501788139343 0.9977272748947144-0.14374993741512299"/>
+            <string name="points_r" value="0.0022727272007614374-0.34062492847442627 0.570454478263855-0.5906248688697815 0.6931818127632141-0.659375011920929"/>
+            <string name="points_g" value="0.0-0.0 0.6431818008422852-0.596875011920929 0.8136363625526428-0.793749988079071 1.0-1.0"/>
+            <string name="points_b" value="0.0-1.0 0.25-0.731249988079071 0.3704545497894287-0.609375 0.46136364340782166-0.5218750238418579 0.581818163394928-0.41874998807907104 0.706818163394928-0.296875 0.8090909123420715-0.171875 1.0-0.0"/>
+        </texture>
+        <float name="brightness" value="0.099999874830245972"/>
+        <float name="contrast" value="3.9999997615814209"/>
+    </texture>
+
+    <!-- Emitters -->
+    <emitter type="point" name="elm__3">
+        <vector name="position" x="4.0762453079223633" y="5.9038619995117188" z="-1.0054539442062378"/>
+        <rgb name="intensity" value="79.577468872070312 79.577468872070312 79.577468872070312"/>
+    </emitter>
+
+    <!-- Shapes -->
+    <shape type="ply" name="elm__2">
+        <string name="filename" value="meshes/Cube.ply"/>
+        <boolean name="face_normals" value="true"/>
+        <ref name="bsdf" id="mat-curves"/>
+    </shape>
+</scene>

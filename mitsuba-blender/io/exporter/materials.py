@@ -41,23 +41,40 @@ def convert_float_texture_node(export_ctx, socket):
 
     return params
 
+def convert_mix_texture_node(export_ctx, current_node):
+
+    return {
+        'type': 'mix_color',
+        'blend_type': current_node.blend_type,
+        'clamp_result': current_node.clamp_result,
+        'clamp_factor': current_node.clamp_factor,
+        'factor': convert_float_texture_node(export_ctx, current_node.inputs['Factor']),
+        'a': convert_color_texture_node(export_ctx, current_node.inputs['A']),
+        'b': convert_color_texture_node(export_ctx, current_node.inputs['B']),
+    }
+
 def convert_color_texture_node(export_ctx, socket):
     params = None
 
     if socket.is_linked:
         node = socket.links[0].from_node
-
         if node.type == "TEX_IMAGE":
             params = export_texture_node(export_ctx, node)
 
         elif node.type == "RGB":
             #input rgb node
-            params = export_ctx.spectrum(node.color)
+            params = export_ctx.spectrum(node.outputs['Color'].default_value)
         elif node.type == "VERTEX_COLOR":
             params = {
                 'type': 'mesh_attribute',
                 'name': 'vertex_%s' % node.layer_name
             }
+        elif node.type == "BRIGHTCONTRAST":
+            params = convert_brightcontrast_material_cycles(export_ctx, node)
+        elif node.type == 'CURVE_RGB':
+            params = convert_rgbcurves_material_cycles(export_ctx, node)
+        elif node.type == 'MIX':
+            params = convert_mix_texture_node(export_ctx, node)
         else:
             raise NotImplementedError("Node type %s is not supported. Only texture & RGB nodes are supported for color inputs" % node.type)
 
@@ -273,13 +290,13 @@ def convert_principled_materials_cycles(export_ctx, current_node):
         clearcoat_roughness_key = 'Clearcoat Roughness'
 
     base_color = convert_color_texture_node(export_ctx, current_node.inputs['Base Color'])
-    specular = current_node.inputs[specular_key].default_value
+
     if bpy.app.version >= (4, 0, 0):
         specular_tint = convert_color_texture_node(export_ctx, current_node.inputs['Specular Tint'])
     else:
         specular_tint = convert_float_texture_node(export_ctx, current_node.inputs['Specular Tint'])
     specular_trans = convert_float_texture_node(export_ctx, current_node.inputs[transmission_key])
-    ior = current_node.inputs['IOR'].default_value
+
     roughness = convert_float_texture_node(export_ctx, current_node.inputs['Roughness'])
     metallic = convert_float_texture_node(export_ctx, current_node.inputs['Metallic'])
     anisotropic = convert_float_texture_node(export_ctx, current_node.inputs['Anisotropic'])
@@ -292,36 +309,97 @@ def convert_principled_materials_cycles(export_ctx, current_node):
     clearcoat_roughness = convert_float_texture_node(export_ctx, current_node.inputs[clearcoat_roughness_key])
 
     params.update({
-        'type': 'principled',
+        'type': 'blender_principled',
         'base_color': base_color,
         'spec_tint': specular_tint,
-        'spec_trans': specular_trans,
+        'transmission': specular_trans,
         'metallic': metallic,
         'anisotropic': anisotropic,
         'roughness': roughness,
         'sheen': sheen,
         'sheen_tint': sheen_tint,
         'clearcoat': clearcoat,
-        'clearcoat_gloss': clearcoat_roughness
+        'clearcoat_roughness': clearcoat_roughness,
+        'eta': max(current_node.inputs['IOR'].default_value, 1+1e-3),
+        'spec_ior_level': max(current_node.inputs[specular_key].default_value, 1e-3) 
     })
 
+    # FIXME not the case anymore I think, to check
     # NOTE: Blender uses the 'specular' value for dielectric/metallic reflections and the
     #       'IOR' value for transmission. Mitsuba only has one value for both which can either
     #       be defined by 'specular' or 'eta' ('specular' will be converted into the corresponding
     #       'eta' value by Mitsuba).
     if type(specular_trans) is not float or specular_trans > 0:
-        # Export 'eta' if the material has a transmission component
-        params.update({
-            'eta': max(ior, 1+1e-3),
-        })
         # Transmissive material should not be twosided
         return params
     else:
-        # Export 'specular' if the material is only reflective
-        params.update({
-            'specular': max(specular, 1e-3)
-        })
+        
         return two_sided_bsdf(params)
+    # params = {}
+
+    # if bpy.app.version >= (4, 0, 0):
+    #     specular_key = 'Specular IOR Level'
+    #     transmission_key = 'Transmission Weight'
+    #     sheen_key = 'Sheen Weight'
+    #     clearcoat_key = 'Coat Weight'
+    #     clearcoat_roughness_key = 'Coat Roughness'
+    # else:
+    #     specular_key = 'Specular'
+    #     transmission_key = 'Transmission'
+    #     sheen_key = 'Sheen'
+    #     clearcoat_key = 'Clearcoat'
+    #     clearcoat_roughness_key = 'Clearcoat Roughness'
+
+    # base_color = convert_color_texture_node(export_ctx, current_node.inputs['Base Color'])
+    # specular = current_node.inputs[specular_key].default_value
+    # if bpy.app.version >= (4, 0, 0):
+    #     specular_tint = convert_color_texture_node(export_ctx, current_node.inputs['Specular Tint'])
+    # else:
+    #     specular_tint = convert_float_texture_node(export_ctx, current_node.inputs['Specular Tint'])
+    # specular_trans = convert_float_texture_node(export_ctx, current_node.inputs[transmission_key])
+    # ior = current_node.inputs['IOR'].default_value
+    # roughness = convert_float_texture_node(export_ctx, current_node.inputs['Roughness'])
+    # metallic = convert_float_texture_node(export_ctx, current_node.inputs['Metallic'])
+    # anisotropic = convert_float_texture_node(export_ctx, current_node.inputs['Anisotropic'])
+    # sheen = convert_float_texture_node(export_ctx, current_node.inputs[sheen_key])
+    # if bpy.app.version >= (4, 0, 0):
+    #     sheen_tint = convert_color_texture_node(export_ctx, current_node.inputs['Sheen Tint'])
+    # else:
+    #     sheen_tint = convert_float_texture_node(export_ctx, current_node.inputs['Sheen Tint'])
+    # clearcoat = convert_float_texture_node(export_ctx, current_node.inputs[clearcoat_key])
+    # clearcoat_roughness = convert_float_texture_node(export_ctx, current_node.inputs[clearcoat_roughness_key])
+
+    # params.update({
+    #     'type': 'principled',
+    #     'base_color': base_color,
+    #     'spec_tint': specular_tint,
+    #     'spec_trans': specular_trans,
+    #     'metallic': metallic,
+    #     'anisotropic': anisotropic,
+    #     'roughness': roughness,
+    #     'sheen': sheen,
+    #     'sheen_tint': sheen_tint,
+    #     'clearcoat': clearcoat,
+    #     'clearcoat_gloss': clearcoat_roughness
+    # })
+
+    # # NOTE: Blender uses the 'specular' value for dielectric/metallic reflections and the
+    # #       'IOR' value for transmission. Mitsuba only has one value for both which can either
+    # #       be defined by 'specular' or 'eta' ('specular' will be converted into the corresponding
+    # #       'eta' value by Mitsuba).
+    # if type(specular_trans) is not float or specular_trans > 0:
+    #     # Export 'eta' if the material has a transmission component
+    #     params.update({
+    #         'eta': max(ior, 1+1e-3),
+    #     })
+    #     # Transmissive material should not be twosided
+    #     return params
+    # else:
+    #     # Export 'specular' if the material is only reflective
+    #     params.update({
+    #         'specular': max(specular, 1e-3)
+    #     })
+    #     return two_sided_bsdf(params)
 
 def convert_transparent_materials_cycles(export_ctx, current_node):
     if current_node.inputs['Color'].is_linked:
@@ -347,6 +425,64 @@ def convert_transparent_materials_cycles(export_ctx, current_node):
 
     return params
 
+def convert_translucent_materials_cycles(export_ctx, current_node):
+    if current_node.inputs['Normal'].is_linked:
+        raise NotImplementedError("Current translucent node does not support normal texture.")
+    
+    params = {
+        'type' : 'translucent',
+        'color': convert_color_texture_node(export_ctx, current_node.inputs['Color'])
+    }
+    return params
+
+def convert_brightcontrast_material_cycles(export_ctx, current_node):
+    if not current_node.inputs['Color'].is_linked:
+        raise NotImplementedError("Bright contrast node without color input are not supported. Verify that your bright contrast node's inputs are correctly linked.")
+
+    color = convert_color_texture_node(export_ctx, current_node.inputs['Color'])
+    
+    if current_node.inputs['Bright'].is_linked:
+        bright = convert_float_texture_node(export_ctx, current_node.inputs['Bright'])
+    else: 
+        bright = current_node.inputs['Bright'].default_value 
+
+    if current_node.inputs['Contrast'].is_linked:
+        contrast = convert_float_texture_node(export_ctx, current_node.inputs['Contrast'])
+    else: 
+        contrast = current_node.inputs['Contrast'].default_value
+
+    params = {
+        'type': 'brightness_contrast',
+        'color': color,
+        'brightness': bright,
+        'contrast': contrast
+    }
+
+    return params
+
+def convert_rgbcurves_material_cycles(export_ctx, current_node):
+    if current_node.mapping.tone == 'FILMLIKE':
+        raise NotImplementedError("RGB curve node with FILMLIKE tone are not supported. Please use the STANDARD option.")
+    
+    color = convert_color_texture_node(export_ctx, current_node.inputs['Color'])
+    
+    if current_node.inputs['Fac'].is_linked:
+        fac = convert_float_texture_node(export_ctx, current_node.inputs['Fac'])
+    else:
+        fac = current_node.inputs['Fac'].default_value
+
+    cmp_to_tuple = lambda p: f'{p.location.x}-{p.location.y}'
+    curves = current_node.mapping.curves
+    param = {
+        'type': 'rgb_curve',
+        'factor': fac,
+        'color': color,
+        'points_c': export_ctx.blender_list_to_str(curves[3].points, cmp_to_tuple),
+        'points_r': export_ctx.blender_list_to_str(curves[0].points, cmp_to_tuple),
+        'points_g': export_ctx.blender_list_to_str(curves[1].points, cmp_to_tuple),
+        'points_b': export_ctx.blender_list_to_str(curves[2].points, cmp_to_tuple),
+    }
+    return param
 
 
 #TODO: Add more support for other materials: refraction, transparent, translucent
@@ -356,9 +492,12 @@ cycles_converters = {
     'BSDF_GLOSSY': convert_glossy_materials_cycles,
     'BSDF_GLASS': convert_glass_materials_cycles,
     'BSDF_TRANSPARENT': convert_transparent_materials_cycles,
+    'BSDF_TRANSLUCENT': convert_translucent_materials_cycles,
     'EMISSION': convert_emitter_materials_cycles,
     'MIX_SHADER': convert_mix_materials_cycles,
     'ADD_SHADER': convert_add_materials_cycles,
+    'BRIGHTCONTRAST': convert_brightcontrast_material_cycles,
+    'CURVE_RGB': convert_rgbcurves_material_cycles
 }
 
 def cycles_material_to_dict(export_ctx, node):
@@ -387,8 +526,12 @@ def b_material_to_dict(export_ctx, b_mat):
             output_node_id = 'Material Output'
             if output_node_id in b_mat.node_tree.nodes:
                 output_node = b_mat.node_tree.nodes[output_node_id]
-                surface_node = output_node.inputs["Surface"].links[0].from_node
-                mat_params = cycles_material_to_dict(export_ctx, surface_node)
+                if output_node.inputs['Surface'].is_linked:
+                    surface_node = output_node.inputs["Surface"].links[0].from_node
+                    mat_params = cycles_material_to_dict(export_ctx, surface_node)
+                else:
+                    export_ctx.log(f'Export of material {b_mat.name} failed: Surface input is not linked. Exporting a dummy material instead.', 'WARN')
+                    mat_params = get_dummy_material(export_ctx)    
             else:
                 export_ctx.log(f'Export of material {b_mat.name} failed: Cannot find material output node. Exporting a dummy material instead.', 'WARN')
                 mat_params = get_dummy_material(export_ctx)

@@ -231,3 +231,13 @@ class ExportContext:
         else: #3x3
             mat = matrix.to_4x4()
         return ScalarTransform4f(list([list(x) for x in mat]))
+    
+    def blender_list_to_str(self, blender_list, convert_elem=None):
+        '''
+        Convert blender list to string using function convert_elem to convert blender 
+        object to string with correct format
+        '''
+        s = []
+        for e in blender_list:
+            s.append(convert_elem(e))
+        return ' '.join(s)
