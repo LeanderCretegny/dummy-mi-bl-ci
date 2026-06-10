@@ -240,4 +240,10 @@ class ExportContext:
         s = []
         for e in blender_list:
             s.append(convert_elem(e))
-        return ' '.join(s)
+        return '-'.join(s)
+    
+    def blender_color_to_str(self, bl_color, sep=' ', alpha=False):
+        temp = []
+        for i in range(3 if not alpha else 4):
+            temp.append(str(bl_color[i]))
+        return sep.join(temp)

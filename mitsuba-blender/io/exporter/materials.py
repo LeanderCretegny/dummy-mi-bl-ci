@@ -29,6 +29,8 @@ def convert_float_texture_node(export_ctx, socket):
 
         if node.type == "TEX_IMAGE":
             params = export_texture_node(export_ctx, node)
+        elif node.type == "VALTORGB":
+            params = convert_ramp_texture_node(export_ctx, node)
         else:
             raise NotImplementedError( "Node type %s is not supported. Only texture nodes are supported for float inputs" % node.type)
 
@@ -53,6 +55,20 @@ def convert_mix_texture_node(export_ctx, current_node):
         'b': convert_color_texture_node(export_ctx, current_node.inputs['B']),
     }
 
+def convert_ramp_texture_node(export_ctx, current_node):
+    fac = convert_float_texture_node(export_ctx, current_node.inputs['Fac'])
+    
+    color_ramp = current_node.color_ramp
+    return {
+        'type': 'color_ramp',
+        'fac': fac,
+        'color_mode': color_ramp.color_mode,
+        'interpolation': color_ramp.interpolation,
+        'hue_interpolation': color_ramp.hue_interpolation,
+        'elements': export_ctx.blender_list_to_str(color_ramp.elements, lambda e: f'{e.alpha} {export_ctx.blender_color_to_str(e.color)} {e.position}')
+    }
+
+
 def convert_color_texture_node(export_ctx, socket):
     params = None
 
@@ -75,6 +91,8 @@ def convert_color_texture_node(export_ctx, socket):
             params = convert_rgbcurves_material_cycles(export_ctx, node)
         elif node.type == 'MIX':
             params = convert_mix_texture_node(export_ctx, node)
+        elif node.type == 'VALTORGB':
+            params = convert_ramp_texture_node(export_ctx, node)
         else:
             raise NotImplementedError("Node type %s is not supported. Only texture & RGB nodes are supported for color inputs" % node.type)
 
@@ -471,7 +489,7 @@ def convert_rgbcurves_material_cycles(export_ctx, current_node):
     else:
         fac = current_node.inputs['Fac'].default_value
 
-    cmp_to_tuple = lambda p: f'{p.location.x}-{p.location.y}'
+    cmp_to_tuple = lambda p: f'{p.location.x} {p.location.y}'
     curves = current_node.mapping.curves
     param = {
         'type': 'rgb_curve',
@@ -483,6 +501,22 @@ def convert_rgbcurves_material_cycles(export_ctx, current_node):
         'points_b': export_ctx.blender_list_to_str(curves[2].points, cmp_to_tuple),
     }
     return param
+
+def convert_refraction_material_cycles(export_ctx, current_node):
+    color = convert_color_texture_node(export_ctx, current_node.inputs['Color'])
+    ior = convert_float_texture_node(export_ctx, current_node.inputs['IOR'])
+    roughness = convert_float_texture_node(export_ctx, current_node.inputs['Roughness'])
+
+    if current_node.inputs['Normal'].is_linked:
+        export_ctx.log("Refraction BSDF: Normal mapping is not supported for refraction.", 'WARN')
+
+    return {
+        'type': 'refraction',
+        'color': color,
+        'ior': ior,
+        'roughness': roughness
+    }
+
 
 
 #TODO: Add more support for other materials: refraction, transparent, translucent
@@ -497,7 +531,8 @@ cycles_converters = {
     'MIX_SHADER': convert_mix_materials_cycles,
     'ADD_SHADER': convert_add_materials_cycles,
     'BRIGHTCONTRAST': convert_brightcontrast_material_cycles,
-    'CURVE_RGB': convert_rgbcurves_material_cycles
+    'CURVE_RGB': convert_rgbcurves_material_cycles,
+    'BSDF_REFRACTION': convert_refraction_material_cycles
 }
 
 def cycles_material_to_dict(export_ctx, node):

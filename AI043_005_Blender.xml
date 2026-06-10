@@ -17,29 +17,7 @@
         <float name="far_clip" value="100"/>
 
         <transform name="to_world">
-            <matrix value="-0.11100434511899948 0 9.7043084679171443e-09 8.9945716857910156 4.2418880602903327e-16 0.11100434511899948 4.8521542339585721e-09 7.8105320930480957 -9.7043084679171443e-09 4.8521542339585721e-09 -0.11100434511899948 -63.040512084960938 0 0 0 1"/>
-        </transform>
-
-        <sampler type="independent" name="sampler">
-            <integer name="sample_count" value="$spp"/>
-        </sampler>
-
-        <film type="hdrfilm" name="film">
-            <integer name="width" value="$resx"/>
-            <integer name="height" value="$resy"/>
-        </film>
-    </sensor>
-
-    <sensor type="perspective" name="elm__221">
-        <string name="fov_axis" value="x"/>
-        <float name="fov" value="61.92751520437556"/>
-        <float name="principal_point_offset_x" value="0"/>
-        <float name="principal_point_offset_y" value="-0"/>
-        <float name="near_clip" value="0.10000000149011612"/>
-        <float name="far_clip" value="10000"/>
-
-        <transform name="to_world">
-            <matrix value="-0.099833548069000244 0.0003091934195253998 0.0057594841346144676 8.9945716857910156 -4.2152153989505337e-10 0.099856235086917877 -0.0053607113659381866 7.8105320930480957 -0.0057677775621414185 -0.0053517874330282211 -0.09969000518321991 -63.456874847412109 0 0 0 1"/>
+            <lookat origin="8.9945716857910156, 7.8105320930480957, -63.040512084960938" target="8.9945717732137922, 7.810532136759484, -64.040512084960938" up="0, 1, 4.3711388286737929e-08"/>
         </transform>
 
         <sampler type="independent" name="sampler">
@@ -53,32 +31,209 @@
     </sensor>
 
     <!-- Materials -->
-    <bsdf type="diffuse" id="mat-AI43_005_11" name="mat-AI43_005_11">
-        <rgb name="reflectance" value="1 0 0.29999999999999999"/>
+    <bsdf type="twosided" id="mat-AI43_005_11" name="mat-AI43_005_11">
+        <bsdf type="blender_principled" name="bsdf">
+            <texture type="bitmap" name="base_color">
+                <string name="filename" value="textures/AI43_005_11_diffuse.001.jpg"/>
+            </texture>
+            <rgb name="spec_tint" value="1 1 1"/>
+            <float name="transmission" value="0"/>
+            <float name="metallic" value="0"/>
+            <float name="anisotropic" value="0"/>
+
+            <texture type="color_ramp" name="roughness">
+                <texture type="bitmap" name="fac">
+                    <string name="filename" value="textures/AI43_005_11_diffuse.001.jpg"/>
+                </texture>
+                <string name="color_mode" value="RGB"/>
+                <string name="interpolation" value="LINEAR"/>
+                <string name="hue_interpolation" value="NEAR"/>
+                <string name="elements" value="1.0 0.011065247468650341 0.011065247468650341 0.011065247468650341 0.0-1.0 0.5747813582420349 0.5747813582420349 0.5747813582420349 1.0"/>
+            </texture>
+            <float name="sheen" value="0"/>
+            <rgb name="sheen_tint" value="1 1 1"/>
+            <float name="clearcoat" value="0"/>
+            <float name="clearcoat_roughness" value="0.00089999995976686523"/>
+            <float name="eta" value="1.4500000476837158"/>
+            <float name="spec_ior_level" value="0.5"/>
+        </bsdf>
     </bsdf>
 
-    <bsdf type="diffuse" id="mat-AI43_005_11_001" name="mat-AI43_005_11_001">
-        <rgb name="reflectance" value="1 0 0.29999999999999999"/>
+    <bsdf type="twosided" id="mat-AI43_005_11_001" name="mat-AI43_005_11_001">
+        <bsdf type="blender_principled" name="bsdf">
+            <texture type="bitmap" name="base_color">
+                <string name="filename" value="textures/AI43_005_13_diffuse.001.jpg"/>
+                <boolean name="raw" value="true"/>
+            </texture>
+            <rgb name="spec_tint" value="1 1 1"/>
+            <float name="transmission" value="0"/>
+            <float name="metallic" value="0"/>
+            <float name="anisotropic" value="0"/>
+
+            <texture type="color_ramp" name="roughness">
+                <texture type="bitmap" name="fac">
+                    <string name="filename" value="textures/AI43_005_13_diffuse.001.jpg"/>
+                    <boolean name="raw" value="true"/>
+                </texture>
+                <string name="color_mode" value="RGB"/>
+                <string name="interpolation" value="LINEAR"/>
+                <string name="hue_interpolation" value="NEAR"/>
+                <string name="elements" value="1.0 0.011065247468650341 0.011065247468650341 0.011065247468650341 0.0-1.0 0.5747813582420349 0.5747813582420349 0.5747813582420349 1.0"/>
+            </texture>
+            <float name="sheen" value="0"/>
+            <rgb name="sheen_tint" value="1 1 1"/>
+            <float name="clearcoat" value="0"/>
+            <float name="clearcoat_roughness" value="0.00089999995976686523"/>
+            <float name="eta" value="1.4500000476837158"/>
+            <float name="spec_ior_level" value="0.5"/>
+        </bsdf>
     </bsdf>
 
-    <bsdf type="diffuse" id="mat-AI43_005_44" name="mat-AI43_005_44">
-        <rgb name="reflectance" value="1 0 0.29999999999999999"/>
+    <bsdf type="twosided" id="mat-AI43_005_44" name="mat-AI43_005_44">
+        <bsdf type="blender_principled" name="bsdf">
+            <texture type="bitmap" name="base_color">
+                <string name="filename" value="textures/AI43_005_book_002.jpg"/>
+            </texture>
+            <rgb name="spec_tint" value="1 1 1"/>
+            <float name="transmission" value="0"/>
+            <float name="metallic" value="0"/>
+            <float name="anisotropic" value="0"/>
+
+            <texture type="color_ramp" name="roughness">
+                <texture type="bitmap" name="fac">
+                    <string name="filename" value="textures/AI43_005_book_008.jpg"/>
+                    <boolean name="raw" value="true"/>
+                </texture>
+                <string name="color_mode" value="RGB"/>
+                <string name="interpolation" value="LINEAR"/>
+                <string name="hue_interpolation" value="NEAR"/>
+                <string name="elements" value="1.0 0.0 0.0 0.0 0.0-1.0 1.0 1.0 1.0 1.0"/>
+            </texture>
+            <float name="sheen" value="0"/>
+            <rgb name="sheen_tint" value="1 1 1"/>
+            <float name="clearcoat" value="0"/>
+            <float name="clearcoat_roughness" value="0.00089999995976686523"/>
+            <float name="eta" value="1.4500000476837158"/>
+            <float name="spec_ior_level" value="0.5"/>
+        </bsdf>
     </bsdf>
 
-    <bsdf type="diffuse" id="mat-AI43_005_20" name="mat-AI43_005_20">
-        <rgb name="reflectance" value="1 0 0.29999999999999999"/>
+    <bsdf type="twosided" id="mat-AI43_005_20" name="mat-AI43_005_20">
+        <bsdf type="blender_principled" name="bsdf">
+            <texture type="bitmap" name="base_color">
+                <string name="filename" value="textures/Arch120_038_011.jpg"/>
+                <boolean name="raw" value="true"/>
+            </texture>
+            <rgb name="spec_tint" value="1 1 1"/>
+            <float name="transmission" value="0"/>
+            <float name="metallic" value="0"/>
+            <float name="anisotropic" value="0"/>
+
+            <texture type="color_ramp" name="roughness">
+                <texture type="bitmap" name="fac">
+                    <string name="filename" value="textures/Arch120_038_011.jpg"/>
+                    <boolean name="raw" value="true"/>
+                </texture>
+                <string name="color_mode" value="RGB"/>
+                <string name="interpolation" value="LINEAR"/>
+                <string name="hue_interpolation" value="NEAR"/>
+                <string name="elements" value="1.0 0.0 0.0 0.0 0.0-1.0 1.0 1.0 1.0 1.0"/>
+            </texture>
+            <float name="sheen" value="0"/>
+            <rgb name="sheen_tint" value="1 1 1"/>
+            <float name="clearcoat" value="0"/>
+            <float name="clearcoat_roughness" value="0.00089999995976686523"/>
+            <float name="eta" value="1.4500000476837158"/>
+            <float name="spec_ior_level" value="0.5"/>
+        </bsdf>
     </bsdf>
 
-    <bsdf type="diffuse" id="mat-AI43_005_22" name="mat-AI43_005_22">
-        <rgb name="reflectance" value="1 0 0.29999999999999999"/>
+    <bsdf type="twosided" id="mat-AI43_005_22" name="mat-AI43_005_22">
+        <bsdf type="blender_principled" name="bsdf">
+            <texture type="bitmap" name="base_color">
+                <string name="filename" value="textures/AI43_005_book_014.jpg"/>
+                <boolean name="raw" value="true"/>
+            </texture>
+            <rgb name="spec_tint" value="1 1 1"/>
+            <float name="transmission" value="0"/>
+            <float name="metallic" value="0"/>
+            <float name="anisotropic" value="0"/>
+
+            <texture type="color_ramp" name="roughness">
+                <texture type="bitmap" name="fac">
+                    <string name="filename" value="textures/AI43_005_book_014.jpg"/>
+                    <boolean name="raw" value="true"/>
+                </texture>
+                <string name="color_mode" value="RGB"/>
+                <string name="interpolation" value="LINEAR"/>
+                <string name="hue_interpolation" value="NEAR"/>
+                <string name="elements" value="1.0 0.0 0.0 0.0 0.0-1.0 1.0 1.0 1.0 1.0"/>
+            </texture>
+            <float name="sheen" value="0"/>
+            <rgb name="sheen_tint" value="1 1 1"/>
+            <float name="clearcoat" value="0"/>
+            <float name="clearcoat_roughness" value="0.00089999995976686523"/>
+            <float name="eta" value="1.4500000476837158"/>
+            <float name="spec_ior_level" value="0.5"/>
+        </bsdf>
     </bsdf>
 
-    <bsdf type="diffuse" id="mat-AI43_005_24" name="mat-AI43_005_24">
-        <rgb name="reflectance" value="1 0 0.29999999999999999"/>
+    <bsdf type="twosided" id="mat-AI43_005_24" name="mat-AI43_005_24">
+        <bsdf type="blender_principled" name="bsdf">
+            <texture type="bitmap" name="base_color">
+                <string name="filename" value="textures/AI43_005_book_011.jpg"/>
+            </texture>
+            <rgb name="spec_tint" value="1 1 1"/>
+            <float name="transmission" value="0"/>
+            <float name="metallic" value="0"/>
+            <float name="anisotropic" value="0"/>
+
+            <texture type="color_ramp" name="roughness">
+                <texture type="bitmap" name="fac">
+                    <string name="filename" value="textures/AI43_005_book_008.jpg"/>
+                    <boolean name="raw" value="true"/>
+                </texture>
+                <string name="color_mode" value="RGB"/>
+                <string name="interpolation" value="LINEAR"/>
+                <string name="hue_interpolation" value="NEAR"/>
+                <string name="elements" value="1.0 0.0 0.0 0.0 0.0-1.0 1.0 1.0 1.0 1.0"/>
+            </texture>
+            <float name="sheen" value="0"/>
+            <rgb name="sheen_tint" value="1 1 1"/>
+            <float name="clearcoat" value="0"/>
+            <float name="clearcoat_roughness" value="0.00089999995976686523"/>
+            <float name="eta" value="1.4500000476837158"/>
+            <float name="spec_ior_level" value="0.5"/>
+        </bsdf>
     </bsdf>
 
-    <bsdf type="diffuse" id="mat-AI43_005_26" name="mat-AI43_005_26">
-        <rgb name="reflectance" value="1 0 0.29999999999999999"/>
+    <bsdf type="twosided" id="mat-AI43_005_26" name="mat-AI43_005_26">
+        <bsdf type="blender_principled" name="bsdf">
+            <texture type="bitmap" name="base_color">
+                <string name="filename" value="textures/AI43_005_book_015.jpg"/>
+            </texture>
+            <rgb name="spec_tint" value="1 1 1"/>
+            <float name="transmission" value="0"/>
+            <float name="metallic" value="0"/>
+            <float name="anisotropic" value="0"/>
+
+            <texture type="color_ramp" name="roughness">
+                <texture type="bitmap" name="fac">
+                    <string name="filename" value="textures/AI43_005_book_008.jpg"/>
+                    <boolean name="raw" value="true"/>
+                </texture>
+                <string name="color_mode" value="RGB"/>
+                <string name="interpolation" value="LINEAR"/>
+                <string name="hue_interpolation" value="NEAR"/>
+                <string name="elements" value="1.0 0.0 0.0 0.0 0.0-1.0 1.0 1.0 1.0 1.0"/>
+            </texture>
+            <float name="sheen" value="0"/>
+            <rgb name="sheen_tint" value="1 1 1"/>
+            <float name="clearcoat" value="0"/>
+            <float name="clearcoat_roughness" value="0.00089999995976686523"/>
+            <float name="eta" value="1.4500000476837158"/>
+            <float name="spec_ior_level" value="0.5"/>
+        </bsdf>
     </bsdf>
 
     <bsdf type="diffuse" id="mat-AI43_005_28" name="mat-AI43_005_28">
@@ -123,36 +278,240 @@
         </bsdf>
     </bsdf>
 
-    <bsdf type="diffuse" id="mat-AI43_005_32" name="mat-AI43_005_32">
-        <rgb name="reflectance" value="1 0 0.29999999999999999"/>
+    <bsdf type="twosided" id="mat-AI43_005_32" name="mat-AI43_005_32">
+        <bsdf type="blender_principled" name="bsdf">
+            <texture type="bitmap" name="base_color">
+                <string name="filename" value="textures/AI43_005_book_006.jpg"/>
+            </texture>
+            <rgb name="spec_tint" value="1 1 1"/>
+            <float name="transmission" value="0"/>
+            <float name="metallic" value="0"/>
+            <float name="anisotropic" value="0"/>
+
+            <texture type="color_ramp" name="roughness">
+                <texture type="bitmap" name="fac">
+                    <string name="filename" value="textures/AI43_005_book_008.jpg"/>
+                    <boolean name="raw" value="true"/>
+                </texture>
+                <string name="color_mode" value="RGB"/>
+                <string name="interpolation" value="LINEAR"/>
+                <string name="hue_interpolation" value="NEAR"/>
+                <string name="elements" value="1.0 0.0 0.0 0.0 0.0-1.0 1.0 1.0 1.0 1.0"/>
+            </texture>
+            <float name="sheen" value="0"/>
+            <rgb name="sheen_tint" value="1 1 1"/>
+            <float name="clearcoat" value="0"/>
+            <float name="clearcoat_roughness" value="0.00089999995976686523"/>
+            <float name="eta" value="1.4500000476837158"/>
+            <float name="spec_ior_level" value="0.5"/>
+        </bsdf>
     </bsdf>
 
-    <bsdf type="diffuse" id="mat-AI43_005_34" name="mat-AI43_005_34">
-        <rgb name="reflectance" value="1 0 0.29999999999999999"/>
+    <bsdf type="twosided" id="mat-AI43_005_34" name="mat-AI43_005_34">
+        <bsdf type="blender_principled" name="bsdf">
+            <texture type="bitmap" name="base_color">
+                <string name="filename" value="textures/AI43_005_book_016.jpg"/>
+                <boolean name="raw" value="true"/>
+            </texture>
+            <rgb name="spec_tint" value="1 1 1"/>
+            <float name="transmission" value="0"/>
+            <float name="metallic" value="0"/>
+            <float name="anisotropic" value="0"/>
+
+            <texture type="color_ramp" name="roughness">
+                <texture type="bitmap" name="fac">
+                    <string name="filename" value="textures/AI43_005_book_016.jpg"/>
+                    <boolean name="raw" value="true"/>
+                </texture>
+                <string name="color_mode" value="RGB"/>
+                <string name="interpolation" value="LINEAR"/>
+                <string name="hue_interpolation" value="NEAR"/>
+                <string name="elements" value="1.0 1.0 1.0 1.0 0.0-1.0 0.1351105272769928 0.1351105272769928 0.1351105272769928 1.0"/>
+            </texture>
+            <float name="sheen" value="0"/>
+            <rgb name="sheen_tint" value="1 1 1"/>
+            <float name="clearcoat" value="0"/>
+            <float name="clearcoat_roughness" value="0.00089999995976686523"/>
+            <float name="eta" value="1.4500000476837158"/>
+            <float name="spec_ior_level" value="0.5"/>
+        </bsdf>
     </bsdf>
 
-    <bsdf type="diffuse" id="mat-AI43_005_36" name="mat-AI43_005_36">
-        <rgb name="reflectance" value="1 0 0.29999999999999999"/>
+    <bsdf type="twosided" id="mat-AI43_005_36" name="mat-AI43_005_36">
+        <bsdf type="blender_principled" name="bsdf">
+            <texture type="bitmap" name="base_color">
+                <string name="filename" value="textures/AI43_005_book_013.jpg"/>
+                <boolean name="raw" value="true"/>
+            </texture>
+            <rgb name="spec_tint" value="1 1 1"/>
+            <float name="transmission" value="0"/>
+            <float name="metallic" value="0"/>
+            <float name="anisotropic" value="0"/>
+
+            <texture type="color_ramp" name="roughness">
+                <texture type="bitmap" name="fac">
+                    <string name="filename" value="textures/AI43_005_book_013.jpg"/>
+                    <boolean name="raw" value="true"/>
+                </texture>
+                <string name="color_mode" value="RGB"/>
+                <string name="interpolation" value="LINEAR"/>
+                <string name="hue_interpolation" value="NEAR"/>
+                <string name="elements" value="1.0 0.0 0.0 0.0 0.0-1.0 0.5616146326065063 0.5616146326065063 0.5616146326065063 1.0"/>
+            </texture>
+            <float name="sheen" value="0"/>
+            <rgb name="sheen_tint" value="1 1 1"/>
+            <float name="clearcoat" value="0"/>
+            <float name="clearcoat_roughness" value="0.00089999995976686523"/>
+            <float name="eta" value="1.4500000476837158"/>
+            <float name="spec_ior_level" value="0.5"/>
+        </bsdf>
     </bsdf>
 
-    <bsdf type="diffuse" id="mat-AI43_005_38" name="mat-AI43_005_38">
-        <rgb name="reflectance" value="1 0 0.29999999999999999"/>
+    <bsdf type="twosided" id="mat-AI43_005_38" name="mat-AI43_005_38">
+        <bsdf type="blender_principled" name="bsdf">
+            <texture type="bitmap" name="base_color">
+                <string name="filename" value="textures/AI43_005_book_007.jpg"/>
+                <boolean name="raw" value="true"/>
+            </texture>
+            <rgb name="spec_tint" value="1 1 1"/>
+            <float name="transmission" value="0"/>
+            <float name="metallic" value="0"/>
+            <float name="anisotropic" value="0"/>
+
+            <texture type="color_ramp" name="roughness">
+                <texture type="bitmap" name="fac">
+                    <string name="filename" value="textures/AI43_005_book_007.jpg"/>
+                    <boolean name="raw" value="true"/>
+                </texture>
+                <string name="color_mode" value="RGB"/>
+                <string name="interpolation" value="LINEAR"/>
+                <string name="hue_interpolation" value="NEAR"/>
+                <string name="elements" value="1.0 0.0 0.0 0.0 0.0-1.0 1.0 1.0 1.0 1.0"/>
+            </texture>
+            <float name="sheen" value="0"/>
+            <rgb name="sheen_tint" value="1 1 1"/>
+            <float name="clearcoat" value="0"/>
+            <float name="clearcoat_roughness" value="0.00089999995976686523"/>
+            <float name="eta" value="1.4500000476837158"/>
+            <float name="spec_ior_level" value="0.5"/>
+        </bsdf>
     </bsdf>
 
-    <bsdf type="diffuse" id="mat-AI43_005_40" name="mat-AI43_005_40">
-        <rgb name="reflectance" value="1 0 0.29999999999999999"/>
+    <bsdf type="twosided" id="mat-AI43_005_40" name="mat-AI43_005_40">
+        <bsdf type="blender_principled" name="bsdf">
+            <texture type="bitmap" name="base_color">
+                <string name="filename" value="textures/AI43_005_book_001.jpg"/>
+                <boolean name="raw" value="true"/>
+            </texture>
+            <rgb name="spec_tint" value="1 1 1"/>
+            <float name="transmission" value="0"/>
+            <float name="metallic" value="0"/>
+            <float name="anisotropic" value="0"/>
+
+            <texture type="color_ramp" name="roughness">
+                <texture type="bitmap" name="fac">
+                    <string name="filename" value="textures/AI43_005_book_001.jpg"/>
+                    <boolean name="raw" value="true"/>
+                </texture>
+                <string name="color_mode" value="RGB"/>
+                <string name="interpolation" value="LINEAR"/>
+                <string name="hue_interpolation" value="NEAR"/>
+                <string name="elements" value="1.0 0.0 0.0 0.0 0.0-1.0 1.0 1.0 1.0 1.0"/>
+            </texture>
+            <float name="sheen" value="0"/>
+            <rgb name="sheen_tint" value="1 1 1"/>
+            <float name="clearcoat" value="0"/>
+            <float name="clearcoat_roughness" value="0.00089999995976686523"/>
+            <float name="eta" value="1.4500000476837158"/>
+            <float name="spec_ior_level" value="0.5"/>
+        </bsdf>
     </bsdf>
 
-    <bsdf type="diffuse" id="mat-AI43_005_42" name="mat-AI43_005_42">
-        <rgb name="reflectance" value="1 0 0.29999999999999999"/>
+    <bsdf type="twosided" id="mat-AI43_005_42" name="mat-AI43_005_42">
+        <bsdf type="blender_principled" name="bsdf">
+            <texture type="bitmap" name="base_color">
+                <string name="filename" value="textures/AI43_005_book_004.jpg"/>
+            </texture>
+            <rgb name="spec_tint" value="1 1 1"/>
+            <float name="transmission" value="0"/>
+            <float name="metallic" value="0"/>
+            <float name="anisotropic" value="0"/>
+
+            <texture type="color_ramp" name="roughness">
+                <texture type="bitmap" name="fac">
+                    <string name="filename" value="textures/AI43_005_book_008.jpg"/>
+                    <boolean name="raw" value="true"/>
+                </texture>
+                <string name="color_mode" value="RGB"/>
+                <string name="interpolation" value="LINEAR"/>
+                <string name="hue_interpolation" value="NEAR"/>
+                <string name="elements" value="1.0 0.0 0.0 0.0 0.0-1.0 1.0 1.0 1.0 1.0"/>
+            </texture>
+            <float name="sheen" value="0"/>
+            <rgb name="sheen_tint" value="1 1 1"/>
+            <float name="clearcoat" value="0"/>
+            <float name="clearcoat_roughness" value="0.00089999995976686523"/>
+            <float name="eta" value="1.4500000476837158"/>
+            <float name="spec_ior_level" value="0.5"/>
+        </bsdf>
     </bsdf>
 
-    <bsdf type="diffuse" id="mat-AI43_005_46" name="mat-AI43_005_46">
-        <rgb name="reflectance" value="1 0 0.29999999999999999"/>
+    <bsdf type="twosided" id="mat-AI43_005_46" name="mat-AI43_005_46">
+        <bsdf type="blender_principled" name="bsdf">
+            <texture type="bitmap" name="base_color">
+                <string name="filename" value="textures/AI43_005_book_012.jpg"/>
+                <boolean name="raw" value="true"/>
+            </texture>
+            <rgb name="spec_tint" value="1 1 1"/>
+            <float name="transmission" value="0"/>
+            <float name="metallic" value="0"/>
+            <float name="anisotropic" value="0"/>
+
+            <texture type="color_ramp" name="roughness">
+                <texture type="bitmap" name="fac">
+                    <string name="filename" value="textures/AI43_005_book_012.jpg"/>
+                    <boolean name="raw" value="true"/>
+                </texture>
+                <string name="color_mode" value="RGB"/>
+                <string name="interpolation" value="LINEAR"/>
+                <string name="hue_interpolation" value="NEAR"/>
+                <string name="elements" value="1.0 0.218786358833313 0.218786358833313 0.218786358833313 0.0-1.0 1.0 1.0 1.0 1.0"/>
+            </texture>
+            <float name="sheen" value="0"/>
+            <rgb name="sheen_tint" value="1 1 1"/>
+            <float name="clearcoat" value="0"/>
+            <float name="clearcoat_roughness" value="0.00089999995976686523"/>
+            <float name="eta" value="1.4500000476837158"/>
+            <float name="spec_ior_level" value="0.5"/>
+        </bsdf>
     </bsdf>
 
-    <bsdf type="diffuse" id="mat-AI43_005_48" name="mat-AI43_005_48">
-        <rgb name="reflectance" value="1 0 0.29999999999999999"/>
+    <bsdf type="twosided" id="mat-AI43_005_48" name="mat-AI43_005_48">
+        <bsdf type="blender_principled" name="bsdf">
+            <texture type="bitmap" name="base_color">
+                <string name="filename" value="textures/AI43_005_book_006_cover_color.png"/>
+            </texture>
+            <rgb name="spec_tint" value="1 1 1"/>
+            <float name="transmission" value="0"/>
+            <float name="metallic" value="0"/>
+            <float name="anisotropic" value="0"/>
+
+            <texture type="color_ramp" name="roughness">
+                <texture type="bitmap" name="fac">
+                    <string name="filename" value="textures/AI43_005_book_006_cover_color.png"/>
+                </texture>
+                <string name="color_mode" value="RGB"/>
+                <string name="interpolation" value="LINEAR"/>
+                <string name="hue_interpolation" value="NEAR"/>
+                <string name="elements" value="1.0 1.0 1.0 1.0 0.0-1.0 0.0 0.0 0.0 1.0"/>
+            </texture>
+            <float name="sheen" value="0"/>
+            <rgb name="sheen_tint" value="1 1 1"/>
+            <float name="clearcoat" value="0"/>
+            <float name="clearcoat_roughness" value="0.00089999995976686523"/>
+            <float name="eta" value="1.4500000476837158"/>
+            <float name="spec_ior_level" value="0.5"/>
+        </bsdf>
     </bsdf>
 
     <bsdf type="twosided" id="mat-AI43_005_49" name="mat-AI43_005_49">
@@ -174,28 +533,181 @@
         </bsdf>
     </bsdf>
 
-    <bsdf type="diffuse" id="mat-AI43_005_51" name="mat-AI43_005_51">
-        <rgb name="reflectance" value="1 0 0.29999999999999999"/>
+    <bsdf type="twosided" id="mat-AI43_005_51" name="mat-AI43_005_51">
+        <bsdf type="blender_principled" name="bsdf">
+            <texture type="bitmap" name="base_color">
+                <string name="filename" value="textures/AI43_005_book_003_cover_color.png"/>
+            </texture>
+            <rgb name="spec_tint" value="1 1 1"/>
+            <float name="transmission" value="0"/>
+            <float name="metallic" value="0"/>
+            <float name="anisotropic" value="0"/>
+
+            <texture type="color_ramp" name="roughness">
+                <texture type="bitmap" name="fac">
+                    <string name="filename" value="textures/AI43_005_book_003_cover_bump.png"/>
+                </texture>
+                <string name="color_mode" value="RGB"/>
+                <string name="interpolation" value="LINEAR"/>
+                <string name="hue_interpolation" value="NEAR"/>
+                <string name="elements" value="1.0 0.6859443187713623 0.6859443187713623 0.6859443187713623 0.0-1.0 1.0 1.0 1.0 1.0"/>
+            </texture>
+            <float name="sheen" value="0"/>
+            <rgb name="sheen_tint" value="1 1 1"/>
+            <float name="clearcoat" value="0"/>
+            <float name="clearcoat_roughness" value="0.00089999995976686523"/>
+            <float name="eta" value="1.4500000476837158"/>
+            <float name="spec_ior_level" value="0.5"/>
+        </bsdf>
     </bsdf>
 
-    <bsdf type="diffuse" id="mat-AI43_005_53" name="mat-AI43_005_53">
-        <rgb name="reflectance" value="1 0 0.29999999999999999"/>
+    <bsdf type="twosided" id="mat-AI43_005_53" name="mat-AI43_005_53">
+        <bsdf type="blender_principled" name="bsdf">
+            <texture type="bitmap" name="base_color">
+                <string name="filename" value="textures/AI43_005_book_005_cover_color.png"/>
+                <boolean name="raw" value="true"/>
+            </texture>
+            <rgb name="spec_tint" value="1 1 1"/>
+            <float name="transmission" value="0"/>
+            <float name="metallic" value="0"/>
+            <float name="anisotropic" value="0"/>
+
+            <texture type="color_ramp" name="roughness">
+                <texture type="bitmap" name="fac">
+                    <string name="filename" value="textures/AI43_005_book_005_cover_color.png"/>
+                    <boolean name="raw" value="true"/>
+                </texture>
+                <string name="color_mode" value="RGB"/>
+                <string name="interpolation" value="LINEAR"/>
+                <string name="hue_interpolation" value="NEAR"/>
+                <string name="elements" value="1.0 1.0 1.0 1.0 0.0-1.0 0.2981150150299072 0.2981150150299072 0.2981150150299072 1.0"/>
+            </texture>
+            <float name="sheen" value="0"/>
+            <rgb name="sheen_tint" value="1 1 1"/>
+            <float name="clearcoat" value="0"/>
+            <float name="clearcoat_roughness" value="0.00089999995976686523"/>
+            <float name="eta" value="1.4500000476837158"/>
+            <float name="spec_ior_level" value="0.5"/>
+        </bsdf>
     </bsdf>
 
-    <bsdf type="diffuse" id="mat-AI43_005_54" name="mat-AI43_005_54">
-        <rgb name="reflectance" value="1 0 0.29999999999999999"/>
+    <bsdf type="twosided" id="mat-AI43_005_54" name="mat-AI43_005_54">
+        <bsdf type="blender_principled" name="bsdf">
+            <texture type="bitmap" name="base_color">
+                <string name="filename" value="textures/Arch120_040_011.jpg"/>
+                <boolean name="raw" value="true"/>
+            </texture>
+            <rgb name="spec_tint" value="1 1 1"/>
+            <float name="transmission" value="0"/>
+            <float name="metallic" value="0"/>
+            <float name="anisotropic" value="0"/>
+
+            <texture type="color_ramp" name="roughness">
+                <texture type="bitmap" name="fac">
+                    <string name="filename" value="textures/Arch120_040_011.jpg"/>
+                    <boolean name="raw" value="true"/>
+                </texture>
+                <string name="color_mode" value="RGB"/>
+                <string name="interpolation" value="LINEAR"/>
+                <string name="hue_interpolation" value="NEAR"/>
+                <string name="elements" value="1.0 0.0 0.0 0.0 0.0-1.0 1.0 1.0 1.0 1.0"/>
+            </texture>
+            <float name="sheen" value="0"/>
+            <rgb name="sheen_tint" value="1 1 1"/>
+            <float name="clearcoat" value="0"/>
+            <float name="clearcoat_roughness" value="0.00089999995976686523"/>
+            <float name="eta" value="1.4500000476837158"/>
+            <float name="spec_ior_level" value="0.5"/>
+        </bsdf>
     </bsdf>
 
-    <bsdf type="diffuse" id="mat-AI43_005_55" name="mat-AI43_005_55">
-        <rgb name="reflectance" value="1 0 0.29999999999999999"/>
+    <bsdf type="twosided" id="mat-AI43_005_55" name="mat-AI43_005_55">
+        <bsdf type="blender_principled" name="bsdf">
+            <texture type="bitmap" name="base_color">
+                <string name="filename" value="textures/arch120_040_007.jpg"/>
+                <boolean name="raw" value="true"/>
+            </texture>
+            <rgb name="spec_tint" value="1 1 1"/>
+            <float name="transmission" value="0"/>
+            <float name="metallic" value="0"/>
+            <float name="anisotropic" value="0"/>
+
+            <texture type="color_ramp" name="roughness">
+                <texture type="bitmap" name="fac">
+                    <string name="filename" value="textures/arch120_040_007.jpg"/>
+                    <boolean name="raw" value="true"/>
+                </texture>
+                <string name="color_mode" value="RGB"/>
+                <string name="interpolation" value="LINEAR"/>
+                <string name="hue_interpolation" value="NEAR"/>
+                <string name="elements" value="1.0 0.0 0.0 0.0 0.0-1.0 1.0 1.0 1.0 1.0"/>
+            </texture>
+            <float name="sheen" value="0"/>
+            <rgb name="sheen_tint" value="1 1 1"/>
+            <float name="clearcoat" value="0"/>
+            <float name="clearcoat_roughness" value="0.00089999995976686523"/>
+            <float name="eta" value="1.4500000476837158"/>
+            <float name="spec_ior_level" value="0.5"/>
+        </bsdf>
     </bsdf>
 
-    <bsdf type="diffuse" id="mat-AI43_005_56" name="mat-AI43_005_56">
-        <rgb name="reflectance" value="1 0 0.29999999999999999"/>
+    <bsdf type="twosided" id="mat-AI43_005_56" name="mat-AI43_005_56">
+        <bsdf type="blender_principled" name="bsdf">
+            <texture type="bitmap" name="base_color">
+                <string name="filename" value="textures/arch120_040_001.jpg"/>
+                <boolean name="raw" value="true"/>
+            </texture>
+            <rgb name="spec_tint" value="1 1 1"/>
+            <float name="transmission" value="0"/>
+            <float name="metallic" value="0"/>
+            <float name="anisotropic" value="0"/>
+
+            <texture type="color_ramp" name="roughness">
+                <texture type="bitmap" name="fac">
+                    <string name="filename" value="textures/arch120_040_001.jpg"/>
+                    <boolean name="raw" value="true"/>
+                </texture>
+                <string name="color_mode" value="RGB"/>
+                <string name="interpolation" value="LINEAR"/>
+                <string name="hue_interpolation" value="NEAR"/>
+                <string name="elements" value="1.0 0.10829485207796097 0.10829485207796097 0.10829485207796097 0.0-1.0 1.0 1.0 1.0 1.0"/>
+            </texture>
+            <float name="sheen" value="0"/>
+            <rgb name="sheen_tint" value="1 1 1"/>
+            <float name="clearcoat" value="0"/>
+            <float name="clearcoat_roughness" value="0.00089999995976686523"/>
+            <float name="eta" value="1.4500000476837158"/>
+            <float name="spec_ior_level" value="0.5"/>
+        </bsdf>
     </bsdf>
 
-    <bsdf type="diffuse" id="mat-AI43_005_58" name="mat-AI43_005_58">
-        <rgb name="reflectance" value="1 0 0.29999999999999999"/>
+    <bsdf type="twosided" id="mat-AI43_005_58" name="mat-AI43_005_58">
+        <bsdf type="blender_principled" name="bsdf">
+            <texture type="bitmap" name="base_color">
+                <string name="filename" value="textures/arch120_040_002.jpg"/>
+            </texture>
+            <rgb name="spec_tint" value="1 1 1"/>
+            <float name="transmission" value="0"/>
+            <float name="metallic" value="0"/>
+            <float name="anisotropic" value="0"/>
+
+            <texture type="color_ramp" name="roughness">
+                <texture type="bitmap" name="fac">
+                    <string name="filename" value="textures/Arch120_040_008.jpg"/>
+                    <boolean name="raw" value="true"/>
+                </texture>
+                <string name="color_mode" value="RGB"/>
+                <string name="interpolation" value="LINEAR"/>
+                <string name="hue_interpolation" value="NEAR"/>
+                <string name="elements" value="1.0 0.0 0.0 0.0 0.0-1.0 1.0 1.0 1.0 1.0"/>
+            </texture>
+            <float name="sheen" value="0"/>
+            <rgb name="sheen_tint" value="1 1 1"/>
+            <float name="clearcoat" value="0"/>
+            <float name="clearcoat_roughness" value="0.00089999995976686523"/>
+            <float name="eta" value="1.4500000476837158"/>
+            <float name="spec_ior_level" value="0.5"/>
+        </bsdf>
     </bsdf>
 
     <bsdf type="twosided" id="mat-AI43_005_00" name="mat-AI43_005_00">
@@ -232,8 +744,38 @@
         </bsdf>
     </bsdf>
 
-    <bsdf type="diffuse" id="mat-AI43_005_10" name="mat-AI43_005_10">
-        <rgb name="reflectance" value="1 0 0.29999999999999999"/>
+    <bsdf type="twosided" id="mat-AI43_005_10" name="mat-AI43_005_10">
+        <bsdf type="blender_principled" name="bsdf">
+            <texture type="brightness_contrast" name="base_color">
+                <texture type="bitmap" name="color">
+                    <string name="filename" value="textures/AI43_005_wood_color_03.jpg"/>
+                    <boolean name="raw" value="true"/>
+                </texture>
+                <float name="brightness" value="0"/>
+                <float name="contrast" value="0.19999998807907104"/>
+            </texture>
+            <rgb name="spec_tint" value="1 1 1"/>
+            <float name="transmission" value="0"/>
+            <float name="metallic" value="0"/>
+            <float name="anisotropic" value="0"/>
+
+            <texture type="color_ramp" name="roughness">
+                <texture type="bitmap" name="fac">
+                    <string name="filename" value="textures/AI43_005_wood_color_03.jpg"/>
+                    <boolean name="raw" value="true"/>
+                </texture>
+                <string name="color_mode" value="RGB"/>
+                <string name="interpolation" value="LINEAR"/>
+                <string name="hue_interpolation" value="NEAR"/>
+                <string name="elements" value="1.0 1.0 1.0 1.0 0.0-1.0 0.0 0.0 0.0 0.8545455932617188"/>
+            </texture>
+            <float name="sheen" value="0"/>
+            <rgb name="sheen_tint" value="1 1 1"/>
+            <float name="clearcoat" value="0"/>
+            <float name="clearcoat_roughness" value="0.00089999995976686523"/>
+            <float name="eta" value="1.4500000476837158"/>
+            <float name="spec_ior_level" value="0.5"/>
+        </bsdf>
     </bsdf>
 
     <bsdf type="twosided" id="mat-AI43_005_109" name="mat-AI43_005_109">
@@ -253,8 +795,34 @@
         </bsdf>
     </bsdf>
 
-    <bsdf type="diffuse" id="mat-AI43_005_77" name="mat-AI43_005_77">
-        <rgb name="reflectance" value="1 0 0.29999999999999999"/>
+    <bsdf type="twosided" id="mat-AI43_005_77" name="mat-AI43_005_77">
+        <bsdf type="blender_principled" name="bsdf">
+            <texture type="bitmap" name="base_color">
+                <string name="filename" value="textures/AI43_005_floor_color_01.jpg"/>
+                <boolean name="raw" value="true"/>
+            </texture>
+            <rgb name="spec_tint" value="1 1 1"/>
+            <float name="transmission" value="0"/>
+            <float name="metallic" value="0"/>
+            <float name="anisotropic" value="0"/>
+
+            <texture type="color_ramp" name="roughness">
+                <texture type="bitmap" name="fac">
+                    <string name="filename" value="textures/AI43_005_floor_color_01.jpg"/>
+                    <boolean name="raw" value="true"/>
+                </texture>
+                <string name="color_mode" value="RGB"/>
+                <string name="interpolation" value="LINEAR"/>
+                <string name="hue_interpolation" value="NEAR"/>
+                <string name="elements" value="1.0 0.0363621860742569 0.0363621860742569 0.0363621860742569 0.0-1.0 1.0 1.0 1.0 1.0"/>
+            </texture>
+            <float name="sheen" value="0"/>
+            <rgb name="sheen_tint" value="1 1 1"/>
+            <float name="clearcoat" value="0"/>
+            <float name="clearcoat_roughness" value="0.00089999995976686523"/>
+            <float name="eta" value="1.4500000476837158"/>
+            <float name="spec_ior_level" value="0.5"/>
+        </bsdf>
     </bsdf>
 
     <bsdf type="blender_principled" id="mat-glass_004" name="mat-glass_004">
@@ -272,8 +840,34 @@
         <float name="spec_ior_level" value="0.5"/>
     </bsdf>
 
-    <bsdf type="diffuse" id="mat-AI43_005_93" name="mat-AI43_005_93">
-        <rgb name="reflectance" value="1 0 0.29999999999999999"/>
+    <bsdf type="twosided" id="mat-AI43_005_93" name="mat-AI43_005_93">
+        <bsdf type="blender_principled" name="bsdf">
+            <texture type="bitmap" name="base_color">
+                <string name="filename" value="textures/AI43_005_ground_color_001.jpg"/>
+                <boolean name="raw" value="true"/>
+            </texture>
+            <rgb name="spec_tint" value="1 1 1"/>
+            <float name="transmission" value="0"/>
+            <float name="metallic" value="0"/>
+            <float name="anisotropic" value="0"/>
+
+            <texture type="color_ramp" name="roughness">
+                <texture type="bitmap" name="fac">
+                    <string name="filename" value="textures/AI43_005_ground_color_001.jpg"/>
+                    <boolean name="raw" value="true"/>
+                </texture>
+                <string name="color_mode" value="RGB"/>
+                <string name="interpolation" value="LINEAR"/>
+                <string name="hue_interpolation" value="NEAR"/>
+                <string name="elements" value="1.0 1.0 1.0 1.0 0.0-1.0 0.0 0.0 0.0 1.0"/>
+            </texture>
+            <float name="sheen" value="0"/>
+            <rgb name="sheen_tint" value="1 1 1"/>
+            <float name="clearcoat" value="0"/>
+            <float name="clearcoat_roughness" value="0.00089999995976686523"/>
+            <float name="eta" value="1.4500000476837158"/>
+            <float name="spec_ior_level" value="0.5"/>
+        </bsdf>
     </bsdf>
 
     <bsdf type="twosided" id="mat-AI43_005_65" name="mat-AI43_005_65">
@@ -293,12 +887,60 @@
         </bsdf>
     </bsdf>
 
-    <bsdf type="diffuse" id="mat-AI43_005_75" name="mat-AI43_005_75">
-        <rgb name="reflectance" value="1 0 0.29999999999999999"/>
+    <bsdf type="twosided" id="mat-AI43_005_75" name="mat-AI43_005_75">
+        <bsdf type="blender_principled" name="bsdf">
+            <texture type="bitmap" name="base_color">
+                <string name="filename" value="textures/AI43_005_75_diffuse.jpg"/>
+            </texture>
+            <rgb name="spec_tint" value="1 1 1"/>
+            <float name="transmission" value="0"/>
+            <float name="metallic" value="1"/>
+            <float name="anisotropic" value="0"/>
+
+            <texture type="color_ramp" name="roughness">
+                <texture type="bitmap" name="fac">
+                    <string name="filename" value="textures/AI43_005_75_bump.jpg"/>
+                    <boolean name="raw" value="true"/>
+                </texture>
+                <string name="color_mode" value="RGB"/>
+                <string name="interpolation" value="LINEAR"/>
+                <string name="hue_interpolation" value="NEAR"/>
+                <string name="elements" value="1.0 0.0 0.0 0.0 0.0-1.0 0.05780491232872009 0.05780491232872009 0.05780491232872009 1.0"/>
+            </texture>
+            <float name="sheen" value="0"/>
+            <rgb name="sheen_tint" value="1 1 1"/>
+            <float name="clearcoat" value="0"/>
+            <float name="clearcoat_roughness" value="0.00089999995976686523"/>
+            <float name="eta" value="1.4500000476837158"/>
+            <float name="spec_ior_level" value="0.5"/>
+        </bsdf>
     </bsdf>
 
-    <bsdf type="diffuse" id="mat-AI43_005_66" name="mat-AI43_005_66">
-        <rgb name="reflectance" value="1 0 0.29999999999999999"/>
+    <bsdf type="twosided" id="mat-AI43_005_66" name="mat-AI43_005_66">
+        <bsdf type="blender_principled" name="bsdf">
+            <texture type="mix_color" name="base_color">
+                <string name="blend_type" value="MIX"/>
+                <boolean name="clamp_result" value="false"/>
+                <boolean name="clamp_factor" value="true"/>
+
+                <texture type="bitmap" name="factor">
+                    <string name="filename" value="textures/ArchModels_68_017_03.jpg"/>
+                </texture>
+                <rgb name="a" value="0.038034908473491669 0.038034908473491669 0.038034908473491669"/>
+                <rgb name="b" value="0.5 0.5 0.5"/>
+            </texture>
+            <rgb name="spec_tint" value="1 1 1"/>
+            <float name="transmission" value="0"/>
+            <float name="metallic" value="1"/>
+            <float name="anisotropic" value="0"/>
+            <float name="roughness" value="0.020069448384973931"/>
+            <float name="sheen" value="0"/>
+            <rgb name="sheen_tint" value="1 1 1"/>
+            <float name="clearcoat" value="0"/>
+            <float name="clearcoat_roughness" value="0.00089999995976686523"/>
+            <float name="eta" value="1.4500000476837158"/>
+            <float name="spec_ior_level" value="0.5"/>
+        </bsdf>
     </bsdf>
 
     <bsdf type="twosided" id="mat-AI43_005_67" name="mat-AI43_005_67">
@@ -420,8 +1062,51 @@
         </bsdf>
     </bsdf>
 
-    <bsdf type="diffuse" id="mat-AI43_005_108" name="mat-AI43_005_108">
-        <rgb name="reflectance" value="1 0 0.29999999999999999"/>
+    <bsdf type="blendbsdf" id="mat-AI43_005_108" name="mat-AI43_005_108">
+        <rgb name="weight" value="0.5 0.5 0.5"/>
+
+        <bsdf type="translucent" name="bsdf1">
+            <texture type="rgb_curve" name="color">
+                <float name="factor" value="1"/>
+
+                <texture type="bitmap" name="color">
+                    <string name="filename" value="textures/AI43_005_pillow_color_01.jpg"/>
+                </texture>
+                <string name="points_c" value="0.0 0.0-0.4590909481048584 0.5624998807907104-1.0 1.0"/>
+                <string name="points_r" value="0.0 0.0-1.0 1.0"/>
+                <string name="points_g" value="0.0 0.0-1.0 1.0"/>
+                <string name="points_b" value="0.0 0.0-1.0 1.0"/>
+            </texture>
+        </bsdf>
+
+        <bsdf type="twosided" name="bsdf2">
+            <bsdf type="blender_principled" name="bsdf">
+                <texture type="bitmap" name="base_color">
+                    <string name="filename" value="textures/AI43_005_pillow_color_01.jpg"/>
+                </texture>
+                <rgb name="spec_tint" value="1 1 1"/>
+                <float name="transmission" value="0"/>
+                <float name="metallic" value="0"/>
+                <float name="anisotropic" value="0"/>
+
+                <texture type="color_ramp" name="roughness">
+                    <texture type="bitmap" name="fac">
+                        <string name="filename" value="textures/AI43_005_108_bump.jpg"/>
+                        <boolean name="raw" value="true"/>
+                    </texture>
+                    <string name="color_mode" value="RGB"/>
+                    <string name="interpolation" value="LINEAR"/>
+                    <string name="hue_interpolation" value="NEAR"/>
+                    <string name="elements" value="1.0 1.0 1.0 1.0 0.0-1.0 0.0 0.0 0.0 1.0"/>
+                </texture>
+                <float name="sheen" value="0.20000000298023224"/>
+                <rgb name="sheen_tint" value="1 1 1"/>
+                <float name="clearcoat" value="0"/>
+                <float name="clearcoat_roughness" value="0.00089999995976686523"/>
+                <float name="eta" value="1.4500000476837158"/>
+                <float name="spec_ior_level" value="0.5"/>
+            </bsdf>
+        </bsdf>
     </bsdf>
 
     <bsdf type="diffuse" id="mat-AI43_005_06" name="mat-AI43_005_06">
@@ -483,12 +1168,73 @@
         </bsdf>
     </bsdf>
 
-    <bsdf type="diffuse" id="mat-AI43_005_104" name="mat-AI43_005_104">
-        <rgb name="reflectance" value="1 0 0.29999999999999999"/>
+    <bsdf type="blendbsdf" id="mat-AI43_005_104" name="mat-AI43_005_104">
+        <rgb name="weight" value="0.5 0.5 0.5"/>
+
+        <bsdf type="translucent" name="bsdf1">
+            <texture type="bitmap" name="color">
+                <string name="filename" value="textures/AI43_005_pillow_color_02.jpg"/>
+            </texture>
+        </bsdf>
+
+        <bsdf type="twosided" name="bsdf2">
+            <bsdf type="blender_principled" name="bsdf">
+                <texture type="bitmap" name="base_color">
+                    <string name="filename" value="textures/AI43_005_pillow_color_02.jpg"/>
+                </texture>
+                <rgb name="spec_tint" value="1 1 1"/>
+                <float name="transmission" value="0"/>
+                <float name="metallic" value="0"/>
+                <float name="anisotropic" value="0"/>
+
+                <texture type="color_ramp" name="roughness">
+                    <texture type="bitmap" name="fac">
+                        <string name="filename" value="textures/AI43_005_104_bump.jpg"/>
+                        <boolean name="raw" value="true"/>
+                    </texture>
+                    <string name="color_mode" value="RGB"/>
+                    <string name="interpolation" value="LINEAR"/>
+                    <string name="hue_interpolation" value="NEAR"/>
+                    <string name="elements" value="1.0 1.0 1.0 1.0 0.0-1.0 0.19150158762931824 0.19150158762931824 0.19150158762931824 1.0"/>
+                </texture>
+                <float name="sheen" value="0.20000000298023224"/>
+                <rgb name="sheen_tint" value="1 1 1"/>
+                <float name="clearcoat" value="0"/>
+                <float name="clearcoat_roughness" value="0.00089999995976686523"/>
+                <float name="eta" value="1.4500000476837158"/>
+                <float name="spec_ior_level" value="0.5"/>
+            </bsdf>
+        </bsdf>
     </bsdf>
 
-    <bsdf type="diffuse" id="mat-AI43_005_13" name="mat-AI43_005_13">
-        <rgb name="reflectance" value="1 0 0.29999999999999999"/>
+    <bsdf type="twosided" id="mat-AI43_005_13" name="mat-AI43_005_13">
+        <bsdf type="blender_principled" name="bsdf">
+            <texture type="bitmap" name="base_color">
+                <string name="filename" value="textures/AI43_005_13_diffuse.jpg"/>
+                <boolean name="raw" value="true"/>
+            </texture>
+            <rgb name="spec_tint" value="1 1 1"/>
+            <float name="transmission" value="0"/>
+            <float name="metallic" value="0"/>
+            <float name="anisotropic" value="0"/>
+
+            <texture type="color_ramp" name="roughness">
+                <texture type="bitmap" name="fac">
+                    <string name="filename" value="textures/AI43_005_13_diffuse.jpg"/>
+                    <boolean name="raw" value="true"/>
+                </texture>
+                <string name="color_mode" value="RGB"/>
+                <string name="interpolation" value="LINEAR"/>
+                <string name="hue_interpolation" value="NEAR"/>
+                <string name="elements" value="1.0 0.6807870864868164 0.6807870864868164 0.6807870864868164 0.0-1.0 0.0 0.0 0.0 0.804545521736145"/>
+            </texture>
+            <float name="sheen" value="0"/>
+            <rgb name="sheen_tint" value="1 1 1"/>
+            <float name="clearcoat" value="0"/>
+            <float name="clearcoat_roughness" value="0.00089999995976686523"/>
+            <float name="eta" value="1.4500000476837158"/>
+            <float name="spec_ior_level" value="0.5"/>
+        </bsdf>
     </bsdf>
 
     <bsdf type="twosided" id="mat-AI43_005_14" name="mat-AI43_005_14">
@@ -508,12 +1254,77 @@
         </bsdf>
     </bsdf>
 
-    <bsdf type="diffuse" id="mat-AI43_005_59" name="mat-AI43_005_59">
-        <rgb name="reflectance" value="1 0 0.29999999999999999"/>
+    <bsdf type="twosided" id="mat-AI43_005_59" name="mat-AI43_005_59">
+        <bsdf type="blender_principled" name="bsdf">
+            <texture type="mix_color" name="base_color">
+                <string name="blend_type" value="MIX"/>
+                <boolean name="clamp_result" value="false"/>
+                <boolean name="clamp_factor" value="true"/>
+                <float name="factor" value="0.10000000149011612"/>
+
+                <texture type="bitmap" name="a">
+                    <string name="filename" value="textures/archmodels76_016_apple-diff.jpg"/>
+                </texture>
+
+                <texture type="bitmap" name="b">
+                    <string name="filename" value="textures/archmodels76_016_apple-diff.jpg"/>
+                </texture>
+            </texture>
+            <rgb name="spec_tint" value="1 1 1"/>
+            <float name="transmission" value="0"/>
+            <float name="metallic" value="0"/>
+            <float name="anisotropic" value="0"/>
+
+            <texture type="color_ramp" name="roughness">
+                <texture type="bitmap" name="fac">
+                    <string name="filename" value="textures/AI43_005_59_bump.jpg"/>
+                    <boolean name="raw" value="true"/>
+                </texture>
+                <string name="color_mode" value="RGB"/>
+                <string name="interpolation" value="LINEAR"/>
+                <string name="hue_interpolation" value="NEAR"/>
+                <string name="elements" value="1.0 0.22842654585838318 0.22842654585838318 0.22842654585838318 0.0-1.0 1.0 1.0 1.0 1.0"/>
+            </texture>
+            <float name="sheen" value="0"/>
+            <rgb name="sheen_tint" value="1 1 1"/>
+            <float name="clearcoat" value="0"/>
+            <float name="clearcoat_roughness" value="0.00089999995976686523"/>
+            <float name="eta" value="1.4500000476837158"/>
+            <float name="spec_ior_level" value="0.5"/>
+        </bsdf>
     </bsdf>
 
-    <bsdf type="diffuse" id="mat-AI43_005_17" name="mat-AI43_005_17">
-        <rgb name="reflectance" value="1 0 0.29999999999999999"/>
+    <bsdf type="twosided" id="mat-AI43_005_17" name="mat-AI43_005_17">
+        <bsdf type="blender_principled" name="bsdf">
+            <texture type="brightness_contrast" name="base_color">
+                <texture type="bitmap" name="color">
+                    <string name="filename" value="textures/AI43_005_17_diffuse.jpg"/>
+                </texture>
+                <float name="brightness" value="0"/>
+                <float name="contrast" value="0.099999994039535522"/>
+            </texture>
+            <rgb name="spec_tint" value="1 1 1"/>
+            <float name="transmission" value="0"/>
+            <float name="metallic" value="0"/>
+            <float name="anisotropic" value="0"/>
+
+            <texture type="color_ramp" name="roughness">
+                <texture type="bitmap" name="fac">
+                    <string name="filename" value="textures/AM134_14_wood_1.png"/>
+                    <boolean name="raw" value="true"/>
+                </texture>
+                <string name="color_mode" value="RGB"/>
+                <string name="interpolation" value="LINEAR"/>
+                <string name="hue_interpolation" value="NEAR"/>
+                <string name="elements" value="1.0 0.0 0.0 0.0 0.0-1.0 1.0 1.0 1.0 1.0"/>
+            </texture>
+            <float name="sheen" value="0"/>
+            <rgb name="sheen_tint" value="1 1 1"/>
+            <float name="clearcoat" value="0"/>
+            <float name="clearcoat_roughness" value="0.00089999995976686523"/>
+            <float name="eta" value="1.4500000476837158"/>
+            <float name="spec_ior_level" value="0.5"/>
+        </bsdf>
     </bsdf>
 
     <bsdf type="twosided" id="mat-AI43_005_18" name="mat-AI43_005_18">
@@ -616,8 +1427,51 @@
         </bsdf>
     </bsdf>
 
-    <bsdf type="diffuse" id="mat-AI43_005_12" name="mat-AI43_005_12">
-        <rgb name="reflectance" value="1 0 0.29999999999999999"/>
+    <bsdf type="twosided" id="mat-AI43_005_12" name="mat-AI43_005_12">
+        <bsdf type="blender_principled" name="bsdf">
+            <texture type="mix_color" name="base_color">
+                <string name="blend_type" value="OVERLAY"/>
+                <boolean name="clamp_result" value="false"/>
+                <boolean name="clamp_factor" value="true"/>
+                <float name="factor" value="0.5"/>
+                <rgb name="a" value="0.35157904028892517 0.35157904028892517 0.35157904028892517"/>
+
+                <texture type="bitmap" name="b">
+                    <string name="filename" value="textures/ArchModels_68_017_012.jpg"/>
+                </texture>
+            </texture>
+            <rgb name="spec_tint" value="1 1 1"/>
+            <float name="transmission" value="0"/>
+
+            <texture type="color_ramp" name="metallic">
+                <texture type="bitmap" name="fac">
+                    <string name="filename" value="textures/AI43_005_12_bump.jpg"/>
+                    <boolean name="raw" value="true"/>
+                </texture>
+                <string name="color_mode" value="RGB"/>
+                <string name="interpolation" value="LINEAR"/>
+                <string name="hue_interpolation" value="NEAR"/>
+                <string name="elements" value="1.0 0.9191595911979675 0.9191595911979675 0.9191595911979675 0.0-1.0 1.0 1.0 1.0 1.0"/>
+            </texture>
+            <float name="anisotropic" value="0"/>
+
+            <texture type="color_ramp" name="roughness">
+                <texture type="bitmap" name="fac">
+                    <string name="filename" value="textures/AI43_005_12_bump.jpg"/>
+                    <boolean name="raw" value="true"/>
+                </texture>
+                <string name="color_mode" value="RGB"/>
+                <string name="interpolation" value="LINEAR"/>
+                <string name="hue_interpolation" value="NEAR"/>
+                <string name="elements" value="1.0 0.1637367457151413 0.1637367457151413 0.1637367457151413 0.0-1.0 0.0 0.0 0.0 1.0"/>
+            </texture>
+            <float name="sheen" value="0"/>
+            <rgb name="sheen_tint" value="1 1 1"/>
+            <float name="clearcoat" value="0"/>
+            <float name="clearcoat_roughness" value="0.00089999995976686523"/>
+            <float name="eta" value="1.4500000476837158"/>
+            <float name="spec_ior_level" value="0.5"/>
+        </bsdf>
     </bsdf>
 
     <bsdf type="twosided" id="mat-AI43_005_86" name="mat-AI43_005_86">
@@ -637,8 +1491,42 @@
         </bsdf>
     </bsdf>
 
-    <bsdf type="diffuse" id="mat-AI43_005_15" name="mat-AI43_005_15">
-        <rgb name="reflectance" value="1 0 0.29999999999999999"/>
+    <bsdf type="twosided" id="mat-AI43_005_15" name="mat-AI43_005_15">
+        <bsdf type="blender_principled" name="bsdf">
+            <texture type="rgb_curve" name="base_color">
+                <float name="factor" value="1"/>
+
+                <texture type="bitmap" name="color">
+                    <string name="filename" value="textures/AI43_005_wood_color_01.jpg"/>
+                    <boolean name="raw" value="true"/>
+                </texture>
+                <string name="points_c" value="0.0 0.0-0.5818181037902832 0.40000006556510925-1.0 1.0"/>
+                <string name="points_r" value="0.0 0.0-1.0 1.0"/>
+                <string name="points_g" value="0.0 0.0-1.0 1.0"/>
+                <string name="points_b" value="0.0 0.0-1.0 1.0"/>
+            </texture>
+            <rgb name="spec_tint" value="1 1 1"/>
+            <float name="transmission" value="0"/>
+            <float name="metallic" value="0"/>
+            <float name="anisotropic" value="0"/>
+
+            <texture type="color_ramp" name="roughness">
+                <texture type="bitmap" name="fac">
+                    <string name="filename" value="textures/AI43_005_wood_color_01.jpg"/>
+                    <boolean name="raw" value="true"/>
+                </texture>
+                <string name="color_mode" value="RGB"/>
+                <string name="interpolation" value="LINEAR"/>
+                <string name="hue_interpolation" value="NEAR"/>
+                <string name="elements" value="1.0 0.336829274892807 0.336829274892807 0.336829274892807 0.0-1.0 0.0 0.0 0.0 1.0"/>
+            </texture>
+            <float name="sheen" value="0"/>
+            <rgb name="sheen_tint" value="1 1 1"/>
+            <float name="clearcoat" value="0"/>
+            <float name="clearcoat_roughness" value="0.00089999995976686523"/>
+            <float name="eta" value="1.4500000476837158"/>
+            <float name="spec_ior_level" value="0.5"/>
+        </bsdf>
     </bsdf>
 
     <bsdf type="twosided" id="mat-AI43_005_62" name="mat-AI43_005_62">
@@ -658,8 +1546,34 @@
         </bsdf>
     </bsdf>
 
-    <bsdf type="diffuse" id="mat-AI43_005_08" name="mat-AI43_005_08">
-        <rgb name="reflectance" value="1 0 0.29999999999999999"/>
+    <bsdf type="twosided" id="mat-AI43_005_08" name="mat-AI43_005_08">
+        <bsdf type="blender_principled" name="bsdf">
+            <texture type="bitmap" name="base_color">
+                <string name="filename" value="textures/AI43_005_marble_001.jpg"/>
+                <boolean name="raw" value="true"/>
+            </texture>
+            <rgb name="spec_tint" value="1 1 1"/>
+            <float name="transmission" value="0"/>
+            <float name="metallic" value="0"/>
+            <float name="anisotropic" value="0"/>
+
+            <texture type="color_ramp" name="roughness">
+                <texture type="bitmap" name="fac">
+                    <string name="filename" value="textures/AI43_005_marble_001.jpg"/>
+                    <boolean name="raw" value="true"/>
+                </texture>
+                <string name="color_mode" value="RGB"/>
+                <string name="interpolation" value="LINEAR"/>
+                <string name="hue_interpolation" value="NEAR"/>
+                <string name="elements" value="1.0 0.0 0.0 0.0 0.0-1.0 1.0 1.0 1.0 1.0"/>
+            </texture>
+            <float name="sheen" value="0"/>
+            <rgb name="sheen_tint" value="1 1 1"/>
+            <float name="clearcoat" value="0"/>
+            <float name="clearcoat_roughness" value="0.00089999995976686523"/>
+            <float name="eta" value="1.4500000476837158"/>
+            <float name="spec_ior_level" value="0.5"/>
+        </bsdf>
     </bsdf>
 
     <bsdf type="twosided" id="mat-AI43_005_01" name="mat-AI43_005_01">
@@ -679,12 +1593,64 @@
         </bsdf>
     </bsdf>
 
-    <bsdf type="diffuse" id="mat-AI43_005_105" name="mat-AI43_005_105">
-        <rgb name="reflectance" value="1 0 0.29999999999999999"/>
+    <bsdf type="blendbsdf" id="mat-AI43_005_105" name="mat-AI43_005_105">
+        <rgb name="weight" value="1 1 1"/>
+        <bsdf type="null" name="bsdf1"/>
+
+        <bsdf type="blendbsdf" name="bsdf2">
+            <rgb name="weight" value="0 0 0"/>
+
+            <bsdf type="blendbsdf" name="bsdf1">
+                <rgb name="weight" value="0 0 0"/>
+
+                <bsdf type="twosided" name="bsdf1">
+                    <bsdf type="diffuse" name="bsdf">
+                        <rgb name="reflectance" value="0.039215687662363052 0.039215687662363052 0.039215687662363052"/>
+                    </bsdf>
+                </bsdf>
+
+                <bsdf type="refraction" name="bsdf2">
+                    <rgb name="color" value="0 0 0"/>
+                    <float name="ior" value="1.6000000238418579"/>
+                    <float name="roughness" value="0"/>
+                </bsdf>
+            </bsdf>
+
+            <bsdf type="dielectric" name="bsdf2">
+                <float name="int_ior" value="180"/>
+                <rgb name="specular_transmittance" value="0 0 0"/>
+            </bsdf>
+        </bsdf>
     </bsdf>
 
-    <bsdf type="diffuse" id="mat-AI43_005_103" name="mat-AI43_005_103">
-        <rgb name="reflectance" value="1 0 0.29999999999999999"/>
+    <bsdf type="twosided" id="mat-AI43_005_103" name="mat-AI43_005_103">
+        <bsdf type="blender_principled" name="bsdf">
+            <texture type="bitmap" name="base_color">
+                <string name="filename" value="textures/AI43_005_103_diffuse.jpg"/>
+                <boolean name="raw" value="true"/>
+            </texture>
+            <rgb name="spec_tint" value="1 1 1"/>
+            <float name="transmission" value="0"/>
+            <float name="metallic" value="0"/>
+            <float name="anisotropic" value="0"/>
+
+            <texture type="color_ramp" name="roughness">
+                <texture type="bitmap" name="fac">
+                    <string name="filename" value="textures/AI43_005_103_diffuse.jpg"/>
+                    <boolean name="raw" value="true"/>
+                </texture>
+                <string name="color_mode" value="RGB"/>
+                <string name="interpolation" value="LINEAR"/>
+                <string name="hue_interpolation" value="NEAR"/>
+                <string name="elements" value="1.0 0.5069307684898376 0.5069307684898376 0.5069307684898376 0.0-1.0 0.056029096245765686 0.056029096245765686 0.056029096245765686 1.0"/>
+            </texture>
+            <float name="sheen" value="0"/>
+            <rgb name="sheen_tint" value="1 1 1"/>
+            <float name="clearcoat" value="0"/>
+            <float name="clearcoat_roughness" value="0.00089999995976686523"/>
+            <float name="eta" value="1.4500000476837158"/>
+            <float name="spec_ior_level" value="0.5"/>
+        </bsdf>
     </bsdf>
 
     <bsdf type="twosided" id="mat-AI43_005_04" name="mat-AI43_005_04">
@@ -695,10 +1661,10 @@
                 <texture type="bitmap" name="color">
                     <string name="filename" value="textures/AI43_005_plaster_color_001.jpg"/>
                 </texture>
-                <string name="points_c" value="0.0-0.0 0.3863636255264282-0.6187500357627869 1.0-1.0"/>
-                <string name="points_r" value="0.0-0.0 1.0-1.0"/>
-                <string name="points_g" value="0.0-0.0 1.0-1.0"/>
-                <string name="points_b" value="0.0-0.0 1.0-1.0"/>
+                <string name="points_c" value="0.0 0.0-0.3863636255264282 0.6187500357627869-1.0 1.0"/>
+                <string name="points_r" value="0.0 0.0-1.0 1.0"/>
+                <string name="points_g" value="0.0 0.0-1.0 1.0"/>
+                <string name="points_b" value="0.0 0.0-1.0 1.0"/>
             </texture>
             <rgb name="spec_tint" value="1 1 1"/>
             <float name="transmission" value="0"/>
@@ -714,8 +1680,41 @@
         </bsdf>
     </bsdf>
 
-    <bsdf type="diffuse" id="mat-AI43_005_61_001" name="mat-AI43_005_61_001">
-        <rgb name="reflectance" value="1 0 0.29999999999999999"/>
+    <bsdf type="twosided" id="mat-AI43_005_61_001" name="mat-AI43_005_61_001">
+        <bsdf type="blender_principled" name="bsdf">
+            <rgb name="base_color" value="0.068384855985641479 0.068384855985641479 0.068384855985641479"/>
+            <rgb name="spec_tint" value="1 1 1"/>
+            <float name="transmission" value="0"/>
+
+            <texture type="color_ramp" name="metallic">
+                <texture type="bitmap" name="fac">
+                    <string name="filename" value="textures/AI43_001_random_scratches_refl.jpg"/>
+                    <boolean name="raw" value="true"/>
+                </texture>
+                <string name="color_mode" value="RGB"/>
+                <string name="interpolation" value="LINEAR"/>
+                <string name="hue_interpolation" value="NEAR"/>
+                <string name="elements" value="1.0 0.28583425283432007 0.28583425283432007 0.28583425283432007 0.0-1.0 1.0 1.0 1.0 1.0"/>
+            </texture>
+            <float name="anisotropic" value="0"/>
+
+            <texture type="color_ramp" name="roughness">
+                <texture type="bitmap" name="fac">
+                    <string name="filename" value="textures/AI43_001_random_scratches_refl.jpg"/>
+                    <boolean name="raw" value="true"/>
+                </texture>
+                <string name="color_mode" value="RGB"/>
+                <string name="interpolation" value="LINEAR"/>
+                <string name="hue_interpolation" value="NEAR"/>
+                <string name="elements" value="1.0 1.0 1.0 1.0 0.0-1.0 0.0 0.0 0.0 1.0"/>
+            </texture>
+            <float name="sheen" value="0"/>
+            <rgb name="sheen_tint" value="1 1 1"/>
+            <float name="clearcoat" value="0"/>
+            <float name="clearcoat_roughness" value="0.00089999995976686523"/>
+            <float name="eta" value="1.4500000476837158"/>
+            <float name="spec_ior_level" value="0.5"/>
+        </bsdf>
     </bsdf>
 
     <bsdf type="twosided" id="mat-AI43_005_60" name="mat-AI43_005_60">
@@ -735,8 +1734,41 @@
         </bsdf>
     </bsdf>
 
-    <bsdf type="diffuse" id="mat-AI43_005_61" name="mat-AI43_005_61">
-        <rgb name="reflectance" value="1 0 0.29999999999999999"/>
+    <bsdf type="twosided" id="mat-AI43_005_61" name="mat-AI43_005_61">
+        <bsdf type="blender_principled" name="bsdf">
+            <rgb name="base_color" value="0.16264717280864716 0.16264717280864716 0.16264717280864716"/>
+            <rgb name="spec_tint" value="1 1 1"/>
+            <float name="transmission" value="0"/>
+
+            <texture type="color_ramp" name="metallic">
+                <texture type="bitmap" name="fac">
+                    <string name="filename" value="textures/AI43_001_random_scratches_refl.jpg"/>
+                    <boolean name="raw" value="true"/>
+                </texture>
+                <string name="color_mode" value="RGB"/>
+                <string name="interpolation" value="LINEAR"/>
+                <string name="hue_interpolation" value="NEAR"/>
+                <string name="elements" value="1.0 0.28583425283432007 0.28583425283432007 0.28583425283432007 0.0-1.0 1.0 1.0 1.0 1.0"/>
+            </texture>
+            <float name="anisotropic" value="0"/>
+
+            <texture type="color_ramp" name="roughness">
+                <texture type="bitmap" name="fac">
+                    <string name="filename" value="textures/AI43_001_random_scratches_refl.jpg"/>
+                    <boolean name="raw" value="true"/>
+                </texture>
+                <string name="color_mode" value="RGB"/>
+                <string name="interpolation" value="LINEAR"/>
+                <string name="hue_interpolation" value="NEAR"/>
+                <string name="elements" value="1.0 1.0 1.0 1.0 0.0-1.0 0.0 0.0 0.0 1.0"/>
+            </texture>
+            <float name="sheen" value="0"/>
+            <rgb name="sheen_tint" value="1 1 1"/>
+            <float name="clearcoat" value="0"/>
+            <float name="clearcoat_roughness" value="0.00089999995976686523"/>
+            <float name="eta" value="1.4500000476837158"/>
+            <float name="spec_ior_level" value="0.5"/>
+        </bsdf>
     </bsdf>
 
     <bsdf type="twosided" id="mat-AI43_005_64" name="mat-AI43_005_64">
@@ -756,8 +1788,42 @@
         </bsdf>
     </bsdf>
 
-    <bsdf type="diffuse" id="mat-AI43_005_91" name="mat-AI43_005_91">
-        <rgb name="reflectance" value="1 0 0.29999999999999999"/>
+    <bsdf type="twosided" id="mat-AI43_005_91" name="mat-AI43_005_91">
+        <bsdf type="blender_principled" name="bsdf">
+            <texture type="rgb_curve" name="base_color">
+                <float name="factor" value="1"/>
+
+                <texture type="bitmap" name="color">
+                    <string name="filename" value="textures/AI43_005_91_bump.jpg"/>
+                    <boolean name="raw" value="true"/>
+                </texture>
+                <string name="points_c" value="0.0 0.0-0.6954543590545654 0.23750001192092896-1.0 1.0"/>
+                <string name="points_r" value="0.0 0.0-1.0 1.0"/>
+                <string name="points_g" value="0.0 0.0-1.0 1.0"/>
+                <string name="points_b" value="0.0 0.0-1.0 1.0"/>
+            </texture>
+            <rgb name="spec_tint" value="1 1 1"/>
+            <float name="transmission" value="0"/>
+            <float name="metallic" value="0"/>
+            <float name="anisotropic" value="0"/>
+
+            <texture type="color_ramp" name="roughness">
+                <texture type="bitmap" name="fac">
+                    <string name="filename" value="textures/AI43_005_91_bump.jpg"/>
+                    <boolean name="raw" value="true"/>
+                </texture>
+                <string name="color_mode" value="RGB"/>
+                <string name="interpolation" value="LINEAR"/>
+                <string name="hue_interpolation" value="NEAR"/>
+                <string name="elements" value="1.0 0.2573951184749603 0.2573951184749603 0.2573951184749603 0.0-1.0 1.0 1.0 1.0 1.0"/>
+            </texture>
+            <float name="sheen" value="0"/>
+            <rgb name="sheen_tint" value="1 1 1"/>
+            <float name="clearcoat" value="0"/>
+            <float name="clearcoat_roughness" value="0.00089999995976686523"/>
+            <float name="eta" value="1.4500000476837158"/>
+            <float name="spec_ior_level" value="0.5"/>
+        </bsdf>
     </bsdf>
 
     <bsdf type="twosided" id="mat-AI43_005_92" name="mat-AI43_005_92">
@@ -828,16 +1894,97 @@
         </bsdf>
     </bsdf>
 
-    <bsdf type="diffuse" id="mat-AI43_005_89" name="mat-AI43_005_89">
-        <rgb name="reflectance" value="1 0 0.29999999999999999"/>
+    <bsdf type="twosided" id="mat-AI43_005_89" name="mat-AI43_005_89">
+        <bsdf type="blender_principled" name="bsdf">
+            <texture type="bitmap" name="base_color">
+                <string name="filename" value="textures/AI43_005_wood_color_06.jpg"/>
+            </texture>
+            <rgb name="spec_tint" value="1 1 1"/>
+            <float name="transmission" value="0"/>
+            <float name="metallic" value="0"/>
+            <float name="anisotropic" value="0"/>
+
+            <texture type="color_ramp" name="roughness">
+                <texture type="bitmap" name="fac">
+                    <string name="filename" value="textures/AI43_005_89_bump.jpg"/>
+                    <boolean name="raw" value="true"/>
+                </texture>
+                <string name="color_mode" value="RGB"/>
+                <string name="interpolation" value="LINEAR"/>
+                <string name="hue_interpolation" value="NEAR"/>
+                <string name="elements" value="1.0 1.0 1.0 1.0 0.05000000074505806-1.0 0.021820027381181717 0.021820027381181717 0.021820027381181717 1.0"/>
+            </texture>
+            <float name="sheen" value="0"/>
+            <rgb name="sheen_tint" value="1 1 1"/>
+            <float name="clearcoat" value="0"/>
+            <float name="clearcoat_roughness" value="0.00089999995976686523"/>
+            <float name="eta" value="1.4500000476837158"/>
+            <float name="spec_ior_level" value="0.5"/>
+        </bsdf>
     </bsdf>
 
-    <bsdf type="diffuse" id="mat-AI43_005_78" name="mat-AI43_005_78">
-        <rgb name="reflectance" value="1 0 0.29999999999999999"/>
+    <bsdf type="twosided" id="mat-AI43_005_78" name="mat-AI43_005_78">
+        <bsdf type="blender_principled" name="bsdf">
+            <texture type="brightness_contrast" name="base_color">
+                <texture type="bitmap" name="color">
+                    <string name="filename" value="textures/AI43_005_wood_color_03.jpg"/>
+                    <boolean name="raw" value="true"/>
+                </texture>
+                <float name="brightness" value="0"/>
+                <float name="contrast" value="0.099999994039535522"/>
+            </texture>
+            <rgb name="spec_tint" value="1 1 1"/>
+            <float name="transmission" value="0"/>
+            <float name="metallic" value="0"/>
+            <float name="anisotropic" value="0"/>
+
+            <texture type="color_ramp" name="roughness">
+                <texture type="bitmap" name="fac">
+                    <string name="filename" value="textures/AI43_005_wood_color_03.jpg"/>
+                    <boolean name="raw" value="true"/>
+                </texture>
+                <string name="color_mode" value="RGB"/>
+                <string name="interpolation" value="LINEAR"/>
+                <string name="hue_interpolation" value="NEAR"/>
+                <string name="elements" value="1.0 1.0 1.0 1.0 0.1818181872367859-1.0 0.0 0.0 0.0 0.8181818723678589"/>
+            </texture>
+            <float name="sheen" value="0"/>
+            <rgb name="sheen_tint" value="1 1 1"/>
+            <float name="clearcoat" value="0"/>
+            <float name="clearcoat_roughness" value="0.00089999995976686523"/>
+            <float name="eta" value="1.4500000476837158"/>
+            <float name="spec_ior_level" value="0.5"/>
+        </bsdf>
     </bsdf>
 
-    <bsdf type="diffuse" id="mat-AI43_005_07" name="mat-AI43_005_07">
-        <rgb name="reflectance" value="1 0 0.29999999999999999"/>
+    <bsdf type="twosided" id="mat-AI43_005_07" name="mat-AI43_005_07">
+        <bsdf type="blender_principled" name="bsdf">
+            <texture type="bitmap" name="base_color">
+                <string name="filename" value="textures/AI43_005_floor_color_01.jpg"/>
+                <boolean name="raw" value="true"/>
+            </texture>
+            <rgb name="spec_tint" value="1 1 1"/>
+            <float name="transmission" value="0"/>
+            <float name="metallic" value="0"/>
+            <float name="anisotropic" value="0"/>
+
+            <texture type="color_ramp" name="roughness">
+                <texture type="bitmap" name="fac">
+                    <string name="filename" value="textures/AI43_005_wood_color_01.jpg"/>
+                    <boolean name="raw" value="true"/>
+                </texture>
+                <string name="color_mode" value="RGB"/>
+                <string name="interpolation" value="LINEAR"/>
+                <string name="hue_interpolation" value="NEAR"/>
+                <string name="elements" value="1.0 0.0 0.0 0.0 0.0-1.0 0.386849582195282 0.386849582195282 0.386849582195282 1.0"/>
+            </texture>
+            <float name="sheen" value="0"/>
+            <rgb name="sheen_tint" value="1 1 1"/>
+            <float name="clearcoat" value="0"/>
+            <float name="clearcoat_roughness" value="0.00089999995976686523"/>
+            <float name="eta" value="1.4500000476837158"/>
+            <float name="spec_ior_level" value="0.5"/>
+        </bsdf>
     </bsdf>
 
     <bsdf type="twosided" id="mat-AI43_005_63" name="mat-AI43_005_63">
@@ -1633,52 +2780,52 @@
         <ref name="bsdf" id="mat-AI43_005_64"/>
     </shape>
 
-    <shape type="ply" name="elm__224">
+    <shape type="ply" name="elm__223">
         <string name="filename" value="meshes/AI43_005_wall_001-AI43_005_91.ply"/>
         <ref name="bsdf" id="mat-AI43_005_91"/>
     </shape>
 
-    <shape type="ply" name="elm__225">
+    <shape type="ply" name="elm__224">
         <string name="filename" value="meshes/AI43_005_wall_001-AI43_005_92.ply"/>
         <ref name="bsdf" id="mat-AI43_005_92"/>
     </shape>
 
-    <shape type="ply" name="elm__227">
+    <shape type="ply" name="elm__226">
         <string name="filename" value="meshes/AI43_005_wall_002.ply"/>
         <ref name="bsdf" id="mat-AI43_005_90"/>
     </shape>
 
-    <shape type="ply" name="elm__229">
+    <shape type="ply" name="elm__228">
         <string name="filename" value="meshes/AI43_005_windows_001.ply"/>
         <ref name="bsdf" id="mat-AI43_005_05"/>
     </shape>
 
-    <shape type="ply" name="elm__231">
+    <shape type="ply" name="elm__230">
         <string name="filename" value="meshes/AI43_005_windows_002-AI43_005_107.ply"/>
         <ref name="bsdf" id="mat-AI43_005_107"/>
     </shape>
 
-    <shape type="ply" name="elm__232">
+    <shape type="ply" name="elm__231">
         <string name="filename" value="meshes/AI43_005_windows_002-AI43_005_05.ply"/>
         <ref name="bsdf" id="mat-AI43_005_05"/>
     </shape>
 
-    <shape type="ply" name="elm__234">
+    <shape type="ply" name="elm__233">
         <string name="filename" value="meshes/AI43_005_wood_002.ply"/>
         <ref name="bsdf" id="mat-AI43_005_89"/>
     </shape>
 
-    <shape type="ply" name="elm__236">
+    <shape type="ply" name="elm__235">
         <string name="filename" value="meshes/AI43_005_floor_001_001.ply"/>
         <ref name="bsdf" id="mat-AI43_005_78"/>
     </shape>
 
-    <shape type="ply" name="elm__238">
+    <shape type="ply" name="elm__237">
         <string name="filename" value="meshes/AI43_005_wood_001_001.ply"/>
         <ref name="bsdf" id="mat-AI43_005_07"/>
     </shape>
 
-    <shape type="ply" name="elm__240">
+    <shape type="ply" name="elm__239">
         <string name="filename" value="meshes/AI43_005_sideboard_001_02_001.ply"/>
         <ref name="bsdf" id="mat-AI43_005_63"/>
     </shape>

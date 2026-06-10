@@ -33,7 +33,7 @@
     <!-- Materials -->
     <bsdf type="test_bsdf" id="test-mat" name="test-mat">
         <rgb name="color" value="0.3 0.8 1"/>
-        <float name="roughness" value="0.0"/>
+        <float name="roughness" value="1.0"/>
         <float name="ior" value="1.0"/>
     </bsdf>
 

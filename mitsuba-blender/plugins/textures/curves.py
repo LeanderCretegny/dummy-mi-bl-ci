@@ -24,8 +24,8 @@ def eval_curve(points, value):
 
 def str_to_points(s):
     points = []
-    for elems in s.split():
-        p = elems.split('-')
+    for elems in s.split('-'):
+        p = elems.split()
         points.append([float(p[0]), float(p[1])])
     return points
 

@@ -31,37 +31,44 @@
     </sensor>
 
     <!-- Materials -->
-    <bsdf type="twosided" id="mat-ramp" name="mat-ramp">
+    <bsdf type="refraction" id="mat-refraction" name="mat-refraction">
+        <rgb name="color" value="0.33654552698135376 0.84284281730651855 1"/>
+        <float name="ior" value="1"/>
+        <float name="roughness" value="0"/>
+    </bsdf>
+
+    <bsdf type="twosided" id="mat-Material" name="mat-Material">
         <bsdf type="diffuse" name="bsdf">
-            <texture type="color_ramp" name="reflectance">
-                <float name="fac" value="0.8227272629737854"/>
-                <string name="color_mode" value="RGB"/>
-                <string name="interpolation" value="LINEAR"/>
-                <string name="hue_interpolation" value="NEAR"/>
-                <string name="elements" value="1.0 0.0 0.0 0.0 0.0-1.0 0.499859094619751 0.0 0.0010651720222085714 0.5-1.0 1.0 1.0 1.0 1.0"/>
-            </texture>
-            <!-- <texture type="color_ramp" name="reflectance">
-                <texture type="bitmap" name="fac">
-                    <string name="filename" value="textures/AI43_005_11_diffuse.001.jpg"/>
-                </texture>
-                <string name="color_mode" value="RGB"/>
-                <string name="interpolation" value="LINEAR"/>
-                <string name="hue_interpolation" value="NEAR"/>
-                <string name="elements" value="1.0 0.011065247468650341 0.011065247468650341 0.011065247468650341 0.0-1.0 0.5747813582420349 0.5747813582420349 0.5747813582420349 1.0"/>
-            </texture> -->
+            <rgb name="reflectance" value="0.80000001192092896 0.80000001192092896 0.80000001192092896"/>
         </bsdf>
+    </bsdf>
+
+    <bsdf type="twosided" id="default-bsdf" name="default-bsdf">
+        <bsdf type="diffuse" name="bsdf"/>
     </bsdf>
 
     <!-- Emitters -->
     <emitter type="point" name="elm__3">
-        <vector name="position" x="4.0762453079223633" y="5.9038619995117188" z="-1.0054539442062378"/>
-        <rgb name="intensity" value="79.577468872070312 79.577468872070312 79.577468872070312"/>
+        <vector name="position" x="7.1366829872131348" y="1.3751583099365234" z="6.9223818778991699"/>
+        <rgb name="intensity" value="795.77471923828125 795.77471923828125 795.77471923828125"/>
     </emitter>
 
     <!-- Shapes -->
     <shape type="ply" name="elm__2">
         <string name="filename" value="meshes/Cube.ply"/>
         <boolean name="face_normals" value="true"/>
-        <ref name="bsdf" id="mat-ramp"/>
+        <ref name="bsdf" id="mat-refraction"/>
+    </shape>
+
+    <shape type="ply" name="elm__6">
+        <string name="filename" value="meshes/Cube_001.ply"/>
+        <boolean name="face_normals" value="true"/>
+        <ref name="bsdf" id="mat-Material"/>
+    </shape>
+
+    <shape type="ply" name="elm__8">
+        <string name="filename" value="meshes/Plane.ply"/>
+        <boolean name="face_normals" value="true"/>
+        <ref name="bsdf" id="default-bsdf"/>
     </shape>
 </scene>

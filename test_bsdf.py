@@ -14,80 +14,125 @@ class Test4(mi.BSDF):
         #TODO add normal texture support
 
         # FIXME some flags might be missing
-        self.m_flags = mi.BSDFFlags.GlossyTransmission 
+        self.m_flags = mi.BSDFFlags.GlossyTransmission | mi.BSDFFlags.FrontSide | mi.BSDFFlags.BackSide
         self.m_components = [self.m_flags]
 
     def sample(self, ctx, si, sample1, sample2, active = True):        
-        alpha = self.roughness.eval_1(si, active)
-        
-        wh = mi.warp.square_to_beckmann(sample2, alpha)
-        
+        a = self.roughness.eval_1(si, active)
+        distr = mi.MicrofacetDistribution(mi.MicrofacetType.Beckmann, a)
+        eta = self.ior.eval_1(si, active)
+        cos_theta_i = mi.Frame3f.cos_theta(si.wi)
         bs = mi.BSDFSample3f()
-        wo = dr.normalize(-si.wi + (mi.Float(2.0) * dr.dot(si.wi, wh) * wh))
-        wo.z = dr.select(wo.z > mi.Float(0.0), -wo.z, wo.z)
-        bs.wo = wo
 
-        valid = si.wi.z * wo.z < mi.Float(0.0)
+        # Ignore perfectly grazing configuration
+        active &= cos_theta_i != mi.Float(0.0)
 
-        pdf = self.pdf(ctx, si, wo, active)
-        valid &= pdf > mi.Float(0.0)
+        # Sample half vector
+        m = mi.warp.square_to_beckmann(sample2, a)
+        # m.z = dr.select(isNegative(m.z, strictly=True), -m.z, m.z)
+        b_pdf = mi.warp.square_to_beckmann_pdf(m, a)
+        cos_theta_mi = dr.dot(m, si.wi)
 
-        bs.pdf = pdf
-        bs.eta = self.ior.eval_1(si, active)
-        bs.sampled_component = self.m_components[0]
+        # Compute fresnel coefficients
+        _, cos_theta_t, eta_it, eta_ti = mi.fresnel(cos_theta_mi, eta)
+
+        bs.eta = eta_it
+        bs.sampled_component = self.m_components [0]
         bs.sampled_type = +mi.BSDFFlags.GlossyTransmission
 
-        color = self.eval(ctx, si, wo, active) * mi.Frame3f.cos_theta(wo) * self.color.eval(si, active)
+        # Transmission sampling
+        bs.wo = mi.refract(si.wi, m, cos_theta_t, eta_ti)
+        cos_theta_mo = dr.dot(bs.wo, m)
+        weight = dr.select(ctx.mode == mi.TransportMode.Radiance, dr.square(eta_ti), mi.Float(1.0))
+        weight *= self.color.eval(si, active)
+        dwh_dwo = (dr.square(bs.eta) * cos_theta_mo) / dr.square(cos_theta_mi + bs.eta * cos_theta_mo)
+        G = self.g(si.wi, m, a) * self.g(bs.wo, m, a)
+        weight *= G * cos_theta_mi / (cos_theta_i * mi.Frame3f.cos_theta(m))
 
-        return bs, dr.select(valid, color / pdf, mi.Color3f(0.0))
+        bs.pdf = b_pdf * dr.abs(dwh_dwo)
+
+        return bs, dr.select(active, mi.Color3f(weight), mi.Color3f(0.0))
 
     def eval(self, ctx, si, wo, active):
-        wo.z = -wo.z
-        cos_wo = mi.Frame3f.cos_theta(wo)        
-        cos_wi = mi.Frame3f.cos_theta(si.wi)
-
-        valid = cos_wo > mi.Float(0.0)
-        valid &= cos_wi > mi.Float(0.0)
-
-        wh = dr.normalize(si.wi + wo)
-        cos_wh = mi.Frame3f.cos_theta(wh)
-
-        f, _, _, _ = mi.fresnel(dr.dot(wh, si.wi), self.ior.eval_1(si, active))
-        denom = mi.Float(4.0) * cos_wi * cos_wo * cos_wh 
-        j = safe_div(mi.Float(1), denom)
         a = self.roughness.eval_1(si, active)
-        G = self.g(si.wi, wh, a) * self.g(wo, wh, a)
-        
-        color = mi.warp.square_to_beckmann_pdf(wh, a) * j * G * f * self.color.eval(si, active)
+        cos_o = mi.Frame3f.cos_theta(wo)
+        cos_i = mi.Frame3f.cos_theta(si.wi)
 
-        return dr.select(valid, color, mi.Color3f(0.0))
+        # Ignore perfectly grazing configuration
+        active &= cos_i != mi.Float(0)
+
+        # Get index of refraction
+        eta = self.ior.eval_1(si, active)
+        eta = dr.select(cos_i > mi.Float(0), eta, safe_div(mi.Float(1), eta))
+        inv_eta = mi.Float(1) / eta
+
+        # Get half vector
+        m = dr.normalize(si.wi + wo * eta)
+        m = dr.mulsign(m, mi.Frame3f.cos_theta(m))
+        cos_mi = dr.dot(si.wi, m)
+
+        # Get value from microfacet distribution and fresnel factors
+        distr = mi.MicrofacetDistribution(mi.MicrofacetType.Beckmann, a)
+        D = distr.eval(m)
+        G = self.g(si.wi, m, a) * self.g(wo, m, a) # distr.G(si.wi, wo, m)
+
+        scale = dr.select(ctx.mode == mi.TransportMode.Radiance, dr.square(inv_eta), mi.Float(1.0))
+        value = dr.abs(
+            (scale * D * G * eta * eta * cos_mi * dr.dot(wo, m)) / 
+            (cos_i * dr.square(cos_mi + eta * dr.dot(wo, m)))) 
+        value *= self.color.eval(si, active)
+
+        return dr.select(active, value, mi.Color3f(0.0))
 
     def pdf(self, ctx, si, wo, active):
-        wo.z = -wo.z
+        cos_i = mi.Frame3f.cos_theta(si.wi)
+        cos_o = mi.Frame3f.cos_theta(wo)
+        
+        active &= cos_i != mi.Float(0)
 
-        valid = mi.Frame3f.cos_theta(wo) <= mi.Float(0.0)
+        eta = self.ior.eval_1(si, active)
+        eta = dr.select(cos_i > mi.Float(0), eta, mi.Float(0.0) / eta)
 
-        wh = dr.normalize(si.wi + wo)
+        m = dr.normalize(si.wi + wo * eta)
+        m = dr.mulsign(m, mi.Frame3f.cos_theta(m))
 
-        denom = mi.Float(4.0) * dr.dot(wh, wo)
-        j = safe_div(mi.Float(1), denom)
+        cos_mi = dr.dot(si.wi, m)
+        cos_mo = dr.dot(wo, m)
+        active &= (cos_mi * cos_i > mi.Float(0)) & (cos_mo * cos_o > mi.Float(0))
 
-        p = mi.warp.square_to_beckmann_pdf(wh, self.roughness.eval_1(si, active)) * j
-        return dr.select(valid, p, mi.Float(0.0))
+        dwh_dwo = (eta * eta * cos_mo) / dr.square(cos_mi + eta * cos_mo)
+
+        distr = mi.MicrofacetDistribution(mi.MicrofacetType.Beckmann, self.roughness.eval_1(si, active))
+        p = distr.pdf(dr.mulsign(si.wi, cos_i), m)
+
+        return dr.select(active, p * dr.abs(dwh_dwo), mi.Float(0.0))
     
     def g(self, v, wh, a):
-        x_arg = safe_div(dr.dot(v, wh), v.z)
-        x = dr.select(x_arg > mi.Float(0.0), mi.Float(1.0), mi.Float(0.0))
+        xy_a2 = dr.square(a * v.x) + dr.square(a * v.y)
+        tan_theta_a2 = xy_a2 / dr.square(v.z)
 
-        tanTheta = mi.Frame3f.tan_theta(v)
-        b = safe_div(mi.Float(1.0), a * tanTheta)
-        b2 = b * b;
-        numerator = (3.535 * b) + (2.181 * b2)
-        denom = 1 + (2.276 * b) + (2.577 * b2)
-        right = dr.select(b < mi.Float(1.6), safe_div(numerator, denom), mi.Float(1.0))
+        a = dr.rsqrt(tan_theta_a2)
+        a_sqr = dr.square(a)
 
-        return x * right
+        res = dr.select(a >= mi.Float(1.6), mi.Float(1.0), \
+                mi.Float(3.535) * a + mi.Float(2.181) * a_sqr / (mi.Float(1.0) + mi.Float(2.276) * a + mi.Float(2.577) * a_sqr))
 
+        # Handle perpendicular incidence (no shadowing)
+        res[xy_a2 == mi.Float(0.0)] = mi.Float(1.0)
+
+        # Ensure consistent orientation
+        res[dr.dot(v, wh) * mi.Frame3f.cos_theta(v) <= mi.Float(0.0)] = mi.Float(0.0)
+
+        return res        
+
+    def traverse(self, cb):
+        cb.put('color', self.color, mi.ParamFlags.Differentiable)
+        cb.put('roughness', self.alpha_x, mi.ParamFlags.Differentiable)
+        cb.put('ior', self.ior, mi.ParamFlags.Differentiable)
+
+    def parameters_changed(self, keys):
+        print("🏝️ there is nothing to do here 🏝️")
+    
 class Test3(mi.BSDF):
     def __init__(self, props):
         mi.BSDF.__init__(self, props)
@@ -120,7 +165,7 @@ class Test3(mi.BSDF):
         H = dr.normalize(-(ior * wo + si.wi))
         cos_hi = dr.dot(H, si.wi)
 
-        tir = dr.sqr(ior) - (mi.Float(1.0) - dr.sqr(cos_hi)) <= mi.Float(0.0)
+        tir = dr.square(ior) - (mi.Float(1.0) - dr.square(cos_hi)) <= mi.Float(0.0)
         transmittance = dr.select(tir, mi.Color3f(0.0), self.color.eval(si, active))
 
         cos_nh = dr.dot(N, H)
@@ -128,7 +173,7 @@ class Test3(mi.BSDF):
         D = self.bsdf_D(alpha2, cos_nh)
         lambdaI = self.bsdf_lambda(alpha2, cos_wi)
         lambdaO = self.bsdf_lambda(alpha2, cos_wo)
-        common = D / cos_wi * (dr.sqr(ior) * dr.abs(cos_hi * dr.dot(H, wo)))
+        common = D / cos_wi * (dr.square(ior) * dr.abs(cos_hi * dr.dot(H, wo)))
 
         return dr.select(valid, transmittance * common / (mi.Float(1.0) + lambdaI + lambdaO), mi.Color3f(0.0))
     
@@ -153,7 +198,7 @@ class Test3(mi.BSDF):
         alpha2 = a_x * a_y
         D = self.bsdf_D(alpha2, cos_nh)
         lambdaI = self.bsdf_lambda(alpha2, cos_wi)
-        common = D / cos_wi * (dr.sqr(ior) * dr.abs(cos_hi * dr.dot(H, wo)))
+        common = D / cos_wi * (dr.square(ior) * dr.abs(cos_hi * dr.dot(H, wo)))
 
         return dr.select(valid, common / (mi.Float(1.0) + lambdaI), mi.Float(0.0))
     
@@ -179,7 +224,7 @@ class Test3(mi.BSDF):
 
         # Getting wo and transmittance value 
         # Test for total internal reflection
-        tir = dr.sqr(ior) - (mi.Float(1.0) - dr.sqr(cos_hi)) <= mi.Float(0.0)
+        tir = dr.square(ior) - (mi.Float(1.0) - dr.square(cos_hi)) <= mi.Float(0.0)
         _, cos_ho, eta_it, eta_ti = mi.fresnel(cos_hi, ior)
         bs.eta = eta_it
 
@@ -196,7 +241,7 @@ class Test3(mi.BSDF):
         lambdaO = self.bsdf_lambda(alpha2, mi.Frame3f.cos_theta(bs.wo))
         lambdaI = self.bsdf_lambda(alpha2, cos_wi)
 
-        common = D / cos_wi * (dr.abs(cos_hi * cos_ho) / dr.sqr(cos_ho + cos_hi * eta_ti))
+        common = D / cos_wi * (dr.abs(cos_hi * cos_ho) / dr.square(cos_ho + cos_hi * eta_ti))
 
         bs.pdf *= dr.select(almost_specular, mi.Float(1e6), common / (mi.Float(1.0) + lambdaI))
         eval *= dr.select(almost_specular, mi.Float(1e6), common / (mi.Float(1.0) + lambdaI + lambdaO))
@@ -207,29 +252,29 @@ class Test3(mi.BSDF):
         return bs, dr.select(sample_valid, eval, mi.Color3f(0.0))
     
     def bsdf_lambda(self, alpha2, cos_theta):
-        alpha_tan2 = alpha2 * dr.maximum(mi.Float(1.0) / dr.sqr(cos_theta) - mi.Float(1.0), mi.Float(0.0))
+        alpha_tan2 = alpha2 * dr.maximum(mi.Float(1.0) / dr.square(cos_theta) - mi.Float(1.0), mi.Float(0.0))
         return self.lambda_helper(alpha_tan2)
 
     def bsdf_D(self, alpha2, cos_theta):
-        cos_theta2 = dr.minimum(dr.sqr(cos_theta), mi.Float(1.0))
+        cos_theta2 = dr.minimum(dr.square(cos_theta), mi.Float(1.0))
 
-        return mi.Float(1.0) / (dr.exp((1 - cos_theta2) / (cos_theta2 * alpha2)) * dr.pi * alpha2 * dr.sqr(cos_theta2));
+        return mi.Float(1.0) / (dr.exp((1 - cos_theta2) / (cos_theta2 * alpha2)) * dr.pi * alpha2 * dr.square(cos_theta2));
 
     # def bsdf_aniso_lambda(self, alpha_x, alpha_y, w):
-    #     alpha_tan2 = (dr.sqr(alpha_x * w.x) + dr.sqr(alpha_y * w.y)) / dr.sqr(w.z)
+    #     alpha_tan2 = (dr.square(alpha_x * w.x) + dr.square(alpha_y * w.y)) / dr.square(w.z)
     #     return self.lambda_helper(alpha_tan2)
 
     # def bsdf_aniso_D(self, alpha_x, alpha_y, H):
     #     H /= mi.Vector3f(alpha_x, alpha_y, 1.0);
 
-    #     cos_NH2 = dr.sqr(H.z);
+    #     cos_NH2 = dr.square(H.z);
     #     alpha2 = alpha_x * alpha_y;
 
-    #     return dr.exp(-(dr.sqr(H.x) + dr.sqr(H.y)) / cos_NH2) / (dr.pi * alpha2 * dr.sqr(cos_NH2));
+    #     return dr.exp(-(dr.square(H.x) + dr.square(H.y)) / cos_NH2) / (dr.pi * alpha2 * dr.square(cos_NH2));
 
     def lambda_helper(self, alpha_tan2):
         valid = alpha_tan2 >= mi.Float(0.39)
-        a = dr.select(alpha_tan2 > mi.Float(0.0), mi.Float(1.0) / dr.sqrt(alpha_tan2), mi.Float(0.0))
+        a = dr.select(alpha_tan2 > mi.Float(0.0), mi.Float(1.0) / dr.squaret(alpha_tan2), mi.Float(0.0))
         numerator = (mi.Float(0.396) * a - mi.Float(1.259)) * a + mi.Float(1.0)
         denom = (mi.Float(2.181) * a + mi.Float(3.535)) * a
         return dr.select(valid, numerator / denom, mi.Float(0.0))
@@ -349,3 +394,12 @@ class Test(mi.BSDF):
                 '    eta=%s,\n'
                 '    tint=%s,\n'
                 ']' % (self.eta, self.tint))
+    
+def isZero(x, eps=1e-9):
+    return mi.Bool(x < eps)
+
+def isPositive(x, strictly=False):
+    return dr.select(mi.Bool(strictly), x > mi.Float(0.0), x >= mi.Float(0.0))
+
+def isNegative(x, strictly=False):
+    return ~isPositive(x, not strictly)
