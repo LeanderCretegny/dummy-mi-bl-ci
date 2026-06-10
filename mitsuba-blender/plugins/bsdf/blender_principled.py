@@ -1,6 +1,3 @@
-# Copy of code from PR https://github.com/mitsuba-renderer/mitsuba3/pull/1822/ for testing purposes
-# In case of satisfying results incorporate them to an official mitsuba release
-
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
 # You may obtain a copy of the License at
@@ -397,13 +394,11 @@ class BlenderPrincipledBSDF(mi.BSDF):
         if self.has_specular:
             spec_r0 = eta_to_r0(attr.eta) * 2.0 * attr.spec_ior_level
             spec_eta = r0_to_eta(spec_r0)
-            if attr.eta < 1.0:
-                spec_eta = 1.0 / spec_eta
+            spec_eta[attr.eta < 1.0] = 1.0 / spec_eta
             spec_r0 *= attr.spec_tint
 
             weights.specular *= attenuation
-            if spec_eta == 1.0:
-                weights.specular = mi.UnpolarizedSpectrum(0.0)
+            weights.specular[spec_eta == 1.0] = mi.UnpolarizedSpectrum(0.0)
 
             albedos.specular = microfacet_estimate_albedo(
                 MicrofacetFresnel.GENERALIZED_SCHLICK,
@@ -414,8 +409,7 @@ class BlenderPrincipledBSDF(mi.BSDF):
                 reflection=True,
                 transmission=False,
             )
-            if attr.spec_ior_level == 0.0:
-                albedos.specular = 0.0
+            albedos.specular[attr.spec_ior_level == 0.0] = 0.0
             attenuation = layering(albedos.specular, weights.specular, attenuation)
 
         # Diffuse lobe
@@ -451,9 +445,8 @@ class BlenderPrincipledBSDF(mi.BSDF):
         # Two-sided
         wo_ = mi.Vector3f(wo_)
         si = mi.SurfaceInteraction3f(si)
-        if attr.two_sided:
-            wo_.z = dr.mulsign(wo_.z, si.wi.z) 
-            si.wi.z = dr.abs(si.wi.z)
+        wo_.z[attr.two_sided] = dr.mulsign(wo_.z, si.wi.z)
+        si.wi.z[attr.two_sided] = dr.abs(si.wi.z)
 
         # Apply normalmap
         frame = compute_normalmap_frame(si, attr.normal, rot=attr.anisotropic_rot)
@@ -572,8 +565,7 @@ class BlenderPrincipledBSDF(mi.BSDF):
         if self.has_specular:
             spec_r0 = eta_to_r0(attr.eta) * 2.0 * attr.spec_ior_level
             spec_eta = r0_to_eta(spec_r0)
-            if attr.eta < 1.0:
-                spec_eta = 1.0 / spec_eta
+            spec_eta[attr.eta < 1.0] = 1.0 / spec_eta
             spec_r0 *= attr.spec_tint
 
             spec_value, spec_pdf = MicrofacetLobe.eval_pdf(
@@ -587,24 +579,22 @@ class BlenderPrincipledBSDF(mi.BSDF):
                 eta=spec_eta,
             )
 
-            if masks.specular:
-                value += mi.Spectrum(weights.specular) * mi.Spectrum(
-                    spec_value
-                )
-                pdf += sampling_weights.specular * spec_pdf
+            value[masks.specular] += mi.Spectrum(weights.specular) * mi.Spectrum(
+                spec_value
+            )
+            pdf[masks.specular] += sampling_weights.specular * spec_pdf
 
-        if True: #FIXME ??? what ???
+        if True:
             # Adding diffuse lobe
             diffuse_value, diffuse_pdf = OrenNayarLobe.eval_pdf(
                 wi, wo, attr.base_color, attr.diffuse_roughness
             )
-            if masks.diffuse:
-                value += (
-                    mi.Spectrum(diffuse_value)
-                    * mi.Spectrum(weights.diffuse)
-                    * mi.Spectrum(attr.base_color)
-                )
-                pdf += sampling_weights.diffuse * diffuse_pdf
+            value[masks.diffuse] += (
+                mi.Spectrum(diffuse_value)
+                * mi.Spectrum(weights.diffuse)
+                * mi.Spectrum(attr.base_color)
+            )
+            pdf[masks.diffuse] += sampling_weights.diffuse * diffuse_pdf
 
         if self.has_alpha:
             value *= mi.Spectrum(attr.alpha)
@@ -620,8 +610,7 @@ class BlenderPrincipledBSDF(mi.BSDF):
 
         # Two-sided
         si = mi.SurfaceInteraction3f(si)
-        if attr.two_sided:
-            si.wi.z = dr.abs(si.wi.z)
+        si.wi.z[attr.two_sided] = dr.abs(si.wi.z)
 
         # Apply normalmap
         frame = compute_normalmap_frame(si, attr.normal, rot=attr.anisotropic_rot)
@@ -723,11 +712,10 @@ class BlenderPrincipledBSDF(mi.BSDF):
         active &= bs.pdf > 0.0
 
         # Compute sampling weight
-        weight = dr.select(active, value / bs.pdf if bs.pdf > 1e-9 else 0.0, 0.0)
+        weight = dr.select(active, value / bs.pdf, 0.0)
 
         # Two-sided
-        if attr.two_sided & ~masks.null:
-            bs.wo.z = dr.mulsign(bs.wo.z, si.wi.z)
+        bs.wo.z[attr.two_sided & ~masks.null] = dr.mulsign(bs.wo.z, si.wi.z)
 
         return bs, weight
 
@@ -798,4 +786,4 @@ class BlenderPrincipledBSDF(mi.BSDF):
         )
 
 
-# mi.register_bsdf("blender_principled", lambda props: BlenderPrincipledBSDF(props))
+mi.register_bsdf("blender_principled", lambda props: BlenderPrincipledBSDF(props))

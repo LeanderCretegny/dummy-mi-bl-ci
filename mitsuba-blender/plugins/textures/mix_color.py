@@ -4,6 +4,9 @@ import drjit as dr
 import mitsuba as mi
 
 blend_type_mix = 'MIX'
+blend_type_mul = 'MULTIPLY'
+blend_type_screen = 'SCREEN'
+blend_type_overlay = 'OVERLAY'
 
 class Mix(mi.Texture):
     '''
@@ -14,7 +17,7 @@ class Mix(mi.Texture):
         self.blend_type = props.get('blend_type', blend_type_mix)
         self.clamp_result = props.get('clamp_result', False)
         self.clamp_factor = props.get('clamp_factor', False)
-        self.factor = props.get('factor', 0.5)
+        self.factor = props.get_texture('factor', 0.5)
         self.a = props.get_texture('a')
         self.b = props.get_texture('b')
     
@@ -46,17 +49,27 @@ class Mix(mi.Texture):
         if self.clamp_factor:
             fac = dr.clip(self.factor.eval_1(si, active), 0.0, 1.0)
 
-        #TODO add remaining blend types
-        if self.blend_type == blend_type_mix:
-            result = (1 - fac) * val_a + fac * val_b
-        else:
-            raise NotImplementedError(f"Current implementation of Mix color texture does not support {self.blend_type}")
+        result = self.blend(self.blend_type, val_a, val_b, fac)
 
         if self.clamp_result:
             result = dr.clip(result, 0.0, 1.0)
         
         return result
-
+    
+    def blend(self, mode, a, b, fac):
+        #TODO add remaining blend types
+        if mode == blend_type_mix:
+            res = (1 - fac) * a + fac * b
+        elif mode == blend_type_screen:
+            res = mi.Color3f(1) - (mi.Color3f(1) - a) * (mi.Color3f(1) - b)
+        elif mode == blend_type_mul:
+            res = dr.minimum(a * b, mi.Color3f(1))
+        elif mode == blend_type_overlay:
+            res = dr.select(a < mi.Float(0.5), dr.minimum(mi.Float(2) * a * b, mi.Color3f(1)), mi.Color3f(1) - mi.Float(2) * (mi.Color3f(1) - a) * (mi.Color3f(1) - b))
+        else:
+            raise NotImplementedError(f"Current implementation of Mix color texture does not support {mode}")
+        return res
+        
     def resolution(self):
         return self.a.resolution()
     

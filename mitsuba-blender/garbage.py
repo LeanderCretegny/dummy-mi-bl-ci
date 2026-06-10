@@ -15,6 +15,9 @@ import sys
 
 import matplotlib.pyplot as plt
 
+# import drjit as dr
+# dr.set_flag(dr.JitFlag.Debug, True)
+
 def main(scene_ref):
     scene = mi.load_file(scene_ref)
     print("scene loaded")

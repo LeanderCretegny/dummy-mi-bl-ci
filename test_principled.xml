@@ -31,33 +31,48 @@
     </sensor>
 
     <!-- Materials -->
-    <bsdf type="twosided" id="mat-Material" name="mat-Material">
-        <bsdf type="blender_principled" name="bsdf">
-            <rgb name="base_color" value="0.065056949853897095 0.13991956412792206 0.80024349689483643"/>
-            <rgb name="spec_tint" value="1 1 1"/>
-            <float name="transmission" value="0"/>
-            <float name="metallic" value="0"/>
-            <float name="anisotropic" value="0"/>
-            <float name="roughness" value="0.25"/>
-            <float name="sheen" value="0"/>
-            <rgb name="sheen_tint" value="1 1 1"/>
-            <float name="clearcoat" value="0"/>
-            <float name="clearcoat_roughness" value="0.00089999995976686523"/>
-            <float name="eta" value="1.4500000476837158"/>
-            <float name="spec_ior_level" value="0.5"/>
-        </bsdf>
+    <bsdf type="blender_principled" id="mat-principled" name="mat-principled">
+        <boolean name="two_sided" value="false"/>
+        <rgb name="base_color" value="0.064802251756191254 0.1412632018327713 0.7991030216217041"/>
+        <float name="roughness" value="0.010000000298023226"/>
+        <float name="metallic" value="0"/>
+        <float name="eta" value="1.5"/>
+        <float name="alpha" value="1"/>
+        <float name="diffuse_roughness" value="0"/>
+        <float name="spec_ior_level" value="0.5"/>
+        <rgb name="spec_tint" value="1 1 1"/>
+        <float name="anisotropic" value="0"/>
+        <float name="anisotropic_rot" value="0"/>
+        <float name="transmission" value="0.5"/>
+        <float name="clearcoat" value="0"/>
+        <float name="clearcoat_roughness" value="0"/>
+        <float name="clearcoat_ior" value="1.5"/>
+        <rgb name="clearcoat_tint" value="1 1 1"/>
+        <float name="sheen" value="0.5"/>
+        <float name="sheen_roughness" value="0.25"/>
+        <rgb name="sheen_tint" value="1 1 1"/>
+    </bsdf>
+
+    <bsdf type="twosided" id="default-bsdf" name="default-bsdf">
+        <bsdf type="diffuse" name="bsdf"/>
     </bsdf>
 
     <!-- Emitters -->
     <emitter type="point" name="elm__3">
         <vector name="position" x="4.0762453079223633" y="5.9038619995117188" z="-1.0054539442062378"/>
-        <rgb name="intensity" value="79.577468872070312 79.577468872070312 79.577468872070312"/>
+        <rgb name="intensity" value="300 300 300"/>
     </emitter>
 
     <!-- Shapes -->
     <shape type="ply" name="elm__2">
         <string name="filename" value="meshes/Cube.ply"/>
         <boolean name="face_normals" value="true"/>
-        <ref name="bsdf" id="mat-Material"/>
+        <ref name="bsdf" id="mat-principled"/>
+    </shape>
+
+    <shape type="ply" name="elm__6">
+        <string name="filename" value="meshes/Plane.ply"/>
+        <boolean name="face_normals" value="true"/>
+        <ref name="bsdf" id="default-bsdf"/>
     </shape>
 </scene>

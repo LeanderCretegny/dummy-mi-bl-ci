@@ -33,14 +33,14 @@
     <!-- Materials -->
     <bsdf type="twosided" id="mat-ramp" name="mat-ramp">
         <bsdf type="diffuse" name="bsdf">
-            <texture type="color_ramp" name="reflectance">
+            <!-- <texture type="color_ramp" name="reflectance">
                 <float name="fac" value="0.8227272629737854"/>
                 <string name="color_mode" value="RGB"/>
                 <string name="interpolation" value="LINEAR"/>
                 <string name="hue_interpolation" value="NEAR"/>
                 <string name="elements" value="1.0 0.0 0.0 0.0 0.0-1.0 0.499859094619751 0.0 0.0010651720222085714 0.5-1.0 1.0 1.0 1.0 1.0"/>
-            </texture>
-            <!-- <texture type="color_ramp" name="reflectance">
+            </texture> -->
+            <texture type="color_ramp" name="reflectance">
                 <texture type="bitmap" name="fac">
                     <string name="filename" value="textures/AI43_005_11_diffuse.001.jpg"/>
                 </texture>
@@ -48,7 +48,7 @@
                 <string name="interpolation" value="LINEAR"/>
                 <string name="hue_interpolation" value="NEAR"/>
                 <string name="elements" value="1.0 0.011065247468650341 0.011065247468650341 0.011065247468650341 0.0-1.0 0.5747813582420349 0.5747813582420349 0.5747813582420349 1.0"/>
-            </texture> -->
+            </texture>
         </bsdf>
     </bsdf>
 

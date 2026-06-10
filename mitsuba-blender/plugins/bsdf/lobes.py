@@ -286,27 +286,23 @@ class OrenNayarLobe:
             * dr.square(albedo)
             * (E_avg / (1.0 - E_avg))
             / (1.0 - albedo * (1.0 - E_avg))
-        ) if sigma > 1e-9 else 0.0
+        )
 
         def oren_nayar_G(cos_theta):
-            if cos_theta < 1e-9:
-                return 0.0
             sin_theta = dr.sqrt(1.0 - dr.square(cos_theta))
             theta = dr.acos(cos_theta)
             G = sin_theta * (theta - 2.0 / 3.0 - sin_theta * cos_theta) + 2.0 / 3.0 * (
                 sin_theta / cos_theta
-            ) * (1.0 - dr.square(sin_theta) * sin_theta) 
+            ) * (1.0 - dr.square(sin_theta) * sin_theta)
             # The tan(theta) term starts to act up at low cos_theta, so fall back to Taylor expansion.
-            if cos_theta < 1e-6:
-                G = (dr.pi / 2.0 - 2.0 / 3.0) - cos_theta
+            G[cos_theta < 1e-6] = (dr.pi / 2.0 - 2.0 / 3.0) - cos_theta
             return G
 
         E_i = A * dr.pi + B * oren_nayar_G(cos_theta_i)
         multiscatter_term = Ems * (1.0 - E_i)
 
         t = dr.dot(wi, wo) - cos_theta_o * cos_theta_i
-        if t > 0.0: 
-            t /= dr.maximum(cos_theta_o, cos_theta_i) + 1e-8
+        t[t > 0.0] /= dr.maximum(cos_theta_o, cos_theta_i) + 1e-8
 
         single_scatter = A + B * t
 
@@ -316,8 +312,7 @@ class OrenNayarLobe:
         value = cos_theta_o * (mi.UnpolarizedSpectrum(single_scatter) + multi_scatter)
 
         # Fallback to Lambertian when roughness == 0.0
-        if B <= 0.0:
-            value = mi.UnpolarizedSpectrum(cos_theta_o * dr.inv_pi)
+        value[B <= 0.0] = mi.UnpolarizedSpectrum(cos_theta_o * dr.inv_pi)
 
         pdf = dr.abs(cos_theta_o) * dr.inv_pi
 
