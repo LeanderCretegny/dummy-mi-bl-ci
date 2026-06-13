@@ -21,24 +21,21 @@ class TranslucentBSDF(mi.BSDF):
         self.m_components = [self.m_flags]
 
     def eval(self, ctx, si, wo, active):
-        same_hemi = mi.Frame3f.cos_theta(si.wi) * mi.Frame3f.cos_theta(wo) >= mi.Float(0.0)
+        active &= mi.Frame3f.cos_theta(si.wi) * mi.Frame3f.cos_theta(wo) >= mi.Float(0.0)
         coso = dr.abs(mi.Frame3f.cos_theta(wo))
         color = self.color.eval(si, active) 
-        return dr.select(same_hemi, mi.Color3f(0.0), color * dr.inv_pi * coso)
-
-    def _pdf(self, wi, wo):
-        same_hemi = mi.Frame3f.cos_theta(wi) * mi.Frame3f.cos_theta(wo) >= mi.Float(0.0)
-        coso = dr.abs(mi.Frame3f.cos_theta(wo))
-        return dr.select(same_hemi, 0.0, coso * dr.inv_pi)
+        return dr.select(active, mi.Color3f(0.0), color * dr.inv_pi * coso)
 
     def pdf(self, ctx, si, wo, active):
-         return self._pdf(si.wi, wo)
+        active &= mi.Frame3f.cos_theta(si.wi) * mi.Frame3f.cos_theta(wo) >= mi.Float(0.0)
+        coso = dr.abs(mi.Frame3f.cos_theta(wo))
+        return dr.select(active, 0.0, coso * dr.inv_pi)
     
     def sample(self, ctx, si, sample1, sample2, active = True):        
         bs = mi.BSDFSample3f()
         bs.wo = mi.warp.square_to_cosine_hemisphere(sample2)
         bs.wo.z = dr.select(mi.Frame3f.cos_theta(si.wi) > mi.Float(0.0), -bs.wo.z, bs.wo.z)
-        bs.pdf = self._pdf(si.wi, bs.wo)
+        bs.pdf = self.pdf(ctx, si, bs.wo, active)
         bs.eta = mi.Float(1.0)
         bs.sampled_component = self.m_components[0]
         bs.sampled_type = +mi.BSDFFlags.DiffuseTransmission

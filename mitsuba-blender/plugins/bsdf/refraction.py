@@ -11,7 +11,6 @@ class RefractionBSDF(mi.BSDF):
         self.ior = props.get_texture('ior', 0.0)
         #TODO add normal texture support
 
-        # FIXME some flags might be missing
         self.m_flags = mi.BSDFFlags.GlossyTransmission | mi.BSDFFlags.FrontSide | mi.BSDFFlags.BackSide
         self.m_components = [self.m_flags]
 
@@ -26,9 +25,8 @@ class RefractionBSDF(mi.BSDF):
         active &= cos_theta_i != mi.Float(0.0)
 
         # Sample half vector
-        m = mi.warp.square_to_beckmann(sample2, a)
-        # m.z = dr.select(isNegative(m.z, strictly=True), -m.z, m.z)
-        b_pdf = mi.warp.square_to_beckmann_pdf(m, a)
+        m, b_pdf = distr.sample(dr.mulsign(si.wi, cos_theta_i), sample2)
+        # b_pdf = distr.pdf(si.wi, m)
         cos_theta_mi = dr.dot(m, si.wi)
 
         # Compute fresnel coefficients
@@ -44,7 +42,7 @@ class RefractionBSDF(mi.BSDF):
         weight = dr.select(ctx.mode == mi.TransportMode.Radiance, dr.square(eta_ti), mi.Float(1.0))
         weight *= self.color.eval(si, active)
         dwh_dwo = (dr.square(bs.eta) * cos_theta_mo) / dr.square(cos_theta_mi + bs.eta * cos_theta_mo)
-        G = self.g(si.wi, m, a) * self.g(bs.wo, m, a)
+        G = distr.G(si.wi, bs.wo, m)
         weight *= G * cos_theta_mi / (cos_theta_i * mi.Frame3f.cos_theta(m))
 
         bs.pdf = b_pdf * dr.abs(dwh_dwo)
@@ -53,7 +51,6 @@ class RefractionBSDF(mi.BSDF):
 
     def eval(self, ctx, si, wo, active):
         a = self.roughness.eval_1(si, active)
-        cos_o = mi.Frame3f.cos_theta(wo)
         cos_i = mi.Frame3f.cos_theta(si.wi)
 
         # Ignore perfectly grazing configuration
@@ -72,7 +69,7 @@ class RefractionBSDF(mi.BSDF):
         # Get value from microfacet distribution and fresnel factors
         distr = mi.MicrofacetDistribution(mi.MicrofacetType.Beckmann, a)
         D = distr.eval(m)
-        G = self.g(si.wi, m, a) * self.g(wo, m, a) # distr.G(si.wi, wo, m)
+        G = distr.G(si.wi, wo, m)
 
         scale = dr.select(ctx.mode == mi.TransportMode.Radiance, dr.square(inv_eta), mi.Float(1.0))
         value = dr.abs(
@@ -104,24 +101,6 @@ class RefractionBSDF(mi.BSDF):
         p = distr.pdf(dr.mulsign(si.wi, cos_i), m)
 
         return dr.select(active, p * dr.abs(dwh_dwo), mi.Float(0.0))
-    
-    def g(self, v, wh, a):
-        xy_a2 = dr.square(a * v.x) + dr.square(a * v.y)
-        tan_theta_a2 = xy_a2 / dr.square(v.z)
-
-        a = dr.rsqrt(tan_theta_a2)
-        a_sqr = dr.square(a)
-
-        res = dr.select(a >= mi.Float(1.6), mi.Float(1.0), \
-                mi.Float(3.535) * a + mi.Float(2.181) * a_sqr / (mi.Float(1.0) + mi.Float(2.276) * a + mi.Float(2.577) * a_sqr))
-
-        # Handle perpendicular incidence (no shadowing)
-        res[xy_a2 == mi.Float(0.0)] = mi.Float(1.0)
-
-        # Ensure consistent orientation
-        res[dr.dot(v, wh) * mi.Frame3f.cos_theta(v) <= mi.Float(0.0)] = mi.Float(0.0)
-
-        return res        
 
     def traverse(self, cb):
         cb.put('color', self.color, mi.ParamFlags.Differentiable)

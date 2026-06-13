@@ -46,8 +46,9 @@ class Mix(mi.Texture):
         return mi.Color3f(self.process(si, val_a, val_b, active))
 
     def process(self, si, val_a, val_b, active):
+        fac = self.factor.eval_1(si, active)
         if self.clamp_factor:
-            fac = dr.clip(self.factor.eval_1(si, active), 0.0, 1.0)
+            fac = dr.clip(fac, 0.0, 1.0)
 
         result = self.blend(self.blend_type, val_a, val_b, fac)
 
@@ -61,11 +62,19 @@ class Mix(mi.Texture):
         if mode == blend_type_mix:
             res = (1 - fac) * a + fac * b
         elif mode == blend_type_screen:
-            res = mi.Color3f(1) - (mi.Color3f(1) - a) * (mi.Color3f(1) - b)
+            fac_inv = mi.Float(1) - fac
+            res = mi.Color3f(1) - (mi.Color3f(fac_inv) + fac * (mi.Color3f(1) - b)) * (mi.Color3f(1) - a)
         elif mode == blend_type_mul:
-            res = dr.minimum(a * b, mi.Color3f(1))
+            res = dr.minimum(a * ((mi.Color3f(1) - fac) + fac * b), mi.Color3f(1))
         elif mode == blend_type_overlay:
-            res = dr.select(a < mi.Float(0.5), dr.minimum(mi.Float(2) * a * b, mi.Color3f(1)), mi.Color3f(1) - mi.Float(2) * (mi.Color3f(1) - a) * (mi.Color3f(1) - b))
+            fac_inv = mi.Float(1) - fac
+            res = mi.Color3f(0)
+
+            blend_mul = lambda ca, cb: ca * (fac_inv + mi.Float(2) * fac * cb)
+            blend_scr = lambda ca, cb: mi.Float(1) - (fac_inv + mi.Float(2) * fac * (mi.Float(1) - cb)) * (mi.Float(1) - ca) 
+            res.x = dr.select(a.x < mi.Float(0.5), blend_mul(a.x, b.x), blend_scr(a.x, b.x))
+            res.y = dr.select(a.y < mi.Float(0.5), blend_mul(a.y, b.y), blend_scr(a.y, b.y))
+            res.z = dr.select(a.z < mi.Float(0.5), blend_mul(a.z, b.z), blend_scr(a.z, b.z))
         else:
             raise NotImplementedError(f"Current implementation of Mix color texture does not support {mode}")
         return res

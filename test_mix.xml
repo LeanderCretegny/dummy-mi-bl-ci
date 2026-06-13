@@ -34,12 +34,12 @@
     <bsdf type="twosided" id="mat-mix" name="mat-mix">
         <bsdf type="diffuse" name="bsdf">
             <texture type="mix_color" name="reflectance">
-                <string name="blend_type" value="MIX"/>
+                <string name="blend_type" value="OVERLAY"/>
                 <boolean name="clamp_result" value="false"/>
                 <boolean name="clamp_factor" value="false"/>
-                <float name="factor" value="0.5"/>
-                <rgb name="a" value="0.22940188646316528 0.53852683305740356 1"/>
-                <rgb name="b" value="0.67827337980270386 0.76808768510818481 0"/>
+                <float name="factor" value="0.25"/>
+                <rgb name="a" value="0 0.31 0.367"/>
+                <rgb name="b" value="1 0.734 0.104"/>
             </texture>
         </bsdf>
     </bsdf>
@@ -47,7 +47,7 @@
     <!-- Emitters -->
     <emitter type="point" name="elm__3">
         <vector name="position" x="4.0762453079223633" y="5.9038619995117188" z="-1.0054539442062378"/>
-        <rgb name="intensity" value="79.577468872070312 79.577468872070312 79.577468872070312"/>
+        <rgb name="intensity" value="150 150 150"/>
     </emitter>
 
     <!-- Shapes -->
