@@ -65,7 +65,7 @@ class Mix(mi.Texture):
         elif mode == blend_type_mul:
             res = dr.minimum(a * b, mi.Color3f(1))
         elif mode == blend_type_overlay:
-            res = dr.select(a < mi.Float(0.5), dr.minimum(mi.Float(2) * a * b, mi.Color3f(1)), mi.Color3f(1) - mi.Float(2) * (mi.Color3f(1) - a) * (mi.Color3f(1) - b))
+            res = dr.select(a < fac, dr.minimum(mi.Float(2) * a * b, mi.Color3f(1)), mi.Color3f(1) - mi.Float(2) * (mi.Color3f(1) - a) * (mi.Color3f(1) - b))
         else:
             raise NotImplementedError(f"Current implementation of Mix color texture does not support {mode}")
         return res
